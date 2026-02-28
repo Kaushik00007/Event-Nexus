@@ -1,0 +1,373 @@
+import { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import * as notificationService from '../../services/notificationService';
+import {
+  Menu,
+  X,
+  Calendar,
+  User,
+  LogOut,
+  Star,
+  PlusCircle,
+  LayoutDashboard,
+  ChevronDown,
+  Shield,
+  Bell,
+  Search
+} from 'lucide-react';
+import ThemeToggle from '../common/ThemeToggle';
+
+const InternalCustomSearch = ({ value, onChange, placeholder = "Search events..." }) => {
+  return (
+    <div className="custom-search-container">
+      <div id="poda">
+        <div className="custom-search-glow"></div>
+        <div className="custom-search-darkBorderBg"></div>
+        <div className="custom-search-darkBorderBg"></div>
+        <div className="custom-search-darkBorderBg"></div>
+        <div className="custom-search-white"></div>
+        <div className="custom-search-border"></div>
+        <div id="main">
+          <input
+            placeholder={placeholder}
+            type="text"
+            name="text"
+            className="custom-search-input"
+            value={value}
+            onChange={onChange}
+          />
+          <div id="input-mask"></div>
+          <div id="pink-mask"></div>
+          <div className="filterBorder"></div>
+          <div id="filter-icon">
+            <svg preserveAspectRatio="none" height={20} width={20} viewBox="4.8 4.56 14.832 15.408" fill="none">
+              <path d="M8.16 6.65002H15.83C16.47 6.65002 16.99 7.17002 16.99 7.81002V9.09002C16.99 9.56002 16.7 10.14 16.41 10.43L13.91 12.64C13.56 12.93 13.33 13.51 13.33 13.98V16.48C13.33 16.83 13.1 17.29 12.81 17.47L12 17.98C11.24 18.45 10.2 17.92 10.2 16.99V13.91C10.2 13.5 9.97 12.98 9.73 12.69L7.52 10.36C7.23 10.08 7 9.55002 7 9.20002V7.87002C7 7.17002 7.52 6.65002 8.16 6.65002Z" stroke="currentColor" className="text-slate-600 dark:text-gray-400" strokeWidth={1} strokeMiterlimit={10} strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+          <div id="search-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width={24} viewBox="0 0 24 24" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" height={24} fill="none" className="feather feather-search">
+              <circle stroke="url(#search)" r={8} cy={11} cx={11} />
+              <line stroke="url(#searchl)" y2="16.65" y1={22} x2="16.65" x1={22} />
+              <defs>
+                <linearGradient gradientTransform="rotate(50)" id="search">
+                  <stop stopColor="#0ea5e9" offset="0%" />
+                  <stop stopColor="#d946ef" offset="100%" />
+                </linearGradient>
+                <linearGradient id="searchl">
+                  <stop stopColor="#0ea5e9" offset="0%" />
+                  <stop stopColor="#d946ef" offset="100%" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Navbar = ({ isCollapsed }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const { user, isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Only show search bar on home page
+  const showSearchBar = location.pathname === '/';
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/events?search=${encodeURIComponent(searchQuery)}`);
+    }
+  };
+
+  // Fetch unread notification count
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchUnreadCount();
+      // Poll for new notifications every 30 seconds
+      const interval = setInterval(fetchUnreadCount, 30000);
+      return () => clearInterval(interval);
+    }
+  }, [isAuthenticated]);
+
+  const fetchUnreadCount = async () => {
+    try {
+      const response = await notificationService.getUnreadCount();
+      setUnreadCount(response.count || 0);
+    } catch (error) {
+      console.error('Error fetching unread count:', error);
+    }
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+    setShowDropdown(false);
+  };
+
+  return (
+    <nav className="glass-navbar fixed top-0 left-0 w-full">
+      <div className="w-full pl-0 pr-4 sm:pr-6 lg:pr-8">
+        <div className="flex justify-between h-16 relative">
+          {/* Logo */}
+          <div className="flex items-center">
+            <Link to="/" className="flex items-center space-x-3">
+              <img
+                src="/logo.png"
+                alt="EventNexus Logo"
+                className="w-20 h-20 object-contain"
+              />
+              <span className="text-xl font-bold gradient-text">EventNexus</span>
+            </Link>
+          </div>
+
+          {/* Search Bar - Only on Home Page */}
+          {showSearchBar && (
+            <div className={`absolute ${isCollapsed ? 'left-[calc(50%+40px)]' : 'left-[calc(50%+128px)]'} -translate-x-1/2 transition-[left] duration-300 hidden md:flex items-center h-full`}>
+              <form onSubmit={handleSearch} className="w-full max-w-2xl">
+                <InternalCustomSearch
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search events..."
+                />
+              </form>
+            </div>
+          )}
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+
+
+            {isAuthenticated ? (
+              <>
+
+                <Link
+                  to="/favorites"
+                  className="flex items-center space-x-1 text-slate-950 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-bold transition-colors group"
+                >
+                  <Star className="w-4 h-4 icon-transition group-hover:scale-110 group-hover:fill-yellow-300 group-hover:text-yellow-400" />
+                </Link>
+
+
+
+                {/* Notifications Bell */}
+                <Link
+                  to="/notifications"
+                  className="relative flex items-center group"
+                >
+                  <div className={`relative ${unreadCount > 0 ? 'animate-bell-ring' : ''}`}>
+                    <Bell
+                      className={`w-5 h-5 transition-all icon-transition group-hover:scale-110 ${unreadCount > 0
+                        ? 'text-red-600 fill-red-100'
+                        : 'text-gray-600 dark:text-gray-400 group-hover:text-primary-600'
+                        }`}
+                    />
+                    {unreadCount > 0 && (
+                      <>
+                        <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-bounce">
+                          {unreadCount > 9 ? '9+' : unreadCount}
+                        </span>
+                        <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full animate-ping"></span>
+                      </>
+                    )}
+                  </div>
+                </Link>
+
+                <ThemeToggle />
+
+                {/* User Dropdown */}
+                <div className="relative">
+                  <button
+                    onClick={() => setShowDropdown(!showDropdown)}
+                    className="flex items-center text-slate-950 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-bold transition-colors group"
+                  >
+                    <div className={`w-8 h-8 ${user?.role === 'admin' ? 'bg-red-100' : 'bg-primary-100'} rounded-full flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                      {user?.role === 'admin' ? (
+                        <Shield className="w-4 h-4 text-red-600 icon-transition group-hover:icon-hover-bounce" />
+                      ) : (
+                        <User className="w-4 h-4 text-primary-600 icon-transition group-hover:scale-110" />
+                      )}
+                    </div>
+                  </button>
+
+                  {showDropdown && (
+                    <div className="absolute right-0 mt-2 w-48 glass-panel-premium rounded-lg shadow-lg py-2 animate-fadeIn border-white/20">
+                      {user?.role === 'admin' && (
+                        <>
+                          <Link
+                            to="/admin"
+                            onClick={() => setShowDropdown(false)}
+                            className="flex items-center space-x-2 px-4 py-2 text-red-600 hover:bg-red-500/10 font-semibold group rounded-md mx-2"
+                          >
+                            <Shield className="w-4 h-4 icon-transition group-hover:scale-110" />
+                            <span>Admin Dashboard</span>
+                          </Link>
+                          <hr className="my-2" />
+                        </>
+                      )}
+                      <Link
+                        to="/dashboard"
+                        onClick={() => setShowDropdown(false)}
+                        className="flex items-center space-x-2 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-white/10 group rounded-md mx-2"
+                      >
+                        <LayoutDashboard className="w-4 h-4 icon-transition group-hover:scale-110" />
+                        <span>Dashboard</span>
+                      </Link>
+                      <Link
+                        to="/profile"
+                        onClick={() => setShowDropdown(false)}
+                        className="flex items-center space-x-2 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-white/10 group rounded-md mx-2"
+                      >
+                        <User className="w-4 h-4 icon-transition group-hover:scale-110" />
+                        <span>Profile</span>
+                      </Link>
+                      <hr className="my-2" />
+                      <button
+                        onClick={handleLogout}
+                        className="flex items-center space-x-2 px-4 py-2 text-red-600 hover:bg-red-500/10 w-[calc(100%-1rem)] text-left group rounded-md mx-2"
+                      >
+                        <LogOut className="w-4 h-4 icon-transition group-hover:translate-x-0.5" />
+                        <span>Logout</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </>
+            ) : (
+              <div className="flex items-center space-x-4">
+                <Link
+                  to="/login"
+                  className="text-gray-600 hover:text-primary-600 font-medium transition-colors"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="bg-primary-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-primary-700 hover:scale-[1.02] transition-all"
+                >
+                  Sign Up
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-gray-600 hover:text-gray-900"
+            >
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        {isOpen && (
+          <div className="md:hidden pb-4 animate-fadeIn">
+            <div className="flex flex-col space-y-4">
+              {showSearchBar && (
+                <form onSubmit={handleSearch} className="px-2 mb-2">
+                  <InternalCustomSearch
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search events..."
+                  />
+                </form>
+              )}
+
+
+              {isAuthenticated ? (
+                <>
+                  {user?.role === 'admin' && (
+                    <Link
+                      to="/admin"
+                      onClick={() => setIsOpen(false)}
+                      className="text-red-600 hover:text-red-700 font-semibold flex items-center space-x-2"
+                    >
+                      <Shield className="w-4 h-4" />
+                      <span>Admin Dashboard</span>
+                    </Link>
+                  )}
+                  <Link
+                    to="/notifications"
+                    onClick={() => setIsOpen(false)}
+                    className="text-gray-600 hover:text-primary-600 font-medium flex items-center space-x-2 relative"
+                  >
+                    <div className={`relative ${unreadCount > 0 ? 'animate-bell-ring' : ''}`}>
+                      <Bell
+                        className={`w-5 h-5 ${unreadCount > 0 ? 'text-red-600 fill-red-100' : ''}`}
+                      />
+                      {unreadCount > 0 && (
+                        <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                          {unreadCount > 9 ? '9+' : unreadCount}
+                        </span>
+                      )}
+                    </div>
+                    <span>Notifications {unreadCount > 0 && `(${unreadCount})`}</span>
+                  </Link>
+
+                  <Link
+                    to="/favorites"
+                    onClick={() => setIsOpen(false)}
+                    className="text-gray-600 hover:text-primary-600 font-medium"
+                  >
+                    Favorites
+                  </Link>
+                  <Link
+                    to="/dashboard"
+                    onClick={() => setIsOpen(false)}
+                    className="text-gray-600 hover:text-primary-600 font-medium"
+                  >
+                    Dashboard
+                  </Link>
+                  <Link
+                    to="/profile"
+                    onClick={() => setIsOpen(false)}
+                    className="text-gray-600 hover:text-primary-600 font-medium"
+                  >
+                    Profile
+                  </Link>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsOpen(false);
+                    }}
+                    className="text-red-600 font-medium text-left"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    onClick={() => setIsOpen(false)}
+                    className="text-gray-600 hover:text-primary-600 font-medium"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/register"
+                    onClick={() => setIsOpen(false)}
+                    className="bg-primary-600 text-white px-4 py-2 rounded-lg font-medium text-center"
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;

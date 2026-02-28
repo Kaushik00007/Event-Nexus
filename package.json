@@ -1,0 +1,26 @@
+{
+  "name": "college-event-aggregator",
+  "version": "1.0.0",
+  "description": "A full-stack College Event Aggregator Platform for discovering hackathons, coding contests, workshops, and campus events",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd backend && npm run dev",
+    "client": "cd frontend && npm run dev",
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "build": "cd frontend && npm run build"
+  },
+  "keywords": [
+    "events",
+    "college",
+    "hackathon",
+    "aggregator",
+    "campus"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+  }
+}
