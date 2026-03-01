@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 
-const PARTICLE_COUNT = 40; // Slightly reduced further for consistency
+const PARTICLE_COUNT = 40;
 
 const BackgroundParticles = () => {
     const canvasRef = useRef(null);
@@ -17,7 +17,6 @@ const BackgroundParticles = () => {
         particleColorRef.current = isDark ? 'rgba(99, 102, 241,' : 'rgba(56, 189, 248,';
     }, [theme]);
 
-    // Initialize canvas and particles only once
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
