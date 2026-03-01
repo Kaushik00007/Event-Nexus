@@ -1,3 +1,7 @@
+# NOTE: Deployment has moved to Railway (backend) + Vercel (frontend).
+# See backend/railway.json and frontend/vercel.json.
+# This file is kept for reference only.
+
 services:
   # Backend - Web Service
   - type: web
