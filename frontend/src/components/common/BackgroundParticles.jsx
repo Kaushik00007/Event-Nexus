@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 
-const PARTICLE_COUNT = 50; // Reduced from 100 for performance
+const PARTICLE_COUNT = 40;
 
 const BackgroundParticles = () => {
     const canvasRef = useRef(null);
@@ -12,11 +12,11 @@ const BackgroundParticles = () => {
 
     // Update particle color on theme change WITHOUT recreating canvas
     useEffect(() => {
+        // Direct DOM access for faster class check
         const isDark = document.documentElement.classList.contains('dark');
         particleColorRef.current = isDark ? 'rgba(99, 102, 241,' : 'rgba(56, 189, 248,';
     }, [theme]);
 
-    // Initialize canvas and particles only once
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
@@ -31,7 +31,13 @@ const BackgroundParticles = () => {
             canvas.height = h;
         };
 
-        window.addEventListener('resize', resizeCanvas, { passive: true });
+        let resizeTimeout;
+        const handleResize = () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(resizeCanvas, 100);
+        };
+
+        window.addEventListener('resize', handleResize, { passive: true });
         resizeCanvas();
 
         // Initialize particles
@@ -40,10 +46,10 @@ const BackgroundParticles = () => {
             particles.push({
                 x: Math.random() * w,
                 y: Math.random() * h,
-                size: Math.random() * 2 + 1,
-                speedX: Math.random() * 0.5 - 0.25,
-                speedY: Math.random() * 0.5 - 0.25,
-                opacity: Math.random() * 0.5 + 0.1,
+                size: Math.random() * 2 + 0.5,
+                speedX: Math.random() * 0.4 - 0.2,
+                speedY: Math.random() * 0.4 - 0.2,
+                opacity: Math.random() * 0.4 + 0.1,
             });
         }
         particlesRef.current = particles;
@@ -55,10 +61,12 @@ const BackgroundParticles = () => {
                 const p = particles[i];
                 p.x += p.speedX;
                 p.y += p.speedY;
-                if (p.x < 0 || p.x > w || p.y < 0 || p.y > h) {
-                    p.x = Math.random() * w;
-                    p.y = Math.random() * h;
-                }
+
+                if (p.x < 0) p.x = w;
+                else if (p.x > w) p.x = 0;
+                if (p.y < 0) p.y = h;
+                else if (p.y > h) p.y = 0;
+
                 ctx.fillStyle = `${color}${p.opacity})`;
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
@@ -70,7 +78,8 @@ const BackgroundParticles = () => {
         animationFrameRef.current = requestAnimationFrame(animate);
 
         return () => {
-            window.removeEventListener('resize', resizeCanvas);
+            window.removeEventListener('resize', handleResize);
+            clearTimeout(resizeTimeout);
             if (animationFrameRef.current) {
                 cancelAnimationFrame(animationFrameRef.current);
             }
@@ -80,9 +89,13 @@ const BackgroundParticles = () => {
     return (
         <canvas
             ref={canvasRef}
-            className={`fixed top-0 left-0 w-full h-full -z-10 pointer-events-none transition-opacity duration-700 ${theme === 'dark' ? 'opacity-100' : 'opacity-30'
+            className={`fixed top-0 left-0 w-full h-full -z-10 pointer-events-none transition-opacity duration-1000 ${theme === 'dark' ? 'opacity-100' : 'opacity-20'
                 }`}
-            style={{ background: 'transparent', willChange: 'opacity' }}
+            style={{
+                background: 'transparent',
+                willChange: 'opacity, transform',
+                transform: 'translateZ(0)'
+            }}
         />
     );
 };
