@@ -34,7 +34,7 @@ function App() {
   const shouldHideSidebar = hideSidebarRoutes.includes(location.pathname);
 
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <div className={`min-h-screen flex flex-col relative overflow-hidden ${!shouldHideSidebar ? 'pt-16' : ''}`}>
         <BackgroundParticles />
 
