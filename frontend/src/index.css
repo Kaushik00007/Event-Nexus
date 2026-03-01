@@ -8,11 +8,6 @@
   box-sizing: border-box;
 }
 
-
-
-
-
-
 :root {
   --bg-primary: #F8FAFC;
   --text-primary: #0F172A;
@@ -40,6 +35,12 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Prevent transitions during theme switching to avoid lag */
+.theme-switching,
+.theme-switching * {
+  transition: none !important;
 }
 
 /* Lenis smooth scrolling */
@@ -289,9 +290,9 @@ html.lenis {
   transform-origin: bottom center;
 }
 
-/* Smooth icon transitions */
+/* Smooth icon transitions - Optimized */
 .icon-transition {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, color 0.3s ease;
 }
 
 .icon-hover-scale:hover {
@@ -322,6 +323,7 @@ html.lenis {
 .card-hover {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   transform: translateZ(0);
+  will-change: transform, box-shadow;
 }
 
 .card-hover:hover {
@@ -358,7 +360,7 @@ html.lenis {
   border: 1px solid var(--glass-border);
   box-shadow: 0 4px 24px 0 var(--glass-shadow);
   transform: translateZ(0);
-  will-change: transform;
+  will-change: transform, box-shadow;
 }
 
 .glass-panel-premium:hover {
@@ -387,7 +389,7 @@ html.lenis {
   border-radius: 12px;
   font-weight: 700;
   font-size: 0.95rem;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -464,16 +466,16 @@ html.lenis {
 }
 
 .sidebar-item-hover {
-  transition: all 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 
 .sidebar-item-hover:hover {
   transform: translateX(2px);
 }
 
-/* Smooth transitions */
+/* Smooth transitions - Optimized */
 .transition-smooth {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Custom Search Styles */
@@ -608,7 +610,8 @@ html.lenis {
       rgba(0, 0, 0, 0) 50%,
       #f0abfc,
       rgba(0, 0, 0, 0) 58%);
-  transition: all 2s;
+  transition: transform 1.5s ease-in-out;
+  will-change: transform;
 }
 
 .custom-search-border {
@@ -637,7 +640,8 @@ html.lenis {
       var(--bg-primary) 50%,
       #d946ef 60%,
       var(--bg-primary) 64%);
-  transition: all 2s;
+  transition: transform 1.5s ease-in-out;
+  will-change: transform;
 }
 
 .custom-search-darkBorderBg {
@@ -663,7 +667,8 @@ html.lenis {
       rgba(0, 0, 0, 0) 50%,
       #a21caf,
       rgba(0, 0, 0, 0) 60%);
-  transition: all 2s;
+  transition: transform 1.5s ease-in-out;
+  will-change: transform;
 }
 
 #poda:hover>.custom-search-darkBorderBg::before {
@@ -728,7 +733,8 @@ html.lenis {
       var(--bg-primary) 50%,
       #d946ef 60%,
       var(--bg-primary) 87%);
-  transition: all 2s;
+  transition: transform 1.5s ease-in-out;
+  will-change: transform;
 }
 
 #filter-icon {
