@@ -25,10 +25,18 @@ export function ThemeProvider({
 
         const oldTheme = newTheme === "dark" ? "light" : "dark";
 
+        // Add transition-lock to prevent layout shifts/transitions during theme change
+        root.classList.add('theme-switching');
+
         // Use requestAnimationFrame to batch the DOM change
         requestAnimationFrame(() => {
             root.classList.remove(oldTheme);
             root.classList.add(newTheme);
+
+            // Remove the transition-lock after a short delay
+            setTimeout(() => {
+                root.classList.remove('theme-switching');
+            }, 300);
         });
     }, [theme]);
 
