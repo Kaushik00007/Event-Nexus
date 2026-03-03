@@ -995,11 +995,10 @@ const Admin = () => {
                             <button
                               onClick={() => handleToggleFeatured(event.id, event.title, event.featured)}
                               disabled={processing === event.id}
-                              className={`flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${
-                                event.featured
+                              className={`flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${event.featured
                                   ? 'bg-yellow-500 text-white hover:bg-yellow-600'
                                   : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-yellow-500 hover:text-white'
-                              }`}
+                                }`}
                             >
                               <Star className={`w-5 h-5 ${event.featured ? 'fill-current' : ''}`} />
                               {processing === event.id ? '...' : event.featured ? 'Featured' : 'Feature'}
@@ -1132,11 +1131,10 @@ const Admin = () => {
                             <button
                               onClick={() => handleToggleFeatured(event.id, event.title, event.featured)}
                               disabled={processing === event.id}
-                              className={`flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${
-                                event.featured
+                              className={`flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${event.featured
                                   ? 'bg-yellow-500 text-white hover:bg-yellow-600'
                                   : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-yellow-500 hover:text-white'
-                              }`}
+                                }`}
                             >
                               <Star className={`w-5 h-5 ${event.featured ? 'fill-current' : ''}`} />
                               {processing === event.id ? '...' : event.featured ? 'Featured' : 'Feature'}
@@ -2357,6 +2355,20 @@ const Admin = () => {
                         onChange={handleResourceFormChange}
                         className="w-full px-4 py-2.5 bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900 dark:text-white"
                         placeholder="https://example.com/logo.png"
+                      />
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-2">
+                        Tags <span className="text-xs font-normal text-slate-500">(comma-separated)</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="tags"
+                        value={resourceFormData.tags}
+                        onChange={handleResourceFormChange}
+                        className="w-full px-4 py-2.5 bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900 dark:text-white"
+                        placeholder="e.g., AI, Free, Tools"
                       />
                     </div>
                   </div>
