@@ -46,13 +46,13 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
         {/* Toggle Button */}
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="absolute -right-3 top-6 bg-white/80 border border-white/40 !rounded-full p-1.5 shadow-lg hover:scale-110 hover:bg-white/90 transition-transform"
+          className="absolute -right-3 top-6 bg-white/80 dark:bg-slate-800/90 border border-white/40 dark:border-white/10 !rounded-full p-1.5 shadow-lg hover:scale-110 hover:bg-white/90 dark:hover:bg-slate-700 transition-transform"
           aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           {isCollapsed ? (
-            <ChevronRight className="w-4 h-4 text-gray-600" />
+            <ChevronRight className="w-4 h-4 text-gray-600 dark:text-gray-300" />
           ) : (
-            <ChevronLeft className="w-4 h-4 text-gray-600" />
+            <ChevronLeft className="w-4 h-4 text-gray-600 dark:text-gray-300" />
           )}
         </button>
 
