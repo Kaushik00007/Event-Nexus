@@ -39,7 +39,7 @@ const IconSelect = ({
   };
 
   return (
-    <div ref={selectRef} className={`relative ${className}`}>
+    <div ref={selectRef} className={`relative ${isOpen ? 'z-[60]' : 'z-10'} ${className}`}>
       <div
         onClick={() => setIsOpen(!isOpen)}
         className="w-full px-4 py-3 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 cursor-pointer flex items-center justify-between transition-all"
@@ -62,20 +62,20 @@ const IconSelect = ({
       </div>
 
       {isOpen && (
-        <div className="absolute z-50 w-full mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl shadow-2xl max-h-60 overflow-auto backdrop-blur-xl transition-all animate-fadeIn">
+        <div className="absolute z-[100] w-full mt-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-white/10 rounded-xl shadow-2xl max-h-60 overflow-auto backdrop-blur-xl transition-all animate-fadeIn">
           {options.map((option) => (
             <div
               key={option.value}
               onClick={() => handleSelect(option.value)}
-              className={`px-4 py-3 cursor-pointer hover:bg-primary-50 dark:hover:bg-primary-900/20 flex items-center space-x-3 transition-colors ${value === option.value ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400' : 'text-slate-700 dark:text-gray-300'
+              className={`px-4 py-3 cursor-pointer hover:bg-primary-50 dark:hover:bg-white/5 flex items-center space-x-3 transition-colors ${value === option.value ? 'bg-primary-50 dark:bg-primary-500/10 text-primary-600 dark:text-primary-400' : 'text-slate-700 dark:text-gray-200'
                 }`}
             >
               {option.icon && (
-                <span className={`${value === option.value ? 'text-primary-600 dark:text-primary-400' : 'text-slate-400 dark:text-gray-500'}`}>
+                <span className={`${value === option.value ? 'text-primary-600 dark:text-primary-400' : 'text-slate-400 dark:text-gray-400'}`}>
                   {getIcon(option.icon)}
                 </span>
               )}
-              <span>{option.label}</span>
+              <span className="font-medium">{option.label}</span>
             </div>
           ))}
         </div>
