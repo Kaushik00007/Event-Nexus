@@ -800,6 +800,94 @@ html.lenis {
   }
 }
 
+/* ==========================================================
+   MOBILE UI OPTIMIZATION (Unstop Style)
+   ========================================================== */
+@media (max-width: 768px) {
+
+  /* Layout Spacing */
+  section {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    margin-bottom: 24px !important;
+  }
+
+  /* Padding Top for Fixed Navbar (including mobile search) */
+  .min-h-screen.flex-col.pt-16 {
+    padding-top: 130px !important;
+    /* Adjust if search bar height changes */
+  }
+
+  /* Hide Sidebar on Mobile */
+  aside,
+  .hidden.md\:block {
+    display: none !important;
+  }
+
+  /* Stacked Event Cards Grid */
+  .grid-cols-1,
+  .md\:grid-cols-2,
+  .lg\:grid-cols-3 {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Event Card Mobile Styles */
+  .glass-panel-premium.rounded-2xl {
+    border-radius: 16px !important;
+    width: 100% !important;
+  }
+
+  .glass-panel-premium .relative.h-56 {
+    height: 160px !important;
+  }
+
+  .glass-panel-premium .p-5 {
+    padding: 14px !important;
+  }
+
+  /* Hide Scrollbars */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Touch Friendly Elements */
+  button,
+  a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .glass-button-primary {
+    min-height: 44px !important;
+  }
+
+  /* Spacing between clickable elements */
+  .space-x-8>*+* {
+    margin-left: 12px !important;
+  }
+
+  /* Specific adjustment for Hero on mobile */
+  section.bg-gradient-to-br {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+    margin-top: -16px !important;
+    /* Pull up to navbar */
+  }
+
+  /* Hero text size */
+  h1.text-4xl {
+    font-size: 2.25rem !important;
+    line-height: 2.5rem !important;
+  }
+}
+
 #main {
   position: relative;
   width: 100%;

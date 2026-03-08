@@ -3,6 +3,8 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/layout/Navbar'
 import Sidebar from './components/layout/Sidebar'
 import Footer from './components/layout/Footer'
+import MobileDrawer from './components/layout/MobileDrawer'
+import MobileBottomNav from './components/layout/MobileBottomNav'
 import Home from './pages/Home'
 import Events from './pages/Events'
 import EventDetail from './pages/EventDetail'
@@ -28,6 +30,7 @@ import BackgroundParticles from './components/common/BackgroundParticles'
 function App() {
   useLenis();
   const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const location = useLocation();
   const hideSidebarRoutes = ['/login', '/register'];
@@ -38,9 +41,24 @@ function App() {
       <div className={`min-h-screen flex flex-col relative overflow-hidden ${!shouldHideSidebar ? 'pt-16' : ''}`}>
         <BackgroundParticles />
 
-        {!shouldHideSidebar && <Navbar isCollapsed={isCollapsed} />}
+        {!shouldHideSidebar && (
+          <Navbar
+            isCollapsed={isCollapsed}
+            onMenuClick={() => setIsDrawerOpen(true)}
+          />
+        )}
+
+        {!shouldHideSidebar && (
+          <MobileDrawer
+            isOpen={isDrawerOpen}
+            onClose={() => setIsDrawerOpen(false)}
+          />
+        )}
+
         <div className="flex flex-1">
-          {!shouldHideSidebar && <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />}
+          {!shouldHideSidebar && <div className="hidden md:block">
+            <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+          </div>}
           <main className={`flex-grow flex flex-col ${shouldHideSidebar ? 'w-full' : 'w-0'} z-10`}>
             <div className="flex-grow">
               <Routes>
@@ -90,6 +108,7 @@ function App() {
             {!shouldHideSidebar && <Footer />}
           </main>
         </div>
+        {!shouldHideSidebar && <MobileBottomNav />}
       </div>
     </ThemeProvider>
   );

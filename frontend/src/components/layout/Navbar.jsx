@@ -67,7 +67,7 @@ const InternalCustomSearch = ({ value, onChange, placeholder = "Search events...
   );
 };
 
-const Navbar = ({ isCollapsed }) => {
+const Navbar = ({ isCollapsed, onMenuClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
@@ -112,18 +112,28 @@ const Navbar = ({ isCollapsed }) => {
   };
 
   return (
-    <nav className="glass-navbar fixed top-0 left-0 w-full">
-      <div className="w-full pl-0 pr-4 sm:pr-6 lg:pr-8">
-        <div className="flex justify-between h-16 relative">
-          {/* Logo */}
-          <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-3">
+    <nav className="glass-navbar fixed top-0 left-0 w-full z-[1000]">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16 relative">
+          {/* Mobile Hamburger - Only Mobile */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={onMenuClick}
+              className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 rounded-full"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Logo - Centered on Mobile, Left on Desktop */}
+          <div className="flex items-center absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
+            <Link to="/" className="flex items-center space-x-2 md:space-x-3">
               <img
                 src="/logo.png"
                 alt="EventNexus Logo"
-                className="w-20 h-20 object-contain"
+                className="w-10 h-10 md:w-20 md:h-20 object-contain"
               />
-              <span className="text-xl font-bold gradient-text">EventNexus</span>
+              <span className="text-lg md:text-xl font-bold gradient-text">EventNexus</span>
             </Link>
           </div>
 
@@ -257,112 +267,24 @@ const Navbar = ({ isCollapsed }) => {
             )}
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile Search Icon - Only Mobile */}
           <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-600 hover:text-gray-900"
-            >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+            <Link to="/events" className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 rounded-full">
+              <Search className="w-6 h-6" />
+            </Link>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
-        {isOpen && (
-          <div className="md:hidden pb-4 animate-fadeIn">
-            <div className="flex flex-col space-y-4">
-              {showSearchBar && (
-                <form onSubmit={handleSearch} className="px-2 mb-2">
-                  <InternalCustomSearch
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search events..."
-                  />
-                </form>
-              )}
-
-
-              {isAuthenticated ? (
-                <>
-                  {user?.role === 'admin' && (
-                    <Link
-                      to="/admin"
-                      onClick={() => setIsOpen(false)}
-                      className="text-red-600 hover:text-red-700 font-semibold flex items-center space-x-2"
-                    >
-                      <Shield className="w-4 h-4" />
-                      <span>Admin Dashboard</span>
-                    </Link>
-                  )}
-                  <Link
-                    to="/notifications"
-                    onClick={() => setIsOpen(false)}
-                    className="text-gray-600 hover:text-primary-600 font-medium flex items-center space-x-2 relative"
-                  >
-                    <div className={`relative ${unreadCount > 0 ? 'animate-bell-ring' : ''}`}>
-                      <Bell
-                        className={`w-5 h-5 ${unreadCount > 0 ? 'text-red-600 fill-red-100' : ''}`}
-                      />
-                      {unreadCount > 0 && (
-                        <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                          {unreadCount > 9 ? '9+' : unreadCount}
-                        </span>
-                      )}
-                    </div>
-                    <span>Notifications {unreadCount > 0 && `(${unreadCount})`}</span>
-                  </Link>
-
-                  <Link
-                    to="/favorites"
-                    onClick={() => setIsOpen(false)}
-                    className="text-gray-600 hover:text-primary-600 font-medium"
-                  >
-                    Favorites
-                  </Link>
-                  <Link
-                    to="/dashboard"
-                    onClick={() => setIsOpen(false)}
-                    className="text-gray-600 hover:text-primary-600 font-medium"
-                  >
-                    Dashboard
-                  </Link>
-                  <Link
-                    to="/profile"
-                    onClick={() => setIsOpen(false)}
-                    className="text-gray-600 hover:text-primary-600 font-medium"
-                  >
-                    Profile
-                  </Link>
-                  <button
-                    onClick={() => {
-                      handleLogout();
-                      setIsOpen(false);
-                    }}
-                    className="text-red-600 font-medium text-left"
-                  >
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link
-                    to="/login"
-                    onClick={() => setIsOpen(false)}
-                    className="text-gray-600 hover:text-primary-600 font-medium"
-                  >
-                    Login
-                  </Link>
-                  <Link
-                    to="/register"
-                    onClick={() => setIsOpen(false)}
-                    className="bg-primary-600 text-white px-4 py-2 rounded-lg font-medium text-center"
-                  >
-                    Sign Up
-                  </Link>
-                </>
-              )}
-            </div>
+        {/* Mobile Search Bar - Appears below Navbar only on Home Page */}
+        {showSearchBar && (
+          <div className="md:hidden pb-4 px-2">
+            <form onSubmit={handleSearch}>
+              <InternalCustomSearch
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search events, workshops..."
+              />
+            </form>
           </div>
         )}
       </div>

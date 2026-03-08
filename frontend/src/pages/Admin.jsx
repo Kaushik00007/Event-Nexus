@@ -76,6 +76,16 @@ const Admin = () => {
     affiliated_to: '',
     status: 'active'
   });
+  // Event edit modal state
+  const [showEventModal, setShowEventModal] = useState(false);
+  const [editingEvent, setEditingEvent] = useState(null);
+  const [eventFormData, setEventFormData] = useState({
+    title: '', description: '', category: '', eventType: '', image: '',
+    dateStart: '', dateEnd: '', registrationDeadline: '',
+    venue: '', city: '', collegeName: '',
+    registrationLink: '', registrationFee: 0,
+    tags: '', requirements: ''
+  });
 
   useEffect(() => {
     if (!user || user.role !== 'admin') {
@@ -105,7 +115,7 @@ const Admin = () => {
 
   // Lock body scroll when modal is open
   useEffect(() => {
-    if (showCourseModal || showRejectModal || showResourceModal || showCollegeModal) {
+    if (showCourseModal || showRejectModal || showResourceModal || showCollegeModal || showEventModal) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
@@ -382,6 +392,75 @@ const Admin = () => {
   const copyCouponCode = (code) => {
     navigator.clipboard.writeText(code);
     toast.success('Coupon code copied to clipboard!');
+  };
+
+  // Event Edit Functions (Admin)
+  const openEventModal = (event) => {
+    setEditingEvent(event);
+    const safeDate = (val) => {
+      if (!val) return '';
+      try { return new Date(val).toISOString().slice(0, 16); } catch { return ''; }
+    };
+    setEventFormData({
+      title: event.title || '',
+      description: event.description || '',
+      category: event.category || '',
+      eventType: event.event_type || '',
+      image: event.image || '',
+      dateStart: safeDate(event.date),
+      dateEnd: safeDate(event.end_date),
+      registrationDeadline: safeDate(event.registration_deadline),
+      venue: event.venue || '',
+      city: event.city || '',
+      collegeName: event.college || '',
+      registrationLink: event.registration_link || '',
+      registrationFee: event.registration_fee ?? 0,
+      tags: Array.isArray(event.tags) ? event.tags.join(', ') : (event.tags || ''),
+      requirements: Array.isArray(event.requirements) ? event.requirements.join(', ') : (event.requirements || '')
+    });
+    setShowEventModal(true);
+  };
+
+  const closeEventModal = () => {
+    setShowEventModal(false);
+    setEditingEvent(null);
+  };
+
+  const handleEventFormChange = (e) => {
+    const { name, value } = e.target;
+    setEventFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleEventSubmit = async (e) => {
+    e.preventDefault();
+    if (!editingEvent) return;
+    try {
+      setProcessing(editingEvent.id);
+      const submitData = {
+        title: eventFormData.title,
+        description: eventFormData.description,
+        category: eventFormData.category,
+        eventType: eventFormData.eventType,
+        image: eventFormData.image || undefined,
+        date: { start: eventFormData.dateStart || undefined, end: eventFormData.dateEnd || undefined },
+        registrationDeadline: eventFormData.registrationDeadline || undefined,
+        location: { venue: eventFormData.venue, city: eventFormData.city },
+        college: { name: eventFormData.collegeName },
+        registration: { link: eventFormData.registrationLink, fee: Number(eventFormData.registrationFee) },
+        tags: eventFormData.tags ? eventFormData.tags.split(',').map(t => t.trim()).filter(Boolean) : [],
+        requirements: eventFormData.requirements ? eventFormData.requirements.split(',').map(r => r.trim()).filter(Boolean) : []
+      };
+      await eventService.updateEvent(editingEvent.id, submitData);
+      toast.success('Event updated successfully!');
+      closeEventModal();
+      await fetchPendingEvents();
+      await fetchScrapedEvents();
+    } catch (error) {
+      console.error('Error updating event:', error);
+      toast.error(error.response?.data?.message || 'Failed to update event');
+    } finally {
+      setProcessing(null);
+    }
   };
 
   // Resource Management Functions
@@ -905,13 +984,21 @@ const Admin = () => {
                             </button>
 
                             <button
+                              onClick={() => openEventModal(event)}
+                              disabled={processing === event.id}
+                              className="flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            >
+                              <Edit2 className="w-5 h-5" />
+                              Edit
+                            </button>
+
+                            <button
                               onClick={() => handleToggleFeatured(event.id, event.title, event.featured)}
                               disabled={processing === event.id}
-                              className={`flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${
-                                event.featured
+                              className={`flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${event.featured
                                   ? 'bg-yellow-500 text-white hover:bg-yellow-600'
                                   : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-yellow-500 hover:text-white'
-                              }`}
+                                }`}
                             >
                               <Star className={`w-5 h-5 ${event.featured ? 'fill-current' : ''}`} />
                               {processing === event.id ? '...' : event.featured ? 'Featured' : 'Feature'}
@@ -1033,13 +1120,21 @@ const Admin = () => {
                             </a>
 
                             <button
+                              onClick={() => openEventModal(event)}
+                              disabled={processing === event.id}
+                              className="flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            >
+                              <Edit2 className="w-5 h-5" />
+                              Edit
+                            </button>
+
+                            <button
                               onClick={() => handleToggleFeatured(event.id, event.title, event.featured)}
                               disabled={processing === event.id}
-                              className={`flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${
-                                event.featured
+                              className={`flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${event.featured
                                   ? 'bg-yellow-500 text-white hover:bg-yellow-600'
                                   : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-yellow-500 hover:text-white'
-                              }`}
+                                }`}
                             >
                               <Star className={`w-5 h-5 ${event.featured ? 'fill-current' : ''}`} />
                               {processing === event.id ? '...' : event.featured ? 'Featured' : 'Feature'}
@@ -1790,6 +1885,161 @@ const Admin = () => {
             </div>
           </div>
         )}
+        {/* Event Edit Modal */}
+        {showEventModal && editingEvent && (
+          <div
+            className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center z-50 overflow-hidden transition-all duration-300"
+            onMouseDown={(e) => { mouseDownRef.current = e.target; }}
+            onClick={(e) => {
+              if (e.target === e.currentTarget && mouseDownRef.current === e.currentTarget) {
+                closeEventModal();
+              }
+            }}
+            onWheel={(e) => e.stopPropagation()}
+          >
+            <div
+              className="glass-panel-premium max-w-3xl w-full mx-4 max-h-[85vh] flex flex-col overflow-hidden transform transition-all"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <form onSubmit={handleEventSubmit} className="flex flex-col h-full overflow-hidden">
+                <div className="px-6 py-4 border-b border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-white/5 flex-shrink-0">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Edit2 className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+                      <h3 className="text-2xl font-bold text-slate-950 dark:text-white">Edit Event</h3>
+                    </div>
+                    <button type="button" onClick={closeEventModal} className="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-all rounded-lg hover:bg-slate-100 dark:hover:bg-white/5">
+                      <X className="w-6 h-6" />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="p-6 overflow-y-auto flex-1 custom-scrollbar" onWheel={(e) => e.stopPropagation()}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-2">Title <span className="text-red-500">*</span></label>
+                      <input type="text" name="title" value={eventFormData.title} onChange={handleEventFormChange} required
+                        className="w-full px-4 py-2.5 bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-slate-900 dark:text-white" />
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-2">Description <span className="text-red-500">*</span></label>
+                      <textarea name="description" value={eventFormData.description} onChange={handleEventFormChange} required rows="3"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-slate-900 dark:text-white" />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-2">Category</label>
+                      <input type="text" name="category" value={eventFormData.category} onChange={handleEventFormChange}
+                        className="w-full px-4 py-2.5 bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-slate-900 dark:text-white"
+                        placeholder="e.g., Hackathon, Workshop" />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-2">Event Type</label>
+                      <select name="eventType" value={eventFormData.eventType} onChange={handleEventFormChange}
+                        className="w-full px-4 py-2.5 bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-slate-900 dark:text-white">
+                        <option value="" className="dark:bg-slate-900">Select type</option>
+                        <option value="online" className="dark:bg-slate-900">Online</option>
+                        <option value="offline" className="dark:bg-slate-900">Offline</option>
+                        <option value="hybrid" className="dark:bg-slate-900">Hybrid</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-2">Start Date &amp; Time</label>
+                      <input type="datetime-local" name="dateStart" value={eventFormData.dateStart} onChange={handleEventFormChange}
+                        className="w-full px-4 py-2.5 bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-slate-900 dark:text-white" />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-2">End Date &amp; Time</label>
+                      <input type="datetime-local" name="dateEnd" value={eventFormData.dateEnd} onChange={handleEventFormChange}
+                        className="w-full px-4 py-2.5 bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-slate-900 dark:text-white" />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-2">Registration Deadline</label>
+                      <input type="datetime-local" name="registrationDeadline" value={eventFormData.registrationDeadline} onChange={handleEventFormChange}
+                        className="w-full px-4 py-2.5 bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-slate-900 dark:text-white" />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-2">Venue</label>
+                      <input type="text" name="venue" value={eventFormData.venue} onChange={handleEventFormChange}
+                        className="w-full px-4 py-2.5 bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-slate-900 dark:text-white"
+                        placeholder="Venue / Hall name" />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-2">City</label>
+                      <input type="text" name="city" value={eventFormData.city} onChange={handleEventFormChange}
+                        className="w-full px-4 py-2.5 bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-slate-900 dark:text-white"
+                        placeholder="City" />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-2">Organiser / College</label>
+                      <input type="text" name="collegeName" value={eventFormData.collegeName} onChange={handleEventFormChange}
+                        className="w-full px-4 py-2.5 bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-slate-900 dark:text-white"
+                        placeholder="College / organisation name" />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-2">Registration Fee (₹)</label>
+                      <input type="number" name="registrationFee" value={eventFormData.registrationFee} onChange={handleEventFormChange} min="0"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-slate-900 dark:text-white" />
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-2">Registration Link</label>
+                      <input type="url" name="registrationLink" value={eventFormData.registrationLink} onChange={handleEventFormChange}
+                        className="w-full px-4 py-2.5 bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-slate-900 dark:text-white"
+                        placeholder="https://..." />
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-2">Image URL</label>
+                      <input type="url" name="image" value={eventFormData.image} onChange={handleEventFormChange}
+                        className="w-full px-4 py-2.5 bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-slate-900 dark:text-white"
+                        placeholder="https://..." />
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-2">Tags <span className="text-xs font-normal text-slate-500">(comma-separated)</span></label>
+                      <input type="text" name="tags" value={eventFormData.tags} onChange={handleEventFormChange}
+                        className="w-full px-4 py-2.5 bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-slate-900 dark:text-white"
+                        placeholder="e.g., AI, Machine Learning, Beginner" />
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-2">Requirements <span className="text-xs font-normal text-slate-500">(comma-separated)</span></label>
+                      <input type="text" name="requirements" value={eventFormData.requirements} onChange={handleEventFormChange}
+                        className="w-full px-4 py-2.5 bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-slate-900 dark:text-white"
+                        placeholder="e.g., Laptop, Team of 2-4" />
+                    </div>
+
+                  </div>
+                </div>
+
+                <div className="px-6 py-4 border-t border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-white/5 flex-shrink-0">
+                  <div className="flex gap-3">
+                    <button type="button" onClick={closeEventModal}
+                      className="flex-1 px-4 py-2 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-gray-400 rounded-lg hover:bg-slate-50 dark:hover:bg-white/5 transition-all font-bold">
+                      Cancel
+                    </button>
+                    <button type="submit" disabled={processing === editingEvent.id}
+                      className="flex-1 px-4 py-2 bg-indigo-600 dark:bg-indigo-500 text-white rounded-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 disabled:opacity-50 transition-all font-bold shadow-lg shadow-indigo-500/20">
+                      {processing === editingEvent.id ? 'Saving...' : 'Save Changes'}
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
         {/* Course Modal */}
         {showCourseModal && (
           <div
@@ -2105,6 +2355,20 @@ const Admin = () => {
                         onChange={handleResourceFormChange}
                         className="w-full px-4 py-2.5 bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900 dark:text-white"
                         placeholder="https://example.com/logo.png"
+                      />
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-2">
+                        Tags <span className="text-xs font-normal text-slate-500">(comma-separated)</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="tags"
+                        value={resourceFormData.tags}
+                        onChange={handleResourceFormChange}
+                        className="w-full px-4 py-2.5 bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900 dark:text-white"
+                        placeholder="e.g., AI, Free, Tools"
                       />
                     </div>
                   </div>

@@ -10,9 +10,7 @@ const BackgroundParticles = () => {
     const animationFrameRef = useRef(null);
     const particlesRef = useRef([]);
 
-    // Update particle color on theme change WITHOUT recreating canvas
     useEffect(() => {
-        // Direct DOM access for faster class check
         const isDark = document.documentElement.classList.contains('dark');
         particleColorRef.current = isDark ? 'rgba(99, 102, 241,' : 'rgba(56, 189, 248,';
     }, [theme]);

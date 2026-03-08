@@ -24,6 +24,7 @@ import FeaturedSection from '../components/events/FeaturedSection';
 import LocalEventsSection from '../components/events/LocalEventsSection';
 import CollegeSection from '../components/colleges/CollegeSection';
 import LightRays from '../components/common/LightRays';
+import MobileCategoryGrid from '../components/events/MobileCategoryGrid';
 import { CATEGORIES } from '../utils/constants';
 import * as collegeService from '../services/collegeService';
 import * as eventService from '../services/eventService';
@@ -206,6 +207,9 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Mobile Category Grid - Unstop Style */}
+      <MobileCategoryGrid />
 
       {/* Featured Section with Horizontal Scrolling */}
       {featuredLoading ? (

@@ -28,7 +28,7 @@ const EventFilters = ({ filters, setFilters, onSearch }) => {
   const hasActiveFilters = filters.category || filters.eventType || filters.city || filters.search;
 
   return (
-    <div className="glass-panel-premium p-6 mb-8">
+    <div className="glass-panel-premium p-6 mb-8 relative z-20">
       {/* Search Bar */}
       <form onSubmit={handleSearchSubmit} className="mb-6">
         <div className="relative">
@@ -85,47 +85,50 @@ const EventFilters = ({ filters, setFilters, onSearch }) => {
         {/* City */}
         <div>
           <label className="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-1.5">City</label>
-          <select
+          <IconSelect
             name="city"
             value={filters.city}
             onChange={handleChange}
-            className="w-full px-3 py-2 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all"
-          >
-            <option value="">All Cities</option>
-            {CITIES.map(city => (
-              <option key={city} value={city}>{city}</option>
-            ))}
-          </select>
+            options={[
+              { value: '', label: 'All Cities', icon: 'MapPin' },
+              ...CITIES.map(city => ({
+                value: city,
+                label: city,
+                icon: city === 'Online' ? 'Globe' : 'MapPin'
+              }))
+            ]}
+            placeholder="All Cities"
+          />
         </div>
 
         {/* Sort */}
         <div>
           <label className="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-1.5">Sort By</label>
-          <select
+          <IconSelect
             name="sort"
             value={filters.sort}
             onChange={handleChange}
-            className="w-full px-3 py-2 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all"
-          >
-            <option value="date">Date (Upcoming)</option>
-            <option value="latest">Latest Added</option>
-            <option value="popular">Most Popular</option>
-            <option value="favorites">Most Favorited</option>
-          </select>
+            options={[
+              { value: 'date', label: 'Date (Upcoming)', icon: 'Calendar' },
+              { value: 'latest', label: 'Latest Added', icon: 'Clock' },
+              { value: 'popular', label: 'Most Popular', icon: 'Zap' },
+              { value: 'favorites', label: 'Most Favorited', icon: 'Heart' }
+            ]}
+          />
         </div>
 
         {/* Upcoming Toggle */}
         <div>
           <label className="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-1.5">Show</label>
-          <select
+          <IconSelect
             name="upcoming"
             value={filters.upcoming}
             onChange={handleChange}
-            className="w-full px-3 py-2 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all"
-          >
-            <option value="true">Upcoming Events</option>
-            <option value="">All Events</option>
-          </select>
+            options={[
+              { value: 'true', label: 'Upcoming Events', icon: 'CalendarCheck' },
+              { value: '', label: 'All Events', icon: 'Eye' }
+            ]}
+          />
         </div>
       </div>
 

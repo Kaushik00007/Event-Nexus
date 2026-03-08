@@ -132,7 +132,7 @@ const FeaturedSection = ({ events = [] }) => {
           {/* Cards Container */}
           <div
             ref={scrollContainerRef}
-            className="flex overflow-x-auto gap-5 pb-6 hide-scrollbar"
+            className="flex overflow-x-auto gap-4 md:gap-5 pb-6 hide-scrollbar snap-x snap-mandatory"
             style={{
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
@@ -142,7 +142,7 @@ const FeaturedSection = ({ events = [] }) => {
             {displayEvents.map((item, idx) => (
               <div
                 key={`${item.id}-${idx}`}
-                className="flex-shrink-0 w-[280px] md:w-[320px] lg:w-[360px] h-[400px]"
+                className="flex-shrink-0 w-[260px] md:w-[320px] lg:w-[360px] h-[380px] md:h-[400px] snap-start"
               >
                 <EventCard event={item} formatDate={formatDate} />
               </div>
