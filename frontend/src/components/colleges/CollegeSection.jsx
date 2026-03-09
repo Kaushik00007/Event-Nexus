@@ -15,13 +15,13 @@ const CollegeSection = ({ colleges = [] }) => {
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-10">
           <div>
-            <div className="flex items-center space-x-3 mb-2">
-              <div className="h-1 w-12 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full"></div>
+            <div className="flex items-center space-x-4 mb-3">
+              <div className="h-8 lg:h-10 w-1 bg-gradient-to-b from-indigo-600 to-purple-600 rounded-full"></div>
               <h2 className="text-3xl lg:text-4xl font-bold text-slate-950 dark:text-white tracking-tight">
                 College Internal Events
               </h2>
             </div>
-            <p className="text-slate-600 dark:text-gray-400 ml-[60px] text-base font-medium">
+            <p className="text-slate-600 dark:text-gray-400 ml-5 text-base font-medium">
               Explore events happening at your institution
             </p>
           </div>
