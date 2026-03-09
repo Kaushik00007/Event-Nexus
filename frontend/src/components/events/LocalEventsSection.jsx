@@ -103,8 +103,8 @@ const LocalEventsSection = ({ events = [], city = '', onCityChange, loading = fa
     return (
       <section className="relative py-12 lg:py-20 bg-gradient-to-b from-white via-orange-50/30 to-white dark:from-slate-900/10 dark:via-orange-950/10 dark:to-slate-900/10 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="flex items-center space-x-3 mb-6">
-            <div className="h-1 w-12 bg-gradient-to-r from-orange-500 to-rose-500 rounded-full"></div>
+          <div className="flex items-center space-x-4 mb-6">
+            <div className="h-8 lg:h-10 w-1 bg-gradient-to-b from-orange-500 to-rose-500 rounded-full"></div>
             <h2 className="text-3xl lg:text-4xl font-bold text-slate-950 dark:text-white tracking-tight">
               Local Events Near You
             </h2>
