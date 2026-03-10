@@ -460,23 +460,36 @@ const EventDetail = () => {
         </div>
       </div>
 
-      {/* Floating Register Button for Mobile - Unstop Style */}
-      <div className="lg:hidden fixed bottom-6 left-0 right-0 z-[100] px-6 py-2 pointer-events-none">
+      {/* Floating Register Button for Mobile - Exact Unstop Style */}
+      <div className="lg:hidden fixed bottom-6 left-0 right-0 z-[100] px-6 pointer-events-none">
         <div className="max-w-md mx-auto relative pointer-events-auto">
-          {/* Countdown Badge */}
-          {event.registration_deadline && (
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-950 px-4 py-1.5 rounded-t-xl z-10 border-t border-x border-white/20">
-              <div className="flex items-center space-x-1.5 whitespace-nowrap">
-                <span className="text-orange-500 font-black text-sm">
-                  {Math.max(0, Math.ceil((new Date(event.registration_deadline) - new Date()) / (1000 * 60 * 60 * 24)))}
-                </span>
-                <span className="text-white text-[10px] font-bold uppercase tracking-wider">Days Left</span>
+          {/* Scooped Countdown Tab */}
+          {(() => {
+            const now = new Date();
+            const targetDate = event.registration_deadline ? new Date(event.registration_deadline) : new Date(event.date);
+            const daysLeft = Math.max(0, Math.ceil((targetDate - now) / (1000 * 60 * 60 * 24)));
+
+            return (
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full mb-[-1px] z-[0]">
+                <div className="relative bg-black px-5 py-1.5 rounded-t-2xl flex items-center justify-center space-x-1.5 whitespace-nowrap min-w-[120px]">
+                  {/* Left Scoop Curve */}
+                  <div className="absolute right-full bottom-0 w-4 h-4 overflow-hidden">
+                    <div className="absolute top-0 right-0 w-8 h-8 rounded-full border-4 border-black translate-x-1/2 translate-y-1/2"></div>
+                  </div>
+                  {/* Right Scoop Curve */}
+                  <div className="absolute left-full bottom-0 w-4 h-4 overflow-hidden">
+                    <div className="absolute top-0 left-0 w-8 h-8 rounded-full border-4 border-black -translate-x-1/2 translate-y-1/2"></div>
+                  </div>
+
+                  <span className="text-[#F97316] font-black text-sm">{daysLeft}</span>
+                  <span className="text-white text-[10px] font-bold uppercase tracking-wider">Days Left</span>
+                </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
 
           {/* Button Container (Outer Pill) */}
-          <div className="bg-white dark:bg-slate-900 p-1.5 rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-slate-200 dark:border-white/10">
+          <div className="bg-white dark:bg-slate-900 p-1.5 rounded-[40px] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.4)] border-2 border-slate-900/5 dark:border-white/10 relative z-10 transition-colors">
             {(() => {
               const registrationLink = event.registration_link;
               if (registrationLink && registrationLink.trim() !== '') {
@@ -485,7 +498,7 @@ const EventDetail = () => {
                     href={registrationLink.startsWith('http') ? registrationLink : `https://${registrationLink}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-14 items-center justify-center bg-[#0066DB] text-white rounded-[35px] font-bold text-lg uppercase tracking-widest hover:brightness-110 active:scale-[0.98] transition-all shadow-inner"
+                    className="flex h-14 items-center justify-center bg-[#0066DB] text-white rounded-[35px] font-bold text-lg hover:brightness-110 active:scale-[0.98] transition-all shadow-lg"
                   >
                     <span>Register</span>
                   </a>
