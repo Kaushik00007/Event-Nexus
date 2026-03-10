@@ -19,7 +19,10 @@ const FreeResources = () => {
   // Back to top button visibility
   useEffect(() => {
     const handleScroll = () => {
-      setShowBackToTop(window.scrollY > 400);
+      const scrollHeight = document.documentElement.scrollHeight;
+      const scrollPos = window.scrollY + window.innerHeight;
+      const threshold = scrollHeight - 600;
+      setShowBackToTop(scrollPos > threshold && window.scrollY > 400);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -119,8 +122,8 @@ const FreeResources = () => {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-6 py-2.5 rounded-lg font-bold transition-all ${activeTab === tab.id
-                    ? 'bg-white dark:bg-white/10 text-slate-950 dark:text-white shadow-sm'
-                    : 'text-slate-600 dark:text-gray-400 hover:text-slate-950 dark:hover:text-white'
+                  ? 'bg-white dark:bg-white/10 text-slate-950 dark:text-white shadow-sm'
+                  : 'text-slate-600 dark:text-gray-400 hover:text-slate-950 dark:hover:text-white'
                   }`}
               >
                 {tab.label}
@@ -240,9 +243,8 @@ const FreeResources = () => {
         {/* Back to Top Button */}
         <button
           onClick={scrollToTop}
-          className={`fixed bottom-8 right-8 p-3 bg-blue-600 dark:bg-blue-500 text-white rounded-full shadow-2xl hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-300 hover:scale-110 border-2 border-white dark:border-white/20 ${showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
+          className={`fixed bottom-24 md:bottom-8 right-6 md:right-8 p-3 bg-blue-600 dark:bg-blue-500 text-white rounded-full shadow-2xl hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-300 hover:scale-110 border-2 border-white dark:border-white/20 z-[9999] ${showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
             }`}
-          style={{ zIndex: 9999 }}
           aria-label="Back to top"
         >
           <ArrowUp className="w-6 h-6" />
