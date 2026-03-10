@@ -108,7 +108,7 @@ function App() {
             {!shouldHideSidebar && <Footer />}
           </main>
         </div>
-        {!shouldHideSidebar && <MobileBottomNav />}
+        {!shouldHideSidebar && !location.pathname.startsWith('/events') && <MobileBottomNav />}
       </div>
     </ThemeProvider>
   );
