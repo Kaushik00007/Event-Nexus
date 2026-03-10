@@ -102,7 +102,10 @@ const Admin = () => {
   // Back to top button visibility
   useEffect(() => {
     const handleScroll = () => {
-      setShowBackToTop(window.scrollY > 400);
+      const scrollHeight = document.documentElement.scrollHeight;
+      const scrollPos = window.scrollY + window.innerHeight;
+      const threshold = scrollHeight - 600;
+      setShowBackToTop(scrollPos > threshold && window.scrollY > 400);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -996,8 +999,8 @@ const Admin = () => {
                               onClick={() => handleToggleFeatured(event.id, event.title, event.featured)}
                               disabled={processing === event.id}
                               className={`flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${event.featured
-                                  ? 'bg-yellow-500 text-white hover:bg-yellow-600'
-                                  : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-yellow-500 hover:text-white'
+                                ? 'bg-yellow-500 text-white hover:bg-yellow-600'
+                                : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-yellow-500 hover:text-white'
                                 }`}
                             >
                               <Star className={`w-5 h-5 ${event.featured ? 'fill-current' : ''}`} />
@@ -1132,8 +1135,8 @@ const Admin = () => {
                               onClick={() => handleToggleFeatured(event.id, event.title, event.featured)}
                               disabled={processing === event.id}
                               className={`flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${event.featured
-                                  ? 'bg-yellow-500 text-white hover:bg-yellow-600'
-                                  : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-yellow-500 hover:text-white'
+                                ? 'bg-yellow-500 text-white hover:bg-yellow-600'
+                                : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-yellow-500 hover:text-white'
                                 }`}
                             >
                               <Star className={`w-5 h-5 ${event.featured ? 'fill-current' : ''}`} />
@@ -2399,9 +2402,8 @@ const Admin = () => {
         {/* Back to Top Button */}
         <button
           onClick={scrollToTop}
-          className={`fixed bottom-8 right-8 p-4 bg-primary-600 dark:bg-primary-500 text-white rounded-full shadow-2xl hover:bg-primary-700 dark:hover:bg-primary-600 transition-all duration-300 hover:scale-110 border-2 border-white dark:border-white/20 group ${showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
+          className={`fixed bottom-24 md:bottom-8 right-6 md:right-8 p-4 bg-primary-600 dark:bg-primary-500 text-white rounded-full shadow-2xl hover:bg-primary-700 dark:hover:bg-primary-600 transition-all duration-300 hover:scale-110 border-2 border-white dark:border-white/20 group z-[9999] ${showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
             }`}
-          style={{ zIndex: 9999 }}
           aria-label="Back to top"
         >
           <ArrowUp className="w-6 h-6 group-hover:-translate-y-1 transition-transform" />
