@@ -29,7 +29,10 @@ const Dashboard = () => {
   // Back to top button visibility
   useEffect(() => {
     const handleScroll = () => {
-      setShowBackToTop(window.scrollY > 400);
+      const scrollHeight = document.documentElement.scrollHeight;
+      const scrollPos = window.scrollY + window.innerHeight;
+      const threshold = scrollHeight - 600;
+      setShowBackToTop(scrollPos > threshold && window.scrollY > 400);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -234,9 +237,8 @@ const Dashboard = () => {
       {/* Back to Top Button */}
       <button
         onClick={scrollToTop}
-        className={`fixed bottom-8 right-8 p-3 bg-blue-600 text-white rounded-full shadow-2xl hover:bg-blue-700 transition-all duration-300 hover:scale-110 border-2 border-white ${showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
+        className={`fixed bottom-24 md:bottom-8 right-6 md:right-8 p-3 bg-blue-600 text-white rounded-full shadow-2xl hover:bg-blue-700 transition-all duration-300 hover:scale-110 border-2 border-white z-[9999] ${showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
           }`}
-        style={{ zIndex: 9999 }}
         aria-label="Back to top"
       >
         <ArrowUp className="w-6 h-6" />
