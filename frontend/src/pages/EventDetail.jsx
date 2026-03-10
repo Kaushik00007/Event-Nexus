@@ -460,21 +460,23 @@ const EventDetail = () => {
         </div>
       </div>
 
-      {/* Floating Register Button for Mobile - Shifted above bottom nav */}
-      <div className="lg:hidden fixed bottom-[72px] left-0 right-0 z-[100] px-4 py-4 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-t border-slate-100 dark:border-white/10 shadow-[0_-15px_40px_-15px_rgba(0,0,0,0.15)] animate-fadeIn">
-        <div className="max-w-md mx-auto flex items-center justify-between gap-4">
-          <div className="flex-shrink-0">
-            <p className="text-[10px] text-slate-500 dark:text-gray-400 uppercase font-bold tracking-wider">Registration</p>
-            {event.registration_fee > 0 ? (
-              <p className="text-lg font-black text-slate-950 dark:text-white">
-                {formatCurrency(event.registration_fee)}
-              </p>
-            ) : (
-              <p className="text-lg font-bold text-green-600 dark:text-green-400">FREE</p>
-            )}
-          </div>
+      {/* Floating Register Button for Mobile - Unstop Style */}
+      <div className="lg:hidden fixed bottom-6 left-0 right-0 z-[100] px-6 py-2 pointer-events-none">
+        <div className="max-w-md mx-auto relative pointer-events-auto">
+          {/* Countdown Badge */}
+          {event.registration_deadline && (
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-950 px-4 py-1.5 rounded-t-xl z-10 border-t border-x border-white/20">
+              <div className="flex items-center space-x-1.5 whitespace-nowrap">
+                <span className="text-orange-500 font-black text-sm">
+                  {Math.max(0, Math.ceil((new Date(event.registration_deadline) - new Date()) / (1000 * 60 * 60 * 24)))}
+                </span>
+                <span className="text-white text-[10px] font-bold uppercase tracking-wider">Days Left</span>
+              </div>
+            </div>
+          )}
 
-          <div className="flex-1">
+          {/* Button Container (Outer Pill) */}
+          <div className="bg-white dark:bg-slate-900 p-1.5 rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-slate-200 dark:border-white/10">
             {(() => {
               const registrationLink = event.registration_link;
               if (registrationLink && registrationLink.trim() !== '') {
@@ -483,15 +485,14 @@ const EventDetail = () => {
                     href={registrationLink.startsWith('http') ? registrationLink : `https://${registrationLink}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full h-14 flex items-center justify-center space-x-2 bg-blue-600 dark:bg-blue-500 text-white rounded-2xl font-bold hover:bg-blue-700 transition-all shadow-lg active:scale-[0.98]"
+                    className="flex h-14 items-center justify-center bg-[#0066DB] text-white rounded-[35px] font-bold text-lg uppercase tracking-widest hover:brightness-110 active:scale-[0.98] transition-all shadow-inner"
                   >
-                    <span className="text-base uppercase tracking-wide">Register Now</span>
-                    <ExternalLink className="w-5 h-5" />
+                    <span>Register</span>
                   </a>
                 );
               }
               return (
-                <button className="w-full h-14 bg-slate-200 dark:bg-white/10 text-slate-500 dark:text-gray-400 rounded-2xl font-bold cursor-not-allowed">
+                <button className="w-full h-14 bg-slate-200 dark:bg-white/10 text-slate-500 dark:text-gray-400 rounded-[35px] font-bold cursor-not-allowed">
                   Not Available
                 </button>
               );
