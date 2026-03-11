@@ -111,10 +111,10 @@ function App() {
                 } />
               </Routes>
             </div>
-            {!shouldHideSidebar && !location.pathname.startsWith('/events') && <Footer />}
+            {!shouldHideSidebar && location.pathname === '/' && <Footer />}
           </main>
         </div>
-        {!shouldHideSidebar && !location.pathname.startsWith('/events') && <MobileBottomNav />}
+        {!shouldHideSidebar && location.pathname === '/' && <MobileBottomNav />}
       </div>
     </ThemeProvider>
   );
