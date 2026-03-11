@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Search, Building2, AlertCircle } from 'lucide-react';
 import * as collegeService from '../services/collegeService';
-import CollegeCard from '../components/colleges/CollegeCard';
+import { CollegeCard } from '../components/colleges/CollegeSection';
 import EventCardSkeleton from '../components/common/EventCardSkeleton';
 
 const Colleges = () => {
@@ -15,7 +15,8 @@ const Colleges = () => {
       setLoading(true);
       try {
         const response = await collegeService.getCollegesWithEvents();
-        setColleges(response?.data || []);
+        console.log('🏛️ Colleges Page - Fetched:', response);
+        setColleges(response?.data || response || []);
       } catch (err) {
         console.error('❌ Error fetching colleges:', err);
         setError('Failed to load colleges. Please try again later.');
