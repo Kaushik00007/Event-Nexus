@@ -12,7 +12,8 @@ import {
   ChevronRight,
   User,
   Shield,
-  Gift
+  Gift,
+  Building2
 } from 'lucide-react';
 
 const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
@@ -22,6 +23,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
   const navigationItems = [
     { name: 'Home', path: '/', icon: Home },
     { name: 'Events', path: '/events', icon: Calendar },
+    { name: 'Colleges', path: '/colleges', icon: Building2 },
     { name: 'Courses', path: '/courses', icon: BookOpen },
     { name: 'Free Resources', path: '/free-resources', icon: Gift },
   ];
