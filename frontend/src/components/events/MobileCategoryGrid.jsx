@@ -26,17 +26,17 @@ const MobileCategoryGrid = () => {
 
     return (
         <div className="md:hidden mt-8 mb-12">
-            <div className="grid grid-cols-4 gap-3 px-4">
+            <div className="grid grid-cols-3 gap-3 px-4 justify-center">
                 {categories.map((category) => (
                     <button
                         key={category.name}
                         onClick={() => navigate(category.path)}
-                        className="flex flex-col items-center group active:scale-95 transition-transform"
+                        className="flex flex-col items-center justify-center h-[80px] rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-md border border-white/20 dark:border-white/5 active:scale-95 transition-all shadow-sm gap-1.5"
                     >
-                        <div className={`w-full aspect-square rounded-2xl ${category.color} flex items-center justify-center shadow-sm border border-black/5 dark:border-white/5`}>
-                            <category.icon className="w-7 h-7" />
+                        <div className={`p-2 rounded-xl ${category.color}`}>
+                            <category.icon className="w-6 h-6" />
                         </div>
-                        <span className="text-[10px] font-bold mt-2 text-gray-600 dark:text-gray-400 capitalize whitespace-nowrap overflow-hidden text-ellipsis w-full text-center">
+                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300 capitalize text-center px-1">
                             {category.name}
                         </span>
                     </button>

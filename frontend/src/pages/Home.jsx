@@ -15,7 +15,8 @@ import {
   Mic,
   Monitor,
   Rocket,
-  Globe
+  Globe,
+  Lightbulb
 } from 'lucide-react';
 import { useEvents } from '../context/EventContext';
 import EventCard from '../components/events/EventCard';
@@ -24,7 +25,6 @@ import FeaturedSection from '../components/events/FeaturedSection';
 import LocalEventsSection from '../components/events/LocalEventsSection';
 import CollegeSection from '../components/colleges/CollegeSection';
 import LightRays from '../components/common/LightRays';
-import MobileCategoryGrid from '../components/events/MobileCategoryGrid';
 import { CATEGORIES } from '../utils/constants';
 import * as collegeService from '../services/collegeService';
 import * as eventService from '../services/eventService';
@@ -128,7 +128,10 @@ const Home = () => {
   // Back to top button visibility
   useEffect(() => {
     const handleScroll = () => {
-      setShowBackToTop(window.scrollY > 400);
+      const scrollHeight = document.documentElement.scrollHeight;
+      const scrollPos = window.scrollY + window.innerHeight;
+      const threshold = scrollHeight - 800; // Show when nearing the bottom/footer
+      setShowBackToTop(scrollPos > threshold && window.scrollY > 400);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -203,13 +206,20 @@ const Home = () => {
                 <Globe className="w-4 h-4" />
                 Online Events
               </Link>
+              <Link to="/courses" className="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-full text-sm font-medium transition-colors flex items-center gap-2">
+                <BookOpen className="w-4 h-4" />
+                Courses
+              </Link>
+              <Link to="/free-resources" className="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-full text-sm font-medium transition-colors flex items-center gap-2">
+                <Lightbulb className="w-4 h-4" />
+                Resources
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Mobile Category Grid - Unstop Style */}
-      <MobileCategoryGrid />
+
 
       {/* Featured Section with Horizontal Scrolling */}
       {featuredLoading ? (
@@ -356,9 +366,8 @@ const Home = () => {
       {/* Back to Top Button */}
       <button
         onClick={scrollToTop}
-        className={`fixed bottom-8 right-8 p-3 bg-blue-600 text-white rounded-full shadow-2xl hover:bg-blue-700 transition-all duration-300 hover:scale-110 border-2 border-white group ${showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
+        className={`fixed bottom-24 md:bottom-8 right-6 md:right-8 p-3 bg-blue-600 text-white rounded-full shadow-2xl hover:bg-blue-700 transition-all duration-300 hover:scale-110 border-2 border-white group z-[9999] ${showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
           }`}
-        style={{ zIndex: 9999 }}
         aria-label="Back to top"
       >
         <ArrowUp className="w-6 h-6 icon-transition group-hover:-translate-y-1" />

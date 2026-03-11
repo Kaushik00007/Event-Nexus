@@ -46,6 +46,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/colleges" className="text-gray-400 hover:text-white transition-colors">
+                  Participating Colleges
+                </Link>
+              </li>
+              <li>
                 <Link to="/events?category=hackathon" className="text-gray-400 hover:text-white transition-colors">
                   Hackathons
                 </Link>

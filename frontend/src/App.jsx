@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/layout/Navbar'
 import Sidebar from './components/layout/Sidebar'
@@ -21,6 +21,7 @@ import Competitions from './pages/Competitions'
 import Courses from './pages/Courses'
 import FreeResources from './pages/FreeResources'
 import CollegeEvents from './pages/CollegeEvents'
+import Colleges from './pages/Colleges'
 import PrivateRoute from './components/auth/PrivateRoute'
 import { useLenis } from './hooks/useLenis'
 
@@ -35,6 +36,11 @@ function App() {
   const location = useLocation();
   const hideSidebarRoutes = ['/login', '/register'];
   const shouldHideSidebar = hideSidebarRoutes.includes(location.pathname);
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
@@ -63,7 +69,7 @@ function App() {
             <div className="flex-grow">
               <Routes>
                 <Route path="/" element={<Home />} />
-                {/* ... other routes remain same ... */}
+                <Route path="/colleges" element={<Colleges />} />
                 <Route path="/events" element={<Events />} />
                 <Route path="/events/:id" element={<EventDetail />} />
                 <Route path="/colleges/:id/events" element={<CollegeEvents />} />
@@ -105,10 +111,10 @@ function App() {
                 } />
               </Routes>
             </div>
-            {!shouldHideSidebar && <Footer />}
+            {!shouldHideSidebar && !location.pathname.startsWith('/events') && <Footer />}
           </main>
         </div>
-        {!shouldHideSidebar && <MobileBottomNav />}
+        {!shouldHideSidebar && !location.pathname.startsWith('/events') && <MobileBottomNav />}
       </div>
     </ThemeProvider>
   );
