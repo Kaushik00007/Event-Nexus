@@ -97,12 +97,12 @@ const CollegeEvents = () => {
               alt={college.name}
               className="w-full h-full object-cover scale-110"
             />
-            <div className="absolute inset-0 backdrop-blur-2xl bg-gradient-to-br from-indigo-900/70 via-purple-900/70 to-blue-900/70"></div>
+            <div className="absolute inset-0 backdrop-blur-2xl bg-[#020617]/70 bg-[linear-gradient(110deg,_#3b82f6_0%,_#1e3a8a_30%,_#020617_70%),_radial-gradient(circle_at_90%_20%,_#8b5cf6_0%,_transparent_50%)]"></div>
           </div>
         )}
         {/* Fallback gradient if no logo */}
         {!college.logo && (
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-600"></div>
+          <div className="absolute inset-0 bg-[#020617] bg-[linear-gradient(110deg,_#3b82f6_0%,_#1e3a8a_30%,_#020617_70%),_radial-gradient(circle_at_90%_20%,_#8b5cf6_0%,_transparent_50%)]"></div>
         )}
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
