@@ -13,25 +13,32 @@ const FeaturedSection = ({ events = [] }) => {
   const [isPaused, setIsPaused] = useState(false);
   const animationFrameRef = useRef(null);
 
-  // Optimized auto-scroll using requestAnimationFrame
+  // Optimized auto-scroll using requestAnimationFrame with delta-time for consistent speed
   useEffect(() => {
-    if (isPaused || !scrollContainerRef.current) return;
+    if (isPaused || !scrollContainerRef.current || events.length === 0) return;
 
     const container = scrollContainerRef.current;
-    const scrollSpeed = 0.8; // pixels per frame for smooth motion
+    let lastTimestamp = performance.now();
+    const scrollSpeed = 50; // pixels per second for frame-independent speed
 
-    const autoScroll = () => {
-      if (container) {
-        const { scrollLeft, scrollWidth, clientWidth } = container;
+    const autoScroll = (timestamp) => {
+      if (!container) return;
 
-        // Check if near the end
-        if (scrollLeft + clientWidth >= scrollWidth - 5) {
-          // Instantly reset to start for seamless loop
-          container.scrollLeft = 0;
-        } else {
-          // Smooth continuous scroll
-          container.scrollLeft += scrollSpeed;
-        }
+      const deltaTime = (timestamp - lastTimestamp) / 1000;
+      lastTimestamp = timestamp;
+
+      // Calculate new scroll position
+      const moveAmount = scrollSpeed * deltaTime;
+      container.scrollLeft += moveAmount;
+
+      // Seamless loop logic
+      const { scrollLeft, scrollWidth, clientWidth } = container;
+      // When we've scrolled past the first set of duplicated items, jump back to maintain "infinite" feel
+      // We have [events, events, events]. Total width is 3 * singleSetWidth.
+      const singleSetWidth = scrollWidth / 3;
+      
+      if (scrollLeft >= singleSetWidth * 2) {
+        container.scrollLeft = scrollLeft - singleSetWidth;
       }
 
       animationFrameRef.current = requestAnimationFrame(autoScroll);
@@ -44,7 +51,7 @@ const FeaturedSection = ({ events = [] }) => {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [isPaused]);
+  }, [isPaused, events.length]);
 
   if (!events || events.length === 0) {
     return (
@@ -132,7 +139,7 @@ const FeaturedSection = ({ events = [] }) => {
           {/* Cards Container */}
           <div
             ref={scrollContainerRef}
-            className="flex overflow-x-auto gap-4 md:gap-5 pb-6 hide-scrollbar snap-x snap-mandatory"
+            className="flex overflow-x-auto gap-4 md:gap-5 pb-6 hide-scrollbar"
             style={{
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
