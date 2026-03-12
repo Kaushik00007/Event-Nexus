@@ -10,7 +10,7 @@ export const CollegeCard = ({ college }) => {
       className="group flex flex-col w-full aspect-[4/5] sm:aspect-auto glass-panel-premium rounded-xl sm:rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
     >
       {/* College Logo/Header */}
-      <div className="relative h-28 sm:h-36 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 overflow-hidden flex-shrink-0">
+      <div className="relative h-28 sm:h-36 bg-[#020617] bg-[linear-gradient(110deg,_#3b82f6_0%,_#1e3a8a_25%,_#020617_60%),_radial-gradient(circle_at_90%_20%,_#8b5cf6_0%,_transparent_40%)] overflow-hidden flex-shrink-0">
         {college.logo ? (
           <div className="w-full h-full flex items-center justify-center p-3 sm:p-6 bg-white/10 backdrop-blur-sm">
             <img
