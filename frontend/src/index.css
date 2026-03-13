@@ -337,6 +337,9 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    display: inline-block;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.05));
+    width: fit-content;
   }
 
   /* Gradient background */
@@ -376,7 +379,7 @@
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--glass-border);
     box-shadow: 0 2px 15px 0 var(--glass-shadow);
-    z-index: 1000;
+    z-index: 1100 !important;
     transform: translateZ(0);
     will-change: transform;
   }
