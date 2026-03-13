@@ -275,7 +275,7 @@ const Navbar = ({ isCollapsed, onMenuClick }) => {
 
         {/* Mobile Search Bar - Appears below Navbar only on Home Page */}
         {showSearchBar && (
-          <div className="md:hidden pb-4 px-2">
+          <div className="md:hidden pb-2 px-2">
             <form onSubmit={handleSearch}>
               <InternalCustomSearch
                 value={searchQuery}
