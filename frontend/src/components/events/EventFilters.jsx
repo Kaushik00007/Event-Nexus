@@ -33,8 +33,10 @@ const EventFilters = ({ filters, setFilters, onSearch }) => {
   return (
     <div className="glass-panel-premium p-4 sm:p-6 mb-6 sm:mb-8 relative z-20">
       {/* Search Bar & Mobile Toggle */}
+      {/* Search Bar & Mobile Toggle */}
       <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-0 sm:mb-6">
-        <form onSubmit={handleSearchSubmit} className="flex-grow">
+        {/* Desktop Search Bar */}
+        <form onSubmit={handleSearchSubmit} className="flex-grow hidden md:block">
           <div className="relative">
             <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 dark:text-gray-500 w-5 h-5" />
             <input
@@ -43,32 +45,74 @@ const EventFilters = ({ filters, setFilters, onSearch }) => {
               value={filters.search}
               onChange={handleChange}
               placeholder="Search events, hackathons..."
-              className="w-full pl-11 pr-20 sm:pr-24 py-3 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all text-sm sm:text-base"
+              className="w-full pl-11 pr-24 py-3 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all text-sm sm:text-base shadow-sm"
             />
             <button
               type="submit"
-              className="absolute right-1.5 top-1/2 transform -translate-y-1/2 bg-primary-600 dark:bg-primary-500 text-white px-3 sm:px-4 py-1.5 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors shadow-lg shadow-primary-500/20 text-xs sm:text-sm font-bold"
+              className="absolute right-1.5 top-1/2 transform -translate-y-1/2 bg-primary-600 dark:bg-primary-500 text-white px-4 py-1.5 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors shadow-lg shadow-primary-500/20 text-sm font-bold"
             >
               Search
             </button>
           </div>
         </form>
 
-        {/* Mobile Filter Toggle */}
-        <button
-          onClick={() => setIsExpanded(!isExpanded)}
-          className={`flex items-center justify-center space-x-2 px-4 py-3 rounded-xl border transition-all md:hidden ${
-            isExpanded 
-              ? 'bg-primary-600 border-primary-600 text-white shadow-lg' 
-              : 'bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-700 dark:text-gray-300'
-          }`}
-        >
-          <Filter className={`w-5 h-5 ${isExpanded ? 'animate-pulse' : ''}`} />
-          <span className="font-bold text-sm">{isExpanded ? 'Hide Filters' : 'Show Filters'}</span>
-          {hasActiveFilters && !isExpanded && (
-            <span className="flex h-2 w-2 rounded-full bg-red-500 animate-pulse"></span>
-          )}
-        </button>
+        {/* Mobile Custom Search with Integrated Filter */}
+        <div className="md:hidden w-full">
+          <div className="custom-search-container !min-h-[50px]">
+            <div id="poda">
+              <div className="custom-search-glow"></div>
+              <div className="custom-search-darkBorderBg"></div>
+              <div className="custom-search-darkBorderBg"></div>
+              <div className="custom-search-darkBorderBg"></div>
+              <div className="custom-search-white"></div>
+              <div className="custom-search-border"></div>
+              <div id="main">
+                <form onSubmit={handleSearchSubmit}>
+                  <input
+                    placeholder="Search events..."
+                    type="text"
+                    name="search"
+                    className="custom-search-input"
+                    value={filters.search}
+                    onChange={handleChange}
+                  />
+                </form>
+                <div id="input-mask"></div>
+                <div id="pink-mask"></div>
+                <div className="filterBorder"></div>
+                <button 
+                  id="filter-icon"
+                  type="button"
+                  onClick={() => setIsExpanded(!isExpanded)}
+                  className={`${isExpanded ? 'bg-primary-100 dark:bg-primary-500/20' : ''} transition-colors`}
+                >
+                  <svg preserveAspectRatio="none" height={20} width={20} viewBox="4.8 4.56 14.832 15.408" fill="none">
+                    <path d="M8.16 6.65002H15.83C16.47 6.65002 16.99 7.17002 16.99 7.81002V9.09002C16.99 9.56002 16.7 10.14 16.41 10.43L13.91 12.64C13.56 12.93 13.33 13.51 13.33 13.98V16.48C13.33 16.83 13.1 17.29 12.81 17.47L12 17.98C11.24 18.45 10.2 17.92 10.2 16.99V13.91C10.2 13.5 9.97 12.98 9.73 12.69L7.52 10.36C7.23 10.08 7 9.55002 7 9.20002V7.87002C7 7.17002 7.52 6.65002 8.16 6.65002Z" stroke="currentColor" className={`${isExpanded ? 'text-primary-600 dark:text-primary-400' : 'text-slate-600 dark:text-gray-400'}`} strokeWidth={1} strokeMiterlimit={10} strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  {hasActiveFilters && !isExpanded && (
+                    <span className="absolute top-1 right-1 flex h-2 w-2 rounded-full bg-red-500"></span>
+                  )}
+                </button>
+                <div id="search-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width={20} viewBox="0 0 24 24" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" height={20} fill="none" className="feather feather-search">
+                    <circle stroke="url(#search_filter)" r={8} cy={11} cx={11} />
+                    <line stroke="url(#searchl_filter)" y2="16.65" y1={22} x2="16.65" x1={22} />
+                    <defs>
+                      <linearGradient gradientTransform="rotate(50)" id="search_filter">
+                        <stop stopColor="#0ea5e9" offset="0%" />
+                        <stop stopColor="#d946ef" offset="100%" />
+                      </linearGradient>
+                      <linearGradient id="searchl_filter">
+                        <stop stopColor="#0ea5e9" offset="0%" />
+                        <stop stopColor="#d946ef" offset="100%" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Filters Grid - Desktop Always Visible, Mobile Toggleable */}
