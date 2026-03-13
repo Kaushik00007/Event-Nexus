@@ -390,6 +390,17 @@
     z-index: 1100 !important;
     transform: translateZ(0);
     will-change: transform;
+    transition: background-color 0.3s ease;
+  }
+
+  .mobile-navbar-opaque {
+    background-color: var(--bg-primary) !important;
+  }
+
+  @media (min-width: 768px) {
+    .mobile-navbar-glass {
+      background: var(--glass-bg) !important;
+    }
   }
 
   /* Premium Button with glass effect - Dark version for Light cards */
