@@ -342,6 +342,14 @@
     width: fit-content;
   }
 
+  .gradient-text-hero {
+    background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+  }
+
   /* Gradient background */
   .gradient-bg {
     background: linear-gradient(135deg, #6366f1 0%, #38bdf8 100%);
