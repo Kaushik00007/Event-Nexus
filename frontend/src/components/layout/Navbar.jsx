@@ -112,7 +112,7 @@ const Navbar = ({ isCollapsed, onMenuClick }) => {
   };
 
   return (
-    <nav className="glass-navbar fixed top-0 left-0 w-full z-[1000]">
+    <nav className="glass-navbar fixed top-0 left-0 w-full z-[1000] mobile-navbar-opaque md:mobile-navbar-glass">
       <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 relative">
           {/* Mobile Hamburger - Only Mobile */}
@@ -133,7 +133,7 @@ const Navbar = ({ isCollapsed, onMenuClick }) => {
                 alt="EventNexus Logo"
                 className="w-12 h-12 md:w-16 md:h-16 object-contain"
               />
-              <span className="text-2xl md:text-2xl font-black gradient-text tracking-tighter leading-none block">EventNexus</span>
+              <span className="text-2xl md:text-2xl font-black gradient-text tracking-tighter leading-none block drop-shadow-md">EventNexus</span>
             </Link>
           </div>
 
