@@ -31,9 +31,9 @@ const EventFilters = ({ filters, setFilters, onSearch }) => {
   const hasActiveFilters = filters.category || filters.eventType || filters.city || (filters.search && filters.search.length > 0);
 
   return (
-    <div className="mb-6 sm:mb-8 relative z-20">
+    <div className="mb-4 sm:mb-8 relative z-20">
       <div className="hidden md:block absolute inset-0 glass-panel-premium -z-10 rounded-2xl"></div>
-      <div className="p-0 md:p-6">
+      <div className="p-0 md:p-6 px-1 sm:px-0">
       {/* Search Bar & Mobile Toggle */}
       {/* Search Bar & Mobile Toggle */}
       <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-0 sm:mb-6">
@@ -118,11 +118,11 @@ const EventFilters = ({ filters, setFilters, onSearch }) => {
       </div>
 
       {/* Filters Grid - Desktop Always Visible, Mobile Toggleable */}
-      <div className={`${isExpanded ? 'block' : 'hidden'} md:block mt-4 sm:mt-0 pt-4 sm:pt-0 border-t border-slate-200 dark:border-white/10 sm:border-0`}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+      <div className={`${isExpanded ? 'block' : 'hidden'} md:block mt-2 sm:mt-0 pt-3 sm:pt-0 border-t border-slate-200 dark:border-white/10 sm:border-0`}>
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-4">
           {/* Category */}
           <div>
-            <label className="block text-[11px] sm:text-xs font-black uppercase tracking-wider text-slate-500 dark:text-gray-400 mb-1.5 ml-1">Category</label>
+            <label className="block text-[10px] sm:text-xs font-black uppercase tracking-wider text-slate-500 dark:text-gray-400 mb-1 ml-1">Category</label>
             <IconSelect
               name="category"
               value={filters.category}
@@ -137,7 +137,7 @@ const EventFilters = ({ filters, setFilters, onSearch }) => {
 
           {/* Event Type */}
           <div>
-            <label className="block text-[11px] sm:text-xs font-black uppercase tracking-wider text-slate-500 dark:text-gray-400 mb-1.5 ml-1">Type</label>
+            <label className="block text-[10px] sm:text-xs font-black uppercase tracking-wider text-slate-500 dark:text-gray-400 mb-1 ml-1">Type</label>
             <IconSelect
               name="eventType"
               value={filters.eventType}
@@ -152,7 +152,7 @@ const EventFilters = ({ filters, setFilters, onSearch }) => {
 
           {/* City */}
           <div>
-            <label className="block text-[11px] sm:text-xs font-black uppercase tracking-wider text-slate-500 dark:text-gray-400 mb-1.5 ml-1">Location</label>
+            <label className="block text-[10px] sm:text-xs font-black uppercase tracking-wider text-slate-500 dark:text-gray-400 mb-1 ml-1">Location</label>
             <IconSelect
               name="city"
               value={filters.city}
@@ -171,7 +171,7 @@ const EventFilters = ({ filters, setFilters, onSearch }) => {
 
           {/* Sort */}
           <div>
-            <label className="block text-[11px] sm:text-xs font-black uppercase tracking-wider text-slate-500 dark:text-gray-400 mb-1.5 ml-1">Sort</label>
+            <label className="block text-[10px] sm:text-xs font-black uppercase tracking-wider text-slate-500 dark:text-gray-400 mb-1 ml-1">Sort</label>
             <IconSelect
               name="sort"
               value={filters.sort}
@@ -187,7 +187,7 @@ const EventFilters = ({ filters, setFilters, onSearch }) => {
 
           {/* Upcoming Toggle */}
           <div>
-            <label className="block text-[11px] sm:text-xs font-black uppercase tracking-wider text-slate-500 dark:text-gray-400 mb-1.5 ml-1">Status</label>
+            <label className="block text-[10px] sm:text-xs font-black uppercase tracking-wider text-slate-500 dark:text-gray-400 mb-1 ml-1">Status</label>
             <IconSelect
               name="upcoming"
               value={filters.upcoming}
