@@ -827,7 +827,7 @@ body {
 
   /* Padding Top for Fixed Navbar */
   .min-h-screen.flex-col.pt-16 {
-    padding-top: 130px !important;
+    padding-top: 80px !important;
   }
 
   /* Hide Sidebar on Mobile */
