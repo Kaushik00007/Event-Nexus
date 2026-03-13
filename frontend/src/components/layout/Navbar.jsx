@@ -125,15 +125,15 @@ const Navbar = ({ isCollapsed, onMenuClick }) => {
             </button>
           </div>
 
-          {/* Logo - Centered on Mobile, Left on Desktop */}
-          <div className="flex items-center absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 z-30">
-            <Link to="/" className="flex items-center space-x-1.5 md:space-x-3">
+          {/* Logo - Centered on Mobile Content Area */}
+          <div className="flex items-center absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 z-[1010] filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+            <Link to="/" className="flex items-center space-x-2 md:space-x-3">
               <img
                 src="/logo.png"
                 alt="EventNexus Logo"
-                className="w-11 h-11 md:w-16 md:h-16 object-contain"
+                className="w-12 h-12 md:w-16 md:h-16 object-contain"
               />
-              <span className="text-xl md:text-2xl font-bold gradient-text tracking-tight">EventNexus</span>
+              <span className="text-2xl md:text-2xl font-black gradient-text tracking-tighter leading-none block">EventNexus</span>
             </Link>
           </div>
 
@@ -267,6 +267,10 @@ const Navbar = ({ isCollapsed, onMenuClick }) => {
             )}
           </div>
 
+          {/* Actions / Theme Toggle for Mobile */}
+          <div className="md:hidden flex items-center z-40">
+            <ThemeToggle />
+          </div>
         </div>
 
         {/* Mobile Search Bar - Appears below Navbar only on Home Page */}
