@@ -31,7 +31,9 @@ const EventFilters = ({ filters, setFilters, onSearch }) => {
   const hasActiveFilters = filters.category || filters.eventType || filters.city || (filters.search && filters.search.length > 0);
 
   return (
-    <div className="glass-panel-premium p-4 sm:p-6 mb-6 sm:mb-8 relative z-20">
+    <div className="mb-6 sm:mb-8 relative z-20">
+      <div className="hidden md:block absolute inset-0 glass-panel-premium -z-10 rounded-2xl"></div>
+      <div className="p-0 md:p-6">
       {/* Search Bar & Mobile Toggle */}
       {/* Search Bar & Mobile Toggle */}
       <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-0 sm:mb-6">
@@ -234,6 +236,7 @@ const EventFilters = ({ filters, setFilters, onSearch }) => {
             <Filter className="w-3.5 h-3.5" />
             <span>Reset Filters</span>
           </button>
+        </div>
         </div>
       </div>
     </div>
