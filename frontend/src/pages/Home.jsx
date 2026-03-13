@@ -155,7 +155,7 @@ const Home = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white py-12 lg:py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white pt-32 pb-12 lg:py-20 overflow-hidden">
         {/* LightRays Background */}
         <div className="absolute inset-0 w-full h-full">
           <LightRays
@@ -178,7 +178,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 animate-fadeIn">
-              EventNexus
+              <span className="gradient-text-hero block mb-2">EventNexus</span>
               <span className="block text-yellow-300">Discover Amazing Events</span>
             </h1>
             <p className="text-xl md:text-2xl text-white/90 mb-8 animate-fadeIn">
