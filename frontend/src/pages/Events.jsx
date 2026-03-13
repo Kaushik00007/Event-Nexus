@@ -53,7 +53,7 @@ const Events = () => {
   };
 
   return (
-    <div className="min-h-screen bg-transparent py-6 sm:py-8 transition-colors duration-500">
+    <div className="min-h-screen bg-transparent pt-2 pb-6 sm:py-8 transition-colors duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-6 sm:mb-8">
