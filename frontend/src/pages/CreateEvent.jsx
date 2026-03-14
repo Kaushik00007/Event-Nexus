@@ -717,21 +717,24 @@ const CreateEvent = () => {
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   College/Organization Name (Optional)
                 </label>
-                <select
+                <input
+                  type="text"
                   name="college.name"
                   value={formData.college.name}
                   onChange={handleChange}
+                  list="college-options"
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                >
-                  <option value="">Select College/Organization</option>
-                  {colleges
-                    .filter(college => college.state === 'Karnataka')
-                    .map(college => (
-                      <option key={college.id} value={college.name}>
-                        {college.name} ({college.short_name})
-                      </option>
-                    ))}
-                </select>
+                  placeholder="Select or type college/organization"
+                />
+                <datalist id="college-options">
+                  {colleges.map(college => (
+                    <option
+                      key={college.id}
+                      value={college.name}
+                      label={college.short_name ? `${college.name} (${college.short_name})` : college.name}
+                    />
+                  ))}
+                </datalist>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
