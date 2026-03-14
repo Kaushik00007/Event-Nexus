@@ -1,10 +1,67 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Search, Filter, X } from 'lucide-react';
 import { CATEGORIES, EVENT_TYPES, CITIES } from '../../utils/constants';
 import IconSelect from '../common/IconSelect';
+import * as eventService from '../../services/eventService';
+
+const normalizeCategoryValue = (rawValue = '') => {
+  return rawValue
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+};
+
+const formatCategoryLabel = (rawValue = '') => {
+  return rawValue
+    .trim()
+    .replace(/[-_]+/g, ' ')
+    .split(' ')
+    .filter(Boolean)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+};
+
+const mergeCategoryOptions = (existingOptions, newValues) => {
+  const optionMap = new Map(existingOptions.map(option => [option.value, option]));
+
+  newValues.forEach(value => {
+    const normalizedValue = normalizeCategoryValue(value);
+    if (!normalizedValue || optionMap.has(normalizedValue)) {
+      return;
+    }
+
+    optionMap.set(normalizedValue, {
+      value: normalizedValue,
+      label: formatCategoryLabel(value),
+      icon: 'Tag'
+    });
+  });
+
+  return Array.from(optionMap.values());
+};
 
 const EventFilters = ({ filters, setFilters, onSearch }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [categoryOptions, setCategoryOptions] = useState(CATEGORIES);
+
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const response = await eventService.getCategories();
+        const apiCategoryValues = Array.isArray(response?.data)
+          ? response.data.map(category => category?._id || category?.category).filter(Boolean)
+          : [];
+
+        setCategoryOptions(prev => mergeCategoryOptions(prev, apiCategoryValues));
+      } catch (error) {
+        // Keep static fallback categories when API call fails.
+        console.error('Failed to load dynamic categories for filters:', error);
+      }
+    };
+
+    loadCategories();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -129,7 +186,7 @@ const EventFilters = ({ filters, setFilters, onSearch }) => {
               onChange={handleChange}
               options={[
                 { value: '', label: 'All Categories' },
-                ...CATEGORIES
+                ...categoryOptions
               ]}
               placeholder="All Categories"
             />
