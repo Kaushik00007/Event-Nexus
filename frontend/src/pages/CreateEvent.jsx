@@ -540,37 +540,43 @@ const CreateEvent = () => {
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     City *
                   </label>
-                  <select
+                  <input
+                    type="text"
                     name="location.city"
                     value={formData.location.city}
                     onChange={handleChange}
                     required
+                    list="city-options"
                     disabled={formData.isInternalEvent && formData.collegeId}
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 disabled:bg-gray-100 dark:disabled:bg-gray-600 disabled:cursor-not-allowed bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                  >
-                    <option value="">Select City</option>
+                    placeholder="Select or type city"
+                  />
+                  <datalist id="city-options">
                     {CITIES.map(city => (
-                      <option key={city} value={city}>{city}</option>
+                      <option key={city} value={city} />
                     ))}
-                  </select>
+                  </datalist>
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     State
                   </label>
-                  <select
+                  <input
+                    type="text"
                     name="location.state"
                     value={formData.location.state}
                     onChange={handleChange}
+                    list="state-options"
                     disabled={formData.isInternalEvent && formData.collegeId}
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 disabled:bg-gray-100 dark:disabled:bg-gray-600 disabled:cursor-not-allowed bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                  >
-                    <option value="">Select State</option>
+                    placeholder="Select or type state"
+                  />
+                  <datalist id="state-options">
                     {INDIAN_STATES.map(state => (
-                      <option key={state} value={state}>{state}</option>
+                      <option key={state} value={state} />
                     ))}
-                  </select>
+                  </datalist>
                 </div>
               </div>
 
