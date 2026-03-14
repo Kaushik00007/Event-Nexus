@@ -19,8 +19,46 @@ import {
 import { useEvents } from '../context/EventContext';
 import { useAuth } from '../context/AuthContext';
 import * as collegeService from '../services/collegeService';
+import * as eventService from '../services/eventService';
 import IconSelect from '../components/common/IconSelect';
 import { CATEGORIES, EVENT_TYPES, CITIES, INDIAN_STATES } from '../utils/constants';
+
+const normalizeCategoryValue = (rawValue = '') => {
+  return rawValue
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+};
+
+const formatCategoryLabel = (rawValue = '') => {
+  return rawValue
+    .trim()
+    .replace(/[-_]+/g, ' ')
+    .split(' ')
+    .filter(Boolean)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+};
+
+const mergeCategoryOptions = (existingOptions, newValues) => {
+  const optionMap = new Map(existingOptions.map(option => [option.value, option]));
+
+  newValues.forEach(value => {
+    const normalizedValue = normalizeCategoryValue(value);
+    if (!normalizedValue || optionMap.has(normalizedValue)) {
+      return;
+    }
+
+    optionMap.set(normalizedValue, {
+      value: normalizedValue,
+      label: formatCategoryLabel(value),
+      icon: 'Tag'
+    });
+  });
+
+  return Array.from(optionMap.values());
+};
 
 const CreateEvent = () => {
   const navigate = useNavigate();
@@ -32,6 +70,8 @@ const CreateEvent = () => {
   const [newRequirement, setNewRequirement] = useState('');
   const [colleges, setColleges] = useState([]);
   const [isCollegeAdmin, setIsCollegeAdmin] = useState(false);
+  const [categoryOptions, setCategoryOptions] = useState(CATEGORIES);
+  const [newCategory, setNewCategory] = useState('');
 
   const [formData, setFormData] = useState({
     title: '',
@@ -123,21 +163,65 @@ const CreateEvent = () => {
 
   useEffect(() => {
     // Fetch colleges list
-    const loadColleges = async () => {
+    const loadInitialData = async () => {
       try {
-        const response = await collegeService.getColleges();
-        setColleges(response.data || []);
+        const [collegeResult, categoryResult] = await Promise.allSettled([
+          collegeService.getColleges(),
+          eventService.getCategories()
+        ]);
+
+        if (collegeResult.status === 'fulfilled') {
+          setColleges(collegeResult.value.data || []);
+        }
+
+        if (categoryResult.status === 'fulfilled') {
+          const apiCategoryValues = Array.isArray(categoryResult.value?.data)
+            ? categoryResult.value.data.map(category => category?._id || category?.category).filter(Boolean)
+            : [];
+
+          setCategoryOptions(prev => mergeCategoryOptions(prev, apiCategoryValues));
+        }
       } catch (err) {
-        console.error('Error loading colleges:', err);
+        console.error('Error loading initial data:', err);
       }
     };
 
-    loadColleges();
+    loadInitialData();
 
     if (user?.college) {
       setIsCollegeAdmin(true);
     }
   }, [user]);
+
+  const handleAddCustomCategory = () => {
+    const normalizedValue = normalizeCategoryValue(newCategory);
+    if (!normalizedValue) {
+      return;
+    }
+
+    setCategoryOptions(prevOptions => {
+      const existingOption = prevOptions.find(option => option.value === normalizedValue);
+
+      if (existingOption) {
+        return prevOptions;
+      }
+
+      return [
+        ...prevOptions,
+        {
+          value: normalizedValue,
+          label: formatCategoryLabel(newCategory),
+          icon: 'Tag'
+        }
+      ];
+    });
+
+    setFormData(prev => ({
+      ...prev,
+      category: normalizedValue
+    }));
+    setNewCategory('');
+  };
 
   // Auto-populate location when college is selected for internal events
   useEffect(() => {
@@ -305,10 +389,34 @@ const CreateEvent = () => {
                     name="category"
                     value={formData.category}
                     onChange={handleChange}
-                    options={CATEGORIES}
+                    options={categoryOptions}
                     placeholder="Select Category"
                     required
                   />
+                  {user?.role === 'admin' && (
+                    <div className="mt-2 flex gap-2">
+                      <input
+                        type="text"
+                        value={newCategory}
+                        onChange={(e) => setNewCategory(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleAddCustomCategory();
+                          }
+                        }}
+                        placeholder="Add custom category"
+                        className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleAddCustomCategory}
+                        className="px-3 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 font-medium"
+                      >
+                        Add
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 <div>
