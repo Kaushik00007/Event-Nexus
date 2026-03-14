@@ -23,7 +23,7 @@ CREATE TABLE events (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   title VARCHAR(255) NOT NULL,
   description TEXT NOT NULL,
-  category VARCHAR(50) NOT NULL CHECK (category IN ('hackathon', 'coding-contest', 'workshop', 'seminar', 'tech-talk', 'cultural', 'sports', 'academic', 'networking', 'other')),
+  category VARCHAR(100) NOT NULL,
   event_type VARCHAR(50) NOT NULL CHECK (event_type IN ('online', 'offline', 'hybrid')),
   date TIMESTAMP NOT NULL,
   end_date TIMESTAMP,
