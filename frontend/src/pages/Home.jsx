@@ -178,15 +178,13 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto mt-12 md:mt-0">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 animate-fadeIn leading-tight">
-              <span className="gradient-text-hero block mb-2 scale-110 origin-center">EventNexus</span>
+              <span className="text-white block mb-2 scale-110 origin-center drop-shadow-md">EventNexus</span>
               <span className="block text-yellow-300 drop-shadow-sm">Discover Amazing Events</span>
             </h1>
             <p className="text-xl md:text-2xl text-white/90 mb-8 animate-fadeIn">
               Your gateway to hackathons, coding contests, workshops, and campus events.
               Never miss an opportunity to learn, compete, and grow!
             </p>
-
-
 
             {/* Quick Links */}
             <div className="flex flex-wrap justify-center gap-3 animate-fadeIn">
