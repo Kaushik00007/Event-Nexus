@@ -865,7 +865,7 @@
     .md\:grid-cols-2,
     .lg\:grid-cols-3 {
       display: grid !important;
-      grid-template-columns: repeat(2, 1fr) !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
       gap: 12px !important;
     }
 
@@ -905,11 +905,9 @@
       margin-bottom: 4px !important;
     }
 
-    /* Card Subtext / Description Fix */
+    /* Card Subtext / Description Fix - Hidden on Mobile */
     .glass-panel-premium p.text-sm {
-      font-size: 11px !important;
-      line-height: 1.3 !important;
-      margin-bottom: 8px !important;
+      display: none !important;
     }
 
     /* Action Buttons inside cards */
