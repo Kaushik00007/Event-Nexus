@@ -133,8 +133,20 @@ const LocalEventsSection = ({ events = [], city = '', onCityChange, loading = fa
     <section className="relative py-12 lg:py-20 bg-gradient-to-b from-white via-orange-50/30 to-white dark:from-slate-900/10 dark:via-orange-950/10 dark:to-slate-900/10 overflow-hidden">
       <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
         {/* Header */}
-        <div className="flex flex-col w-full mb-12 lg:mb-16">
-          <div className="w-full">
+        <div className="flex flex-col w-full mb-6 md:mb-12 lg:mb-16">
+          {/* Mobile Header (Static) */}
+          <div className="md:hidden flex flex-col mb-1">
+            <div className="flex items-center mb-2">
+              <div className="h-6 w-1 bg-orange-600 rounded-full mr-2"></div>
+              <h2 className="text-[18px] font-bold text-slate-900 dark:text-white tracking-tight">Explore Events in Mangalore</h2>
+            </div>
+            <p className="text-[14px] font-semibold text-slate-700 dark:text-gray-300 ml-3 text-shadow-sm">
+              Events happening near you
+            </p>
+          </div>
+
+          {/* Desktop/Tablet Header (Animated) */}
+          <div className="hidden md:block w-full">
             <ScrollVelocity
               texts={[`Events in ${city}`]}
               velocity={45}
