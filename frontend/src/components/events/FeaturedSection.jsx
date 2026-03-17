@@ -96,8 +96,15 @@ const FeaturedSection = ({ events = [] }) => {
     <section className="relative py-12 lg:py-20 bg-slate-50 dark:bg-transparent overflow-hidden">
       <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
         {/* Header */}
-        <div className="flex flex-col w-full mb-12 lg:mb-16">
-          <div className="w-full">
+        <div className="flex flex-col w-full mb-6 md:mb-12 lg:mb-16">
+          {/* Mobile Header (Static) */}
+          <div className="md:hidden flex items-center">
+            <div className="h-6 w-1 bg-primary-600 rounded-full mr-2"></div>
+            <h2 className="text-[18px] font-medium text-slate-900 dark:text-white">Featured</h2>
+          </div>
+
+          {/* Desktop/Tablet Header (Animated) */}
+          <div className="hidden md:block w-full">
             <ScrollVelocity
               texts={['Featured']}
               velocity={45}
@@ -108,7 +115,6 @@ const FeaturedSection = ({ events = [] }) => {
               velocity={-45}
               className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-gray-300 tracking-tight"
             />
-
           </div>
         </div>
 
