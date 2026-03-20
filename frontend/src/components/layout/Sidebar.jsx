@@ -29,8 +29,8 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
   ];
 
   const userRoles = [
-    { name: 'Student', icon: User, color: 'bg-gradient-to-r from-blue-600 to-slate-900 shadow-md border border-blue-500/20' },
-    { name: 'Admin', icon: Shield, color: 'bg-gradient-to-r from-blue-600 to-slate-900 shadow-md border border-blue-500/20' },
+    { name: 'Student', icon: User, color: 'bg-gradient-to-r from-blue-600 to-slate-900 shadow-md' },
+    { name: 'Admin', icon: Shield, color: 'bg-gradient-to-r from-blue-600 to-slate-900 shadow-md' },
   ];
 
   const isActivePath = (path) => {
@@ -81,7 +81,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
           <div className={`px-4 ${isCollapsed ? 'mb-6 mt-6' : 'mb-4'}`}>
             <Link
               to="/create-event"
-              className={`flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-slate-900 border border-blue-500/20 text-white rounded-xl py-3 hover:opacity-90 hover:scale-[1.02] transition-all shadow-lg hover:shadow-blue-900/20 group ${isCollapsed ? 'w-12 h-12 mx-auto' : 'w-full'
+              className={`flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-slate-900 text-white rounded-xl py-3 hover:opacity-90 hover:scale-[1.02] transition-all shadow-lg hover:shadow-blue-900/20 group ${isCollapsed ? 'w-12 h-12 mx-auto' : 'w-full'
                 }`}
               title="Host Event"
             >
