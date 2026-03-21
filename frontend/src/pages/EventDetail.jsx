@@ -439,109 +439,78 @@ const EventDetail = () => {
           <div className="block lg:grid lg:grid-cols-3 gap-8">
             {/* Main Content */}
             <div className="lg:col-span-2">
-              <div className="glass-panel-premium p-5 md:p-8 mb-6 md:mb-8">
+              <div className="glass-panel-premium p-6 md:p-10 mb-6 md:mb-8 border border-white/40 dark:border-slate-800 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
                 {/* Category & Type */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className={`px-2 py-0.5 md:px-3 md:py-1 rounded-full text-xs md:text-sm font-semibold ${getCategoryColor(event.category)}`}>
-                    {event.category.replace('-', ' ').toUpperCase()}
+                <div className="flex flex-wrap items-center gap-3 mb-5">
+                  <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide shadow-sm ${getCategoryColor(event.category)}`}>
+                    {event.category.replace('-', ' ')}
                   </span>
-                  <span className="px-2 py-0.5 md:px-3 md:py-1 bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-gray-300 rounded-full text-xs md:text-sm font-semibold">
+                  <span className="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-gray-300 rounded-full text-xs font-bold uppercase tracking-wide border border-black/5 dark:border-white/5">
                     {formatEventType(event.event_type)}
                   </span>
                   {event.featured && (
-                    <span className="px-2 py-0.5 md:px-3 md:py-1 bg-yellow-500/10 dark:bg-yellow-500/20 text-yellow-800 dark:text-yellow-300 rounded-full text-xs md:text-sm font-bold border border-yellow-500/20">
-                      ⭐ FEATURED
+                    <span className="px-3 py-1 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full text-xs font-bold uppercase tracking-wide shadow-sm shadow-amber-500/20 flex items-center gap-1.5">
+                      ⭐ Featured
                     </span>
                   )}
                 </div>
 
                 {/* Title */}
-                <h1 className="text-2xl md:text-4xl font-bold text-slate-950 dark:text-white mb-4 leading-tight">
+                <h1 className="text-3xl md:text-[32px] lg:text-[36px] font-black text-slate-900 dark:text-white mb-6 leading-[1.2] tracking-tight max-w-[90%]">
                   {event.title}
                 </h1>
 
                 {/* Organizer */}
-                <div className="flex items-center space-x-3 mb-6">
-                  <div className="w-8 h-8 md:w-10 md:h-10 bg-primary-100/50 dark:bg-primary-900/20 rounded-full flex items-center justify-center">
-                    <Users className="w-4 h-4 md:w-5 md:h-5 text-primary-600 dark:text-primary-400" />
+                <div className="flex items-center space-x-3 mb-8 pb-8 border-b border-slate-100 dark:border-slate-800">
+                  <div className="w-12 h-12 bg-[#f8fafc] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full flex items-center justify-center shadow-sm">
+                    <Users className="w-5 h-5 text-slate-500 dark:text-gray-400" />
                   </div>
                   <div>
-                    <p className="text-xs text-slate-500 dark:text-gray-400">Organized by</p>
-                    <p className="text-sm md:text-base font-semibold text-slate-900 dark:text-white">{event.college}</p>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-0.5">Organized by</p>
+                    <p className="text-base font-bold text-slate-900 dark:text-white">{event.college}</p>
                   </div>
                 </div>
 
                 {/* Description */}
-                <div className="prose max-w-none mb-8">
-                  <h3 className="text-lg md:text-xl font-bold text-slate-950 dark:text-white mb-4 border-l-4 border-primary-600 pl-3">
-                    All that you need to know about {event.title}
+                <div className="prose max-w-none mb-10">
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
+                    About This Event
                   </h3>
                   <div className="relative">
-                    <p className={`text-sm md:text-base text-slate-600 dark:text-gray-300 whitespace-pre-line leading-relaxed ${!isExpanded && event.description?.length > 400 ? 'line-clamp-[6] md:line-clamp-[8]' : ''}`}>
+                    <p className={`text-[15px] text-slate-600 dark:text-slate-300 whitespace-pre-line leading-[1.7] ${!isExpanded && event.description?.length > 400 ? 'line-clamp-[6]' : ''}`}>
                       {event.description}
                     </p>
 
                     {!isExpanded && event.description?.length > 400 && (
-                      <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white dark:from-slate-900 to-transparent pointer-events-none"></div>
+                      <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-white dark:from-slate-900 to-transparent pointer-events-none"></div>
                     )}
                   </div>
-
+                  
                   {event.description?.length > 400 && (
-                    <div className="mt-4 flex justify-center">
-                      <button
-                        onClick={() => setIsExpanded(!isExpanded)}
-                        className="flex items-center gap-1 text-primary-600 dark:text-primary-400 px-4 py-2 rounded-lg font-medium hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"
-                      >
-                        {isExpanded ? (
-                          <>Read Less <ChevronUp className="w-4 h-4" /></>
-                        ) : (
-                          <>Read More <ChevronDown className="w-4 h-4" /></>
-                        )}
-                      </button>
-                    </div>
-                  )}
-                </div>
-
-                {/* Mobile Sidebar Content (Stacked) */}
-                <div className="lg:hidden space-y-6 pt-6 border-t border-slate-100 dark:border-white/5">
-                  {/* Mobile Date/Time Summary */}
-                  <div className="flex items-start space-x-4">
-                    <div className="w-10 h-10 bg-primary-100/50 dark:bg-primary-900/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Calendar className="w-5 h-5 text-primary-600 dark:text-primary-400" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-slate-500 dark:text-gray-400">Date & Time</p>
-                      <p className="font-bold text-slate-950 dark:text-white text-sm">
-                        {formatDateRange(event.date, event.end_date)}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Mobile Venue Summary */}
-                  {event.venue && (
-                    <div className="flex items-start space-x-4">
-                      <div className="w-10 h-10 bg-primary-100/50 dark:bg-primary-900/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <Clock className="w-5 h-5 text-primary-600 dark:text-primary-400" />
-                      </div>
-                      <div>
-                        <p className="text-xs text-slate-500 dark:text-gray-400">Venue</p>
-                        <p className="font-bold text-slate-950 dark:text-white text-sm">
-                          {event.venue}, {event.city}
-                        </p>
-                      </div>
+                    <div className="mt-2">
+                       <button 
+                         onClick={() => setIsExpanded(!isExpanded)}
+                         className="flex items-center gap-1.5 text-primary-600 dark:text-primary-400 font-bold hover:text-primary-700 transition-colors"
+                       >
+                         {isExpanded ? (
+                           <>Read Less <ChevronUp className="w-4 h-4" /></>
+                         ) : (
+                           <>Read More <ChevronDown className="w-4 h-4" /></>
+                         )}
+                       </button>
                     </div>
                   )}
                 </div>
 
                 {/* Schedule */}
                 {event.schedule && event.schedule.length > 0 && (
-                  <div className="mt-8 mb-8">
-                    <h3 className="text-lg md:text-xl font-bold text-slate-950 dark:text-white mb-4">Schedule</h3>
+                  <div className="mb-10 pt-10 border-t border-slate-100 dark:border-slate-800">
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-5">Schedule</h3>
                     <div className="space-y-3">
                       {event.schedule.map((item, index) => (
-                        <div key={index} className="flex items-start space-x-4 p-3 bg-slate-50 dark:bg-white/5 rounded-lg border border-slate-100 dark:border-white/5">
-                          <div className="text-primary-600 dark:text-primary-400 font-bold min-w-20 md:min-w-24 text-sm md:text-base">{item.time}</div>
-                          <div className="text-slate-700 dark:text-gray-300 text-sm md:text-base">{item.activity}</div>
+                        <div key={index} className="flex items-center space-x-4 p-4 bg-[#f8fafc] dark:bg-slate-800/50 rounded-2xl border border-slate-200/60 dark:border-slate-700/50 transition-all hover:shadow-sm">
+                          <div className="text-primary-600 dark:text-primary-400 font-black min-w-24 text-[15px]">{item.time}</div>
+                          <div className="text-slate-700 dark:text-slate-300 text-[15px] font-medium">{item.activity}</div>
                         </div>
                       ))}
                     </div>
@@ -550,13 +519,13 @@ const EventDetail = () => {
 
                 {/* Requirements */}
                 {event.requirements && event.requirements.length > 0 && (
-                  <div className="mb-8">
-                    <h3 className="text-lg md:text-xl font-bold text-slate-950 dark:text-white mb-4">Requirements</h3>
-                    <ul className="space-y-2">
+                  <div className="mb-10 pt-10 border-t border-slate-100 dark:border-slate-800">
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-5">Requirements</h3>
+                    <ul className="space-y-3">
                       {event.requirements.map((req, index) => (
-                        <li key={index} className="flex items-center space-x-2 text-slate-600 dark:text-gray-300 text-sm md:text-base">
-                          <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-green-500" />
-                          <span>{req}</span>
+                        <li key={index} className="flex items-start space-x-3 text-slate-600 dark:text-slate-300 text-[15px] leading-relaxed">
+                          <CheckCircle className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+                          <span className="font-medium">{req}</span>
                         </li>
                       ))}
                     </ul>
@@ -565,16 +534,17 @@ const EventDetail = () => {
 
                 {/* Prizes */}
                 {event.prizes && event.prizes.length > 0 && (
-                  <div className="mt-8">
-                    <h3 className="text-lg md:text-xl font-bold text-slate-950 dark:text-white mb-4">Prizes</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="mt-10 pt-10 border-t border-slate-100 dark:border-slate-800">
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-5">Prizes</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                       {event.prizes.map((prize, index) => (
-                        <div key={index} className="bg-gradient-to-br from-yellow-50 to-yellow-100 dark:from-yellow-900/10 dark:to-yellow-800/10 border border-yellow-200 dark:border-yellow-500/20 rounded-lg p-4 text-center">
-                          <Award className="w-6 h-6 md:w-8 md:h-8 text-yellow-600 dark:text-yellow-400 mx-auto mb-2" />
-                          <div className="text-base md:text-lg font-bold text-slate-950 dark:text-white">{prize.position}</div>
-                          <div className="text-sm md:text-base text-yellow-700 dark:text-yellow-300 font-bold">{prize.prize}</div>
+                        <div key={index} className="bg-gradient-to-b from-[#fffbeb] to-white dark:from-amber-900/10 dark:to-slate-800/50 border border-amber-200/60 dark:border-amber-700/30 rounded-2xl p-6 text-center shadow-sm relative overflow-hidden group hover:shadow-md transition-shadow">
+                          <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-amber-100 to-transparent dark:from-amber-900/20 rounded-bl-[100px] -mr-4 -mt-4 opacity-50 group-hover:scale-110 transition-transform"></div>
+                          <Award className="w-8 h-8 text-amber-500 dark:text-amber-400 mx-auto mb-3" />
+                          <div className="text-lg font-black text-slate-900 dark:text-white leading-tight">{prize.position}</div>
+                          <div className="text-sm text-amber-600 dark:text-amber-500 font-bold mt-1">{prize.prize}</div>
                           {prize.amount > 0 && (
-                            <div className="text-xl md:text-2xl font-black text-slate-950 dark:text-white mt-1">
+                            <div className="text-2xl font-black text-slate-900 dark:text-white mt-3">
                               {formatCurrency(prize.amount)}
                             </div>
                           )}
@@ -588,104 +558,91 @@ const EventDetail = () => {
 
             {/* Sidebar */}
             <div className="lg:col-span-1">
-              <div className="glass-panel-premium p-6 mb-6 lg:sticky lg:top-24">
-                {/* Date */}
-                <div className="hidden lg:flex items-start space-x-4 mb-4 pb-4 border-b border-slate-100 dark:border-white/5">
-                  <div className="w-12 h-12 bg-primary-100/50 dark:bg-primary-900/20 rounded-lg flex items-center justify-center">
-                    <Calendar className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+              <div className="glass-panel-premium bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-white/50 dark:border-slate-700 shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-6 rounded-[20px] lg:sticky lg:top-[100px] mb-8 transition-all hover:shadow-[0_8px_40px_rgb(0,0,0,0.08)]">
+                
+                {/* 1. Date Block */}
+                <div className="flex items-center gap-4 mb-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+                  <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-xl flex items-center justify-center shrink-0">
+                    <Calendar className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-sm text-slate-500 dark:text-gray-400">Date</p>
-                    <p className="font-bold text-slate-950 dark:text-white">
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-0.5">Date & Time</p>
+                    <p className="text-[14px] font-bold text-slate-900 dark:text-white leading-tight">
                       {formatDateRange(event.date, event.end_date)}
                     </p>
-                    <p className="text-sm text-primary-600 dark:text-primary-400 font-bold">
+                    <p className="text-[12px] text-blue-600 dark:text-blue-400 font-bold mt-0.5">
                       {getDaysUntil(event.date)}
                     </p>
                   </div>
                 </div>
 
-                {/* Venue (Desktop) */}
+                {/* 2. Venue Block */}
                 {event.venue && (
-                  <div className="hidden lg:flex items-start space-x-4 mb-4 pb-4 border-b border-slate-100 dark:border-white/5">
-                    <div className="w-12 h-12 bg-primary-100/50 dark:bg-primary-900/20 rounded-lg flex items-center justify-center">
-                      <Clock className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                  <div className="flex items-center gap-4 mb-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+                    <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-xl flex items-center justify-center shrink-0">
+                      <Clock className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-sm text-slate-500 dark:text-gray-400">Venue</p>
-                      <p className="font-bold text-slate-950 dark:text-white">
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-0.5">Venue</p>
+                      <p className="text-[14px] font-bold text-slate-900 dark:text-white leading-tight">
                         {event.venue}
                       </p>
                     </div>
                   </div>
                 )}
 
-                {/* Location & Map */}
-                <div className="mb-4 pb-4 lg:border-b border-slate-100 dark:border-white/5">
-                  <div className="flex items-start space-x-4 mb-3">
-                    <div className="w-12 h-12 bg-primary-100/50 dark:bg-primary-900/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <MapPin className="w-6 h-6 text-primary-600 dark:text-primary-400" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm text-slate-500 dark:text-gray-400">Location</p>
-                      <p className="font-bold text-slate-950 dark:text-white">{event.city || 'Location TBA'}</p>
-                      {event.college && (
-                        <p className="text-sm text-slate-600 dark:text-gray-400">
-                          {event.college}
-                        </p>
-                      )}
-                    </div>
+                {/* 3. Location Block */}
+                <div className="flex items-center gap-4 mb-5">
+                  <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-xl flex items-center justify-center shrink-0">
+                    <MapPin className="w-5 h-5" />
                   </div>
+                  <div>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-0.5">Location</p>
+                    <p className="text-[14px] font-bold text-slate-900 dark:text-white leading-tight">
+                      {event.city || 'Location TBA'}
+                    </p>
+                  </div>
+                </div>
 
-                  {/* Google Maps Embed */}
-                  {getMapEmbedUrl() && (
-                    <div className="mt-3">
-                      <iframe
-                        width="100%"
-                        height="200"
-                        style={{ border: 0, borderRadius: '8px' }}
-                        loading="lazy"
-                        allowFullScreen
-                        referrerPolicy="no-referrer-when-downgrade"
-                        src={getMapEmbedUrl()}
-                        className="shadow-sm"
-                      ></iframe>
+                {/* 4. Map Block */}
+                {getMapEmbedUrl() && (
+                  <div className="mb-6 rounded-[14px] overflow-hidden border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
+                    <iframe
+                      width="100%"
+                      height="160"
+                      style={{ border: 0 }}
+                      loading="lazy"
+                      allowFullScreen
+                      referrerPolicy="no-referrer-when-downgrade"
+                      src={getMapEmbedUrl()}
+                    ></iframe>
+                  </div>
+                )}
 
-                      {/* Get Directions Button */}
-                      {getDirectionsUrl() && (
-                        <a
-                          href={getDirectionsUrl()}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mt-2 w-full flex items-center justify-center space-x-2 bg-blue-600/10 dark:bg-blue-500/10 hover:bg-blue-600/20 dark:hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 py-2 px-4 rounded-lg text-sm font-bold transition-all border border-blue-500/20"
-                        >
-                          <Navigation className="w-4 h-4" />
-                          <span>Get Directions</span>
-                        </a>
-                      )}
+                {/* Registration Info */}
+                <div className="flex items-center justify-between mb-5 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
+                  <div className="flex flex-col">
+                    <span className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Fee</span>
+                    {event.registration_fee > 0 ? (
+                      <span className="text-[20px] font-black text-slate-900 dark:text-white">
+                        {formatCurrency(event.registration_fee)}
+                      </span>
+                    ) : (
+                      <span className="text-[20px] font-black text-emerald-600 dark:text-emerald-400">FREE</span>
+                    )}
+                  </div>
+                  {event.registration_deadline && (
+                    <div className="text-right">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 block">Deadline</span>
+                      <span className="text-[14px] font-bold text-slate-900 dark:text-white">
+                        {new Date(event.registration_deadline).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                      </span>
                     </div>
                   )}
                 </div>
 
-                {/* Registration Fee */}
-                <div className="flex items-center lg:items-start space-x-4 mb-6 pb-4 border-b border-slate-100 dark:border-white/5">
-                  <div className="w-12 h-12 bg-primary-100/50 dark:bg-primary-900/20 rounded-lg flex items-center justify-center">
-                    <ExternalLink className="w-6 h-6 text-primary-600 dark:text-primary-400" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-slate-500 dark:text-gray-400">Registration Fee</p>
-                    {event.registration_fee > 0 ? (
-                      <p className="text-2xl font-black text-slate-950 dark:text-white">
-                        {formatCurrency(event.registration_fee)}
-                      </p>
-                    ) : (
-                      <p className="text-2xl font-bold text-green-600 dark:text-green-400">FREE</p>
-                    )}
-                  </div>
-                </div>
-
-                {/* Desktop Register Button */}
-                <div className="hidden lg:block">
+                {/* 5. CTA Button Desktop */}
+                <div className="w-full relative z-10">
                   {(() => {
                     const registrationLink = event.registration_link;
                     if (registrationLink && registrationLink.trim() !== '') {
@@ -694,62 +651,56 @@ const EventDetail = () => {
                           href={registrationLink.startsWith('http') ? registrationLink : `https://${registrationLink}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-full flex items-center justify-center space-x-2 bg-primary-600 dark:bg-primary-500 text-white py-3 px-6 rounded-lg font-bold hover:bg-primary-700 dark:hover:bg-primary-600 transition-all mb-4 shadow-lg shadow-primary-500/20"
+                          className="flex h-[48px] w-full items-center justify-center space-x-2 bg-primary-600 text-white rounded-[14px] font-bold hover:bg-primary-700 hover:-translate-y-0.5 active:scale-[0.98] transition-all shadow-[0_8px_20px_rgba(37,99,235,0.25)]"
                         >
-                          <span>Register Now</span>
-                          <ExternalLink className="w-5 h-5" />
+                          <span className="text-[15px]">Register Now</span>
+                          <ExternalLink className="w-4 h-4 ml-1" />
                         </a>
                       );
                     }
                     return (
-                      <button className="w-full bg-slate-200 dark:bg-white/10 text-slate-500 dark:text-gray-400 py-3 px-6 rounded-lg font-bold cursor-not-allowed mb-4">
-                        Registration Not Available
+                      <button className="flex h-[48px] w-full items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 rounded-[14px] font-bold cursor-not-allowed">
+                        <span className="text-[15px]">Not Available</span>
                       </button>
                     );
                   })()}
-
-                  {event.registration_deadline && (
-                    <p className="text-sm text-center text-slate-500 dark:text-gray-400 font-medium">
-                      Register before: {new Date(event.registration_deadline).toLocaleDateString()}
-                    </p>
-                  )}
                 </div>
-
-                {/* Contact Info (In Sidebar for Both) */}
-                {(event.contact?.email || event.contact?.phone || event.contact?.website) && (
-                  <div className="mt-6 pt-6 border-t border-slate-100 dark:border-white/5">
-                    <h4 className="font-bold text-slate-950 dark:text-white mb-3 text-sm md:text-base">Contact Organizer</h4>
-                    <div className="space-y-3">
-                      {event.contact.email && (
-                        <a href={`mailto:${event.contact.email}`} className="flex items-center space-x-3 text-slate-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-                          <Mail className="w-4 h-4" />
-                          <span className="text-xs md:text-sm font-medium">{event.contact.email}</span>
-                        </a>
-                      )}
-                      {event.contact.phone && (
-                        <a href={`tel:${event.contact.phone}`} className="flex items-center space-x-3 text-slate-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-                          <Phone className="w-4 h-4" />
-                          <span className="text-xs md:text-sm font-medium">{event.contact.phone}</span>
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {/* Tags */}
-                {event.tags && event.tags.length > 0 && (
-                  <div className="mt-6 pt-6 border-t border-slate-100 dark:border-white/5">
-                    <h4 className="font-bold text-slate-950 dark:text-white mb-3 text-sm">Tags</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {event.tags.map((tag, index) => (
-                        <span key={index} className="px-2 py-1 bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-gray-400 rounded text-xs font-medium">
-                          #{tag}
-                        </span>
-                      ))}
-                    </div>
+                
+                {/* Footer links within card */}
+                {(event.contact?.email || event.contact?.phone || event.contact?.website || getDirectionsUrl()) && (
+                  <div className="mt-5 pt-5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-center gap-4">
+                    {getDirectionsUrl() && (
+                      <a href={getDirectionsUrl()} target="_blank" rel="noopener noreferrer" className="p-2.5 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full text-slate-500 hover:text-primary-600 transition-colors tooltip" title="Directions">
+                        <Navigation className="w-4 h-4" />
+                      </a>
+                    )}
+                    {event.contact?.website && (
+                      <a href={event.contact.website} target="_blank" rel="noopener noreferrer" className="p-2.5 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full text-slate-500 hover:text-primary-600 transition-colors tooltip" title="Website">
+                        <Globe className="w-4 h-4" />
+                      </a>
+                    )}
+                    {event.contact?.email && (
+                      <a href={`mailto:${event.contact.email}`} className="p-2.5 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full text-slate-500 hover:text-primary-600 transition-colors tooltip" title="Email">
+                        <Mail className="w-4 h-4" />
+                      </a>
+                    )}
                   </div>
                 )}
               </div>
+              
+              {/* Tags Section moved OUT of the main sticky card */}
+              {event.tags && event.tags.length > 0 && (
+                <div className="px-2">
+                  <h4 className="text-[12px] font-bold text-slate-400 uppercase tracking-widest mb-3 pl-1">Tags</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {event.tags.map((tag, index) => (
+                      <span key={index} className="px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-600 dark:text-slate-300 rounded-[999px] text-[12px] font-medium shadow-sm hover:border-primary-200 transition-colors">
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
