@@ -291,7 +291,7 @@ const Home = () => {
       </section>
 
       {/* Featured Events */}
-      <section className="py-12">
+      <section className="pt-12 pb-6 md:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-12">
             <div>
@@ -329,7 +329,7 @@ const Home = () => {
             </div>
           )}
 
-          <div className="mt-10 text-center md:hidden">
+          <div className="mt-8 text-center md:hidden">
             <Link
               to="/events"
               className="inline-flex items-center space-x-2 bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
@@ -342,7 +342,7 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-10 bg-gradient-to-r from-primary-600 to-secondary-600 text-white">
+      <section className="hidden md:block py-10 bg-gradient-to-r from-primary-600 to-secondary-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-3">
             Have an Event to Share?
