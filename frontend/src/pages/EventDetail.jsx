@@ -126,6 +126,253 @@ const EventDetail = () => {
 
   return (
     <div className="min-h-screen bg-transparent transition-colors duration-500">
+      <div className="block md:hidden bg-slate-50 dark:bg-slate-950 min-h-screen pb-[100px] overflow-x-hidden">
+        
+        {/* 1 & 2. Hero Section with gradient overlay and bottom-left content */}
+        <div className="relative h-[220px] rounded-b-[20px] overflow-hidden shadow-sm">
+          {event.image ? (
+            <img
+              src={getDecodedImage()}
+              alt={event.title}
+              className="w-full h-full object-cover"
+              onError={(e) => e.target.style.display = 'none'}
+            />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-primary-600 to-secondary-600"></div>
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+
+          {/* Top Actions */}
+          <div className="absolute top-4 left-4 right-4 flex justify-between items-center z-10 w-[calc(100%-32px)]">
+            <button onClick={() => navigate(-1)} className="p-2 bg-white/10 backdrop-blur-md rounded-full text-white active:scale-95 transition-transform border border-white/20">
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+            <div className="flex space-x-2">
+              <button onClick={handleShare} className="p-2 bg-white/10 backdrop-blur-md rounded-full text-white active:scale-95 transition-transform border border-white/20">
+                <Share2 className="w-5 h-5" />
+              </button>
+              <button onClick={handleFavorite} className="p-2 bg-white/10 backdrop-blur-md rounded-full text-white active:scale-95 transition-transform border border-white/20">
+                <Heart className={`w-5 h-5 ${isFavorite ? 'fill-red-500 text-red-500' : ''}`} />
+              </button>
+            </div>
+          </div>
+
+          {/* Content Overlay */}
+          <div className="absolute bottom-4 left-4 right-4 z-10">
+            <div className="flex flex-wrap gap-2 mb-2">
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-white text-primary-600 uppercase tracking-wider shadow-sm">
+                {event.category.replace('-', ' ')}
+              </span>
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-white/20 backdrop-blur-md text-white border border-white/30 uppercase tracking-wider">
+                {formatEventType(event.event_type)}
+              </span>
+              {event.featured && (
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-yellow-500 text-yellow-950 uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                  ★ Featured
+                </span>
+              )}
+            </div>
+            <h1 className="text-[20px] font-bold text-white leading-[1.2] drop-shadow-md">
+              {event.title}
+            </h1>
+          </div>
+        </div>
+
+        {/* 3. Floating event info card */}
+        <div className="mx-4 -mt-8 relative z-20 bg-white dark:bg-slate-900 rounded-[18px] p-4 shadow-[0_10px_30px_rgba(0,0,0,0.08)] border border-slate-100 dark:border-slate-800">
+          <div className="flex items-center space-x-3 mb-3 pb-3 border-b border-slate-100 dark:border-slate-800">
+            <div className="w-10 h-10 rounded-full bg-[#f0f9ff] dark:bg-blue-900/20 flex items-center justify-center text-[#0284c7] dark:text-blue-400 flex-shrink-0">
+              <Calendar className="w-5 h-5" />
+            </div>
+            <div>
+              <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Date & Time</p>
+              <p className="font-bold text-slate-900 dark:text-white text-[13px]">{formatDateRange(event.date, event.end_date)}</p>
+            </div>
+          </div>
+          
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 rounded-full bg-[#eef2ff] dark:bg-indigo-900/20 flex items-center justify-center text-[#4f46e5] dark:text-indigo-400 flex-shrink-0">
+              <MapPin className="w-5 h-5" />
+            </div>
+            <div>
+              <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Location</p>
+              <p className="font-bold text-slate-900 dark:text-white text-[13px]">{event.venue || event.city || 'Location TBA'}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* 4. About section */}
+        <div className="px-4 mt-6">
+          <h3 className="text-[16px] font-bold text-slate-900 dark:text-white mb-2">About</h3>
+          <div className="relative">
+            <p className={`text-[13.5px] text-slate-600 dark:text-gray-300 leading-relaxed ${!isExpanded && event.description?.length > 250 ? 'line-clamp-5' : ''}`}>
+              {event.description}
+            </p>
+            {!isExpanded && event.description?.length > 250 && (
+              <div className="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-slate-50 dark:from-slate-950 to-transparent pointer-events-none"></div>
+            )}
+          </div>
+          {event.description?.length > 250 && (
+            <button 
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="mt-2 text-primary-600 dark:text-primary-400 font-semibold text-[13px] flex items-center gap-1"
+            >
+              {isExpanded ? <>Read Less <ChevronUp className="w-3.5 h-3.5"/></> : <>Read More <ChevronDown className="w-3.5 h-3.5"/></>}
+            </button>
+          )}
+        </div>
+
+        {/* 5. Schedule */}
+        {event.schedule && event.schedule.length > 0 && (
+          <div className="px-4 mt-6">
+            <h3 className="text-[16px] font-bold text-slate-900 dark:text-white mb-3">Schedule</h3>
+            <div className="space-y-2">
+              {event.schedule.map((item, index) => (
+                <div key={index} className="flex space-x-3 bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                  <div className="font-bold text-primary-600 dark:text-primary-400 text-[13px] min-w-[60px] pt-0.5">{item.time}</div>
+                  <div className="text-[13px] text-slate-700 dark:text-gray-300 font-medium leading-tight">{item.activity}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Requirements */}
+        {event.requirements && event.requirements.length > 0 && (
+          <div className="px-4 mt-6">
+            <h3 className="text-[16px] font-bold text-slate-900 dark:text-white mb-3">Requirements</h3>
+            <ul className="space-y-2">
+              {event.requirements.map((req, index) => (
+                <li key={index} className="flex items-start space-x-2 text-slate-600 dark:text-gray-300 text-[13.5px]">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span>{req}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Prizes */}
+        {event.prizes && event.prizes.length > 0 && (
+          <div className="px-4 mt-6">
+            <h3 className="text-[16px] font-bold text-slate-900 dark:text-white mb-3">Prizes</h3>
+            <div className="space-y-2">
+              {event.prizes.map((prize, index) => (
+                <div key={index} className="flex items-center space-x-3 bg-gradient-to-r from-yellow-50 to-white dark:from-yellow-900/10 dark:to-slate-900 border border-yellow-100 dark:border-yellow-900/30 rounded-xl p-3 shadow-sm">
+                  <div className="w-10 h-10 rounded-full bg-yellow-100 dark:bg-yellow-900/40 flex items-center justify-center flex-shrink-0">
+                    <Award className="w-5 h-5 text-yellow-600 dark:text-yellow-400" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="text-[13px] font-bold text-slate-900 dark:text-white">{prize.position}</div>
+                    <div className="text-[12px] text-yellow-700 dark:text-yellow-500 font-semibold">{prize.prize}</div>
+                  </div>
+                  {prize.amount > 0 && (
+                    <div className="text-[15px] font-black text-slate-900 dark:text-white">
+                      {formatCurrency(prize.amount)}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* 6. Location Map */}
+        {getMapEmbedUrl() && (
+          <div className="px-4 mt-6">
+            <h3 className="text-[16px] font-bold text-slate-900 dark:text-white mb-3">Location</h3>
+            <div className="w-full h-[180px] rounded-[14px] overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800">
+              <iframe
+                title="Event Map"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+                src={getMapEmbedUrl()}
+              ></iframe>
+            </div>
+            {getDirectionsUrl() && (
+              <a href={getDirectionsUrl()} target="_blank" rel="noopener noreferrer" className="mt-3 flex items-center justify-center gap-2 w-full py-3 bg-[#eff6ff] dark:bg-blue-900/20 text-[#2563eb] dark:text-blue-400 rounded-xl font-bold text-[14px] active:scale-[0.98] transition-all">
+                <Navigation className="w-4 h-4" /> Get Directions
+              </a>
+            )}
+          </div>
+        )}
+
+        {/* 7. Tags */}
+        {event.tags && event.tags.length > 0 && (
+          <div className="px-4 mt-6">
+            <h3 className="text-[16px] font-bold text-slate-900 dark:text-white mb-3">Tags</h3>
+            <div className="flex flex-wrap gap-2">
+              {event.tags.map((tag, idx) => (
+                <span key={idx} className="text-[11.5px] px-3 py-1.5 rounded-[999px] bg-[#eef2ff] dark:bg-indigo-900/30 text-[#4338ca] dark:text-indigo-300 font-semibold">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* 8. Organizer */}
+        <div className="px-4 mt-6 mb-8">
+          <h3 className="text-[16px] font-bold text-slate-900 dark:text-white mb-3">Organizer</h3>
+          <div className="flex items-center space-x-3 bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center flex-shrink-0">
+              <Users className="w-6 h-6 text-slate-500 dark:text-gray-400" />
+            </div>
+            <div className="flex-1">
+              <p className="font-bold text-slate-900 dark:text-white text-[14px]">{event.college || 'EventNexus Community'}</p>
+              <div className="flex gap-4 mt-1.5">
+                {event.contact?.email && <a href={`mailto:${event.contact.email}`} className="text-slate-500 dark:text-gray-400 hover:text-primary-600"><Mail className="w-4 h-4"/></a>}
+                {event.contact?.phone && <a href={`tel:${event.contact.phone}`} className="text-slate-500 dark:text-gray-400 hover:text-primary-600"><Phone className="w-4 h-4"/></a>}
+                {event.contact?.website && <a href={event.contact.website} className="text-slate-500 dark:text-gray-400 hover:text-primary-600" target="_blank" rel="noopener noreferrer"><Globe className="w-4 h-4"/></a>}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 9. Sticky CTA */}
+        <div className="fixed bottom-4 left-4 right-4 z-[200]">
+          {(() => {
+            const registrationLink = event.registration_link;
+            const now = new Date();
+            const targetDate = event.registration_deadline ? new Date(event.registration_deadline) : new Date(event.date);
+            const daysLeft = Math.max(0, Math.ceil((targetDate - now) / (1000 * 60 * 60 * 24)));
+            
+            if (registrationLink && registrationLink.trim() !== '') {
+              return (
+                <a
+                  href={registrationLink.startsWith('http') ? registrationLink : `https://${registrationLink}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-[52px] w-full items-center justify-between px-5 bg-[#0066DB] text-white rounded-[14px] hover:brightness-110 active:scale-[0.98] transition-all shadow-xl shadow-blue-500/20"
+                >
+                  <div className="flex flex-col text-left">
+                    <span className="text-[13px] font-black leading-tight text-white">{event.registration_fee > 0 ? formatCurrency(event.registration_fee) : 'FREE'}</span>
+                    <span className="text-[10px] text-white/80 uppercase font-bold tracking-wider">Registration</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {daysLeft > 0 && <span className="bg-[#f97316] text-white text-[10px] font-black px-2 py-0.5 rounded shadow-sm"> {daysLeft}D LEFT</span>}
+                    <span className="text-[15px] font-bold text-white ml-2">Register</span>
+                  </div>
+                </a>
+              );
+            }
+            return (
+              <button className="w-full h-[52px] bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-[14px] font-bold text-[15px] cursor-not-allowed shadow-md">
+                Not Available
+              </button>
+            );
+          })()}
+        </div>
+      </div>
+
+      {/* ========================================================= */}
+      {/* DESKTOP VIEW (min-width: 768px)                           */}
+      {/* ========================================================= */}
+      <div className="hidden md:block">
       {/* Hero Section */}
       <div className="relative h-64 md:h-96 bg-gradient-to-br from-primary-600 to-secondary-600">
         {event.image && (
@@ -541,6 +788,9 @@ const EventDetail = () => {
           </div>
         </div>
       </div>
+      
+      </div> {/* End Desktop View */}
+
     </div>
   );
 };
