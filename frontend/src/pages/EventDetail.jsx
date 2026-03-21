@@ -15,7 +15,9 @@ import {
   Award,
   CheckCircle,
   AlertCircle,
-  Navigation
+  Navigation,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 import { useEvents } from '../context/EventContext';
 import { useAuth } from '../context/AuthContext';
@@ -28,6 +30,7 @@ const EventDetail = () => {
   const { currentEvent, loading, error, fetchEvent, toggleFavorite } = useEvents();
   const { isAuthenticated, user } = useAuth();
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     fetchEvent(id);
@@ -204,8 +207,33 @@ const EventDetail = () => {
 
               {/* Description */}
               <div className="prose max-w-none mb-8">
-                <h3 className="text-lg md:text-xl font-bold text-slate-950 dark:text-white mb-3">About This Event</h3>
-                <p className="text-sm md:text-base text-slate-600 dark:text-gray-300 whitespace-pre-line leading-relaxed">{event.description}</p>
+                <h3 className="text-lg md:text-xl font-bold text-slate-950 dark:text-white mb-4 border-l-4 border-primary-600 pl-3">
+                  All that you need to know about {event.title}
+                </h3>
+                <div className="relative">
+                  <p className={`text-sm md:text-base text-slate-600 dark:text-gray-300 whitespace-pre-line leading-relaxed ${!isExpanded && event.description?.length > 400 ? 'line-clamp-[6] md:line-clamp-[8]' : ''}`}>
+                    {event.description}
+                  </p>
+                  
+                  {!isExpanded && event.description?.length > 400 && (
+                    <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white dark:from-slate-900 to-transparent pointer-events-none"></div>
+                  )}
+                </div>
+                
+                {event.description?.length > 400 && (
+                  <div className="mt-4 flex justify-center">
+                    <button 
+                      onClick={() => setIsExpanded(!isExpanded)}
+                      className="flex items-center gap-1 text-primary-600 dark:text-primary-400 px-4 py-2 rounded-lg font-medium hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"
+                    >
+                      {isExpanded ? (
+                        <>Read Less <ChevronUp className="w-4 h-4" /></>
+                      ) : (
+                        <>Read More <ChevronDown className="w-4 h-4" /></>
+                      )}
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* Mobile Sidebar Content (Stacked) */}
