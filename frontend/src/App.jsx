@@ -50,7 +50,8 @@ function App() {
         {!shouldHideSidebar && (
           <Navbar
             isCollapsed={isCollapsed}
-            onMenuClick={() => setIsDrawerOpen(true)}
+            isDrawerOpen={isDrawerOpen}
+            onMenuClick={() => setIsDrawerOpen(!isDrawerOpen)}
           />
         )}
 
