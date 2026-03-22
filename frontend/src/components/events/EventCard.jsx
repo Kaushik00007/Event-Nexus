@@ -65,10 +65,10 @@ const EventCard = ({ event }) => {
   };
 
   return (
-    <Link to={`/events/${eventId}`}>
-      <div className="glass-panel-premium rounded-2xl overflow-hidden group h-full flex flex-col">
+    <Link to={`/events/${eventId}`} className="block h-full outline-none">
+      <div className="bg-white dark:bg-slate-900 rounded-[14px] md:rounded-[16px] overflow-hidden group h-full flex flex-col border border-slate-100 dark:border-slate-800 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] active:scale-[0.98] transition-all duration-300">
         {/* Image Section */}
-        <div className={`relative h-56 overflow-hidden ${event.image && !imageError ? '' : `bg-gradient-to-br ${getCategoryGradient()}`}`}>
+        <div className={`relative h-[140px] sm:h-[180px] overflow-hidden shrink-0 ${event.image && !imageError ? '' : `bg-gradient-to-br ${getCategoryGradient()}`}`}>
           {event.image && !imageError ? (
             <img
               src={getDecodedImage()}
@@ -78,73 +78,73 @@ const EventCard = ({ event }) => {
               loading="lazy"
             />
           ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center space-y-3">
-              <div className="bg-white/10 backdrop-blur-md rounded-full p-5 group-hover:scale-110 transition-transform duration-300 border border-white/20">
-                <CategoryIcon className="w-12 h-12 text-white/90" />
+            <div className="w-full h-full flex flex-col items-center justify-center space-y-2">
+              <div className="bg-white/10 backdrop-blur-md rounded-full p-4 group-hover:scale-110 transition-transform duration-300 border border-white/20">
+                <CategoryIcon className="w-8 h-8 md:w-10 md:h-10 text-white/90" />
               </div>
             </div>
           )}
 
-          {/* Overlay for better text readability (Gradient) */}
-          <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-[#171717] to-transparent opacity-80" />
+          {/* Deep Overlay for rich contrast */}
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-950/95 via-gray-900/30 to-transparent group-hover:from-gray-950/100 transition-colors duration-300" />
 
-          {/* Category Badge - Minimalist */}
-          <div className="absolute top-4 left-4 flex items-center space-x-2">
-            <span className="px-3 py-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-[10px] font-bold text-white tracking-wider uppercase">
+          {/* Category Badge - Bottom Left over gradient */}
+          <div className="absolute bottom-3 left-3 flex items-center">
+            <span className="px-2.5 py-1 bg-white/20 backdrop-blur-md border border-white/20 rounded-[6px] text-[9px] md:text-[10px] font-bold text-white tracking-widest uppercase shadow-sm">
               {event.category.replace('-', ' ')}
             </span>
           </div>
 
-          {/* Favorite Button - Glass Style */}
+          {/* Favorite Button - Top Right Sleek */}
           <button
             onClick={handleFavorite}
             disabled={isLoading}
-            className={`absolute top-4 right-4 p-2 rounded-full backdrop-blur-md border transition-all duration-300 ${isFavorite
-              ? 'bg-yellow-400 border-yellow-400 text-white'
-              : 'bg-white/10 border-white/20 text-white/70 hover:bg-white/20 hover:text-white'
+            className={`absolute top-3 right-3 p-1.5 rounded-full backdrop-blur-md border transition-all duration-300 z-10 ${isFavorite
+              ? 'bg-yellow-400 border-yellow-400 text-slate-900'
+              : 'bg-black/20 border-white/20 text-white hover:bg-white/30'
               }`}
           >
-            <Star className={`w-4 h-4 ${isFavorite ? 'fill-current' : ''}`} />
+            <Star className={`w-3.5 h-3.5 md:w-4 md:h-4 ${isFavorite ? 'fill-current' : ''}`} strokeWidth={isFavorite ? 0 : 2} />
           </button>
         </div>
 
         {/* Content Section */}
-        <div className="p-5 flex flex-col flex-grow">
-          <div className="flex justify-between items-start mb-3">
-            <h3 className="text-xl font-bold text-slate-950 dark:text-white leading-tight line-clamp-2 max-w-[70%]">
+        <div className="p-3 md:p-4 flex flex-col flex-grow bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 relative">
+          
+          {/* Title & Featured Row - Forced min-height to prevent staggering */}
+          <div className="flex justify-between items-start mb-2 gap-2 min-h-[40px] md:min-h-[42px]">
+            <h3 className="text-[14.5px] md:text-[16px] font-bold text-slate-900 dark:text-white leading-[1.3] line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
               {event.title}
             </h3>
             {event.featured && (
-              <span className="featured-pill flex-shrink-0">
-                Featured
+              <span className="px-2 py-0.5 rounded-[4px] bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[9px] font-black tracking-widest uppercase shrink-0 shadow-sm mt-0.5">
+                HOT
               </span>
             )}
           </div>
 
-          <p className="text-slate-700 dark:text-gray-300 text-sm mb-6 line-clamp-2 flex-grow font-semibold">
-            {event.description || 'Join us for this exciting event! Details and registration information available below.'}
+          {/* Description - Tightened and forced min-height */}
+          <p className="text-slate-500 dark:text-slate-400 text-[12px] md:text-[13px] leading-[1.4] line-clamp-2 mb-3 md:mb-4 flex-grow min-h-[34px] md:min-h-[36px]">
+            {event.description || 'Join us for this exciting event! Tap to view more details.'}
           </p>
 
-          <div className="space-y-4 mb-6">
-            {/* Minimalist Info Row */}
-            <div className="flex items-center justify-between text-[11px] font-bold tracking-wide">
-              <div className="flex items-center text-slate-500 dark:text-gray-400 uppercase">
-                <Calendar className="w-3.5 h-3.5 mr-1.5 text-indigo-600" />
-                {formatDate(event.date)}
-              </div>
-              <div className="flex items-center text-slate-500 dark:text-gray-400 uppercase">
-                <MapPin className="w-3.5 h-3.5 mr-1.5 text-indigo-600" />
-                {event.city || 'Online'}
-              </div>
+          {/* Date & Location - unified single row */}
+          <div className="flex items-center gap-2 md:gap-3 text-[11px] md:text-[12px] font-semibold text-slate-600 dark:text-slate-400 mb-3 md:mb-4 truncate">
+            <div className="flex items-center gap-1 shrink-0">
+              <Calendar className="w-3.5 h-3.5 text-primary-500 shrink-0" />
+              <span className="truncate">{formatDate(event.date)}</span>
             </div>
-
-            <div className="h-px bg-slate-200/50 dark:bg-white/10 w-full" />
+            <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-600 shrink-0" />
+            <div className="flex items-center gap-1 truncate">
+              <MapPin className="w-3.5 h-3.5 text-primary-500 shrink-0" />
+              <span className="truncate">{event.city || 'Online'}</span>
+            </div>
           </div>
 
-          {/* Action Button */}
-          <div className="mt-auto">
-            <div className="glass-button-primary dark:bg-white/10 dark:text-white dark:border-white/20">
-              View Event
+          {/* Action Button - Minimalist Outlined Pill */}
+          <div className="mt-auto pt-2.5 md:pt-3 border-t border-slate-100 dark:border-slate-800/60">
+            <div className="w-full text-center py-2 text-[13px] font-bold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-500/10 hover:bg-primary-100 dark:hover:bg-primary-500/20 rounded-[8px] transition-colors">
+              View Details
             </div>
           </div>
         </div>
