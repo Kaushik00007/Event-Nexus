@@ -116,13 +116,14 @@ const Home = () => {
     console.log('🔍 Processing events:', events.length, events);
     // Separate featured and upcoming events
     const featured = events.filter(event => event.featured === true);
-    const upcoming = events.filter(event => !event.featured).slice(0, 6);
+    // Cap at exactly 8 to create exactly two symmetrical rows on desktop (4x2)
+    const upcoming = events.filter(event => !event.featured).slice(0, 8);
 
     console.log('⭐ Featured events:', featured.length, featured);
     console.log('📅 Upcoming events:', upcoming.length, upcoming);
 
     setFeaturedEvents(featured);
-    setUpcomingEvents(upcoming.length > 0 ? upcoming : events.slice(0, 6));
+    setUpcomingEvents(upcoming.length > 0 ? upcoming : events.slice(0, 8));
   }, [events]);
 
   // Back to top button visibility
@@ -307,13 +308,13 @@ const Home = () => {
           </div>
 
           {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[...Array(6)].map((_, index) => (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
+              {[...Array(8)].map((_, index) => (
                 <EventCardSkeleton key={index} />
               ))}
             </div>
           ) : upcomingEvents.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
               {upcomingEvents.map((event) => (
                 <EventCard key={event.id || event._id} event={event} />
               ))}
