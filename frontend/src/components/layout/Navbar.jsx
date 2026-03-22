@@ -67,8 +67,7 @@ const InternalCustomSearch = ({ value, onChange, placeholder = "Search events...
   );
 };
 
-const Navbar = ({ isCollapsed, onMenuClick }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const Navbar = ({ isCollapsed, isDrawerOpen, onMenuClick }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const { user, isAuthenticated, logout } = useAuth();
@@ -124,9 +123,9 @@ const Navbar = ({ isCollapsed, onMenuClick }) => {
               aria-label="Toggle Menu"
             >
               <div className="relative w-6 h-6 flex flex-col justify-center items-center overflow-hidden">
-                <span className={`bg-current h-[2px] w-5 rounded-full transform transition-all duration-300 ease-in-out absolute ${!isCollapsed ? 'rotate-45' : '-translate-y-2'}`} />
-                <span className={`bg-current h-[2px] w-5 rounded-full transform transition-all duration-300 ease-in-out absolute ${!isCollapsed ? 'opacity-0 translate-x-3' : 'opacity-100 translate-x-0'}`} />
-                <span className={`bg-current h-[2px] w-5 rounded-full transform transition-all duration-300 ease-in-out absolute ${!isCollapsed ? '-rotate-45' : 'translate-y-2'}`} />
+                <span className={`bg-current h-[2px] w-5 rounded-full transform transition-all duration-300 ease-in-out absolute ${isDrawerOpen ? 'rotate-45' : '-translate-y-2'}`} />
+                <span className={`bg-current h-[2px] w-5 rounded-full transform transition-all duration-300 ease-in-out absolute ${isDrawerOpen ? 'opacity-0 translate-x-3' : 'opacity-100 translate-x-0'}`} />
+                <span className={`bg-current h-[2px] w-5 rounded-full transform transition-all duration-300 ease-in-out absolute ${isDrawerOpen ? '-rotate-45' : 'translate-y-2'}`} />
               </div>
             </button>
           </div>
