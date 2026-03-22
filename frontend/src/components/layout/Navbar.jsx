@@ -114,16 +114,32 @@ const Navbar = ({ isCollapsed, onMenuClick }) => {
   return (
     <nav className="glass-navbar fixed top-0 left-0 w-full z-[1000] mobile-navbar-opaque md:mobile-navbar-glass">
       <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 relative">
-          {/* Logo - Aligned Full Left */}
-          <div className="flex items-center z-[1010] filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)] -ml-2 md:ml-0">
+        <div className="flex items-center justify-between h-16 relative w-full">
+          
+          {/* Mobile Animated Hamburger (Left aligned) */}
+          <div className="md:hidden flex items-center z-50 -ml-2">
+            <button
+              onClick={onMenuClick}
+              className="p-2 text-gray-600 dark:text-gray-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full active:scale-90 transition-transform focus:outline-none"
+              aria-label="Toggle Menu"
+            >
+              <div className="relative w-6 h-6 flex flex-col justify-center items-center overflow-hidden">
+                <span className={`bg-current h-[2px] w-5 rounded-full transform transition-all duration-300 ease-in-out absolute ${!isCollapsed ? 'rotate-45' : '-translate-y-2'}`} />
+                <span className={`bg-current h-[2px] w-5 rounded-full transform transition-all duration-300 ease-in-out absolute ${!isCollapsed ? 'opacity-0 translate-x-3' : 'opacity-100 translate-x-0'}`} />
+                <span className={`bg-current h-[2px] w-5 rounded-full transform transition-all duration-300 ease-in-out absolute ${!isCollapsed ? '-rotate-45' : 'translate-y-2'}`} />
+              </div>
+            </button>
+          </div>
+
+          {/* Logo - Centered on Mobile, Left on Desktop */}
+          <div className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 md:left-auto flex items-center z-[1010] filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
             <Link to="/" className="flex items-center space-x-1 md:space-x-3">
               <img
                 src="/logo.png"
                 alt="EventNexus Logo"
-                className="w-12 h-12 md:w-16 md:h-16 object-contain"
+                className="w-10 h-10 md:w-16 md:h-16 object-contain"
               />
-              <span className="text-2xl md:text-2xl font-black bg-gradient-to-r from-blue-600 to-slate-900 dark:from-blue-400 dark:to-slate-100 bg-clip-text text-transparent tracking-tighter leading-none block drop-shadow-md">EventNexus</span>
+              <span className="text-xl md:text-2xl font-black bg-gradient-to-r from-blue-600 to-slate-900 dark:from-blue-400 dark:to-slate-100 bg-clip-text text-transparent tracking-tighter leading-none block drop-shadow-md">EventNexus</span>
             </Link>
           </div>
 
@@ -257,15 +273,9 @@ const Navbar = ({ isCollapsed, onMenuClick }) => {
             )}
           </div>
 
-          {/* Actions / Theme Toggle / Hamburger for Mobile */}
-          <div className="md:hidden flex items-center z-40 gap-1">
+          {/* Actions / Theme Toggle for Mobile (Right aligned) */}
+          <div className="md:hidden flex items-center z-40 gap-1 -mr-2">
             <ThemeToggle />
-            <button
-              onClick={onMenuClick}
-              className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 rounded-full"
-            >
-              <Menu className="w-6 h-6" />
-            </button>
           </div>
         </div>
 
