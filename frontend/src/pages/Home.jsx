@@ -252,10 +252,10 @@ const Home = () => {
         onCityChange={handleCityChange}
         loading={localEventsLoading}
       />
-      <section className="py-10 md:py-16 bg-white dark:bg-slate-950">
+      <section className="py-2 md:py-6 bg-white dark:bg-slate-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center mb-8 md:mb-12">
+
+          <div className="text-center mb-6 md:mb-8">
             <h2 className="text-[20px] md:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-2 md:mb-4">
               Explore by Category
             </h2>
@@ -264,7 +264,7 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-y-8 gap-x-2 sm:gap-x-6 md:gap-x-8 max-w-fit mx-auto justify-items-center">
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-y-6 md:gap-y-8 gap-x-2 sm:gap-x-6 md:gap-x-8 max-w-fit mx-auto justify-items-center">
             {CATEGORIES.slice(0, 6).map((category, index) => {
               const Icon = categoryIcons[category.value] || Calendar;
               return (
@@ -288,9 +288,9 @@ const Home = () => {
       </section>
 
       {/* Featured Events */}
-      <section className="pt-12 pb-6 md:py-12">
+      <section className="pt-2 md:pt-4 pb-6 md:pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-12">
+          <div className="flex items-center justify-between mb-6 md:mb-10">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold text-slate-950 dark:text-white mb-2">
                 Upcoming Events
