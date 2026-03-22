@@ -44,13 +44,13 @@ const Favorites = () => {
 
         {/* Content */}
         {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
             {[...Array(6)].map((_, index) => (
               <EventCardSkeleton key={index} />
             ))}
           </div>
         ) : favorites.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
             {favorites.map((event) => (
               <EventCard key={event.id || event._id} event={event} />
             ))}
