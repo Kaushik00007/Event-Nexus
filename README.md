@@ -1,4 +1,4 @@
-# 🚀 EventNexus – College Events Aggregator
+# 🚀 EventNexus – Event Aggregator for College/University Students
 
 ## 🌐 Live Site
 Check out the live application here: 👉 **[EventNexus Live Site](https://event-nexus-phi.vercel.app)**
