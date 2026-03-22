@@ -252,41 +252,38 @@ const Home = () => {
         onCityChange={handleCityChange}
         loading={localEventsLoading}
       />
-
-      {/* Categories Section */}
-      <section className="py-12 bg-gray-50 dark:bg-slate-900/20">
+      <section className="py-10 md:py-16 bg-white dark:bg-slate-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-950 dark:text-white mb-4">
+          
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-[20px] md:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-2 md:mb-4">
               Explore by Category
             </h2>
-            <p className="text-slate-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-[13px] md:text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
               Find the perfect event that matches your interests and goals
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-y-8 gap-x-2 sm:gap-x-6 md:gap-x-8 max-w-fit mx-auto justify-items-center">
             {CATEGORIES.slice(0, 6).map((category, index) => {
               const Icon = categoryIcons[category.value] || Calendar;
               return (
                 <Link
                   key={category.value}
                   to={`/events?category=${category.value}`}
-                  className="glass-panel-premium p-6 text-center hover:shadow-xl transition-all duration-300 card-hover group"
-                  style={{
-                    animationDelay: `${index * 0.1}s`
-                  }}
+                  className="flex flex-col items-center group cursor-pointer w-[90px] md:w-[120px] outline-none"
                 >
-                  <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-primary-100 to-primary-50 dark:from-primary-900/20 dark:to-primary-800/20 rounded-2xl mb-3 group-hover:shadow-lg group-hover:scale-110 transition-all duration-300">
-                    <Icon className="w-7 h-7 text-primary-600 dark:text-primary-400 icon-transition icon-hover-bounce" />
+                  <div className="w-[64px] h-[64px] md:w-[84px] md:h-[84px] rounded-full bg-[#f3f4f6] dark:bg-slate-800/80 flex items-center justify-center mb-3 transition-colors duration-200 group-active:scale-95 group-hover:bg-[#e5e7eb] dark:group-hover:bg-slate-700">
+                    <Icon className="w-6 h-6 md:w-8 md:h-8 text-slate-800 dark:text-gray-200" strokeWidth={1.5} />
                   </div>
-                  <h3 className="font-bold text-slate-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                  <h3 className="text-[12.5px] md:text-[14.5px] font-semibold text-slate-800 dark:text-white text-center leading-tight">
                     {category.label}
                   </h3>
                 </Link>
               );
             })}
           </div>
+
         </div>
       </section>
 
