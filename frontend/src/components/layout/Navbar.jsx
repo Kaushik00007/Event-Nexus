@@ -228,14 +228,8 @@ const Navbar = ({ isCollapsed, isDrawerOpen, onMenuClick }) => {
             </button>
           </div>
 
-          {/* Logo - Centered on Mobile, Left on Desktop */}
           <div className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 md:left-auto flex items-center z-[1010] filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
-            <Link to="/" className="flex items-center space-x-1 md:space-x-3">
-              <img
-                src="/logo.png"
-                alt="EventNexus Logo"
-                className="w-10 h-10 md:w-16 md:h-16 object-contain"
-              />
+            <Link to="/" className="flex items-center">
               <span className="text-xl md:text-2xl font-black bg-gradient-to-r from-blue-600 to-slate-900 dark:from-blue-400 dark:to-slate-100 bg-clip-text text-transparent tracking-tighter leading-none block drop-shadow-md">EventNexus</span>
             </Link>
           </div>
