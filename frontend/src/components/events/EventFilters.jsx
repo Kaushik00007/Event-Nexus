@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Search, Filter, X } from 'lucide-react';
 import { CATEGORIES, EVENT_TYPES, CITIES } from '../../utils/constants';
-import IconSelect from '../common/IconSelect';
 import * as eventService from '../../services/eventService';
 
 const normalizeCategoryValue = (rawValue = '') => {
@@ -33,16 +32,42 @@ const mergeCategoryOptions = (existingOptions, newValues) => {
 
     optionMap.set(normalizedValue, {
       value: normalizedValue,
-      label: formatCategoryLabel(value),
-      icon: 'Tag'
+      label: formatCategoryLabel(value)
     });
   });
 
   return Array.from(optionMap.values());
 };
 
+const FilterScrollRow = ({ options, name, currentValue, onChange }) => (
+  <div className="w-full">
+    <div className="flex overflow-x-auto hide-scrollbar gap-2 pb-1 -mx-2 px-2 sm:mx-0 sm:px-0" style={{ WebkitOverflowScrolling: 'touch' }}>
+      {options.map((opt, idx) => {
+        const val = typeof opt === 'string' ? opt : opt.value || opt;
+        const lbl = typeof opt === 'string' ? opt : opt.label || opt;
+        const isActive = currentValue === val;
+        return (
+          <button
+            key={idx}
+            type="button"
+            onClick={() => onChange({ target: { name, value: val }})}
+            className={`flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-[8px] text-[11px] sm:text-[12px] font-bold transition-all active:scale-[0.97] border ${
+              isActive 
+                ? 'bg-primary-600 border-primary-600 text-white shadow-sm shadow-primary-500/20' 
+                : 'bg-white dark:bg-slate-800/80 border-slate-200 dark:border-slate-700/80 text-slate-600 dark:text-gray-300 hover:border-primary-300 dark:hover:border-primary-500/50 hover:bg-slate-50 dark:hover:bg-slate-800'
+            }`}
+          >
+            {lbl}
+          </button>
+        )
+      })}
+    </div>
+  </div>
+);
+
 const EventFilters = ({ filters, setFilters, onSearch }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isMoreFiltersOpen, setIsMoreFiltersOpen] = useState(false);
   const [categoryOptions, setCategoryOptions] = useState(CATEGORIES);
 
   useEffect(() => {
@@ -88,213 +113,135 @@ const EventFilters = ({ filters, setFilters, onSearch }) => {
   const hasActiveFilters = filters.category || filters.eventType || filters.city || (filters.search && filters.search.length > 0);
 
   return (
-    <div className="mb-4 sm:mb-8 relative z-20">
-      <div className="hidden md:block absolute inset-0 glass-panel-premium -z-10 rounded-2xl"></div>
-      <div className="p-0 md:p-6 px-1 sm:px-0">
-      {/* Search Bar & Mobile Toggle */}
-      {/* Search Bar & Mobile Toggle */}
-      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-0 sm:mb-6">
-        {/* Desktop Search Bar */}
-        <form onSubmit={handleSearchSubmit} className="flex-grow hidden md:block">
+    <div className="mb-6 relative z-20">
+      {/* Sleek Minimal Glass Panel */}
+      <div className="absolute inset-0 bg-white/70 dark:bg-slate-900/60 backdrop-blur-lg border border-white/50 dark:border-white/5 shadow-sm rounded-xl md:rounded-2xl -z-10 transition-all duration-300"></div>
+      
+      <div className="p-3 md:p-4 flex flex-col gap-3">
+        {/* Compact Search Bar & Filters Header row */}
+        <form onSubmit={handleSearchSubmit} className="w-full group">
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 dark:text-gray-500 w-5 h-5" />
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 dark:text-gray-500 w-5 h-5 transition-colors group-focus-within:text-primary-500" />
             <input
               type="text"
               name="search"
               value={filters.search}
               onChange={handleChange}
-              placeholder="Search events, hackathons..."
-              className="w-full pl-11 pr-24 py-3 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all text-sm sm:text-base shadow-sm"
+              placeholder="Search hackathons, coding contests, workshops..."
+              className="w-full pl-11 pr-24 py-2.5 sm:py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 rounded-[10px] text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 transition-all text-sm sm:text-[15px] shadow-sm"
             />
             <button
               type="submit"
-              className="absolute right-1.5 top-1/2 transform -translate-y-1/2 bg-primary-600 dark:bg-primary-500 text-white px-4 py-1.5 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors shadow-lg shadow-primary-500/20 text-sm font-bold"
+              className="absolute right-1.5 top-1/2 transform -translate-y-1/2 bg-primary-600 text-white px-4 py-1.5 sm:py-2 rounded-[8px] hover:bg-primary-700 transition-all shadow-sm active:scale-[0.97] text-[13px] font-bold tracking-wide"
             >
               Search
             </button>
           </div>
         </form>
 
-        {/* Mobile Custom Search with Integrated Filter */}
-        <div className="md:hidden w-full">
-          <div className="custom-search-container !min-h-[50px]">
-            <div id="poda">
-              <div className="custom-search-glow"></div>
-              <div className="custom-search-darkBorderBg"></div>
-              <div className="custom-search-darkBorderBg"></div>
-              <div className="custom-search-darkBorderBg"></div>
-              <div className="custom-search-white"></div>
-              <div className="custom-search-border"></div>
-              <div id="main">
-                <form onSubmit={handleSearchSubmit}>
-                  <input
-                    placeholder="Search events..."
-                    type="text"
-                    name="search"
-                    className="custom-search-input"
-                    value={filters.search}
-                    onChange={handleChange}
-                  />
-                </form>
-                <div id="input-mask"></div>
-                <div id="pink-mask"></div>
-                <div className="filterBorder"></div>
-                <button 
-                  id="filter-icon"
-                  type="button"
-                  onClick={() => setIsExpanded(!isExpanded)}
-                  className={`${isExpanded ? 'bg-primary-100 dark:bg-primary-500/20' : ''} transition-colors`}
-                >
-                  <svg preserveAspectRatio="none" height={20} width={20} viewBox="4.8 4.56 14.832 15.408" fill="none">
-                    <path d="M8.16 6.65002H15.83C16.47 6.65002 16.99 7.17002 16.99 7.81002V9.09002C16.99 9.56002 16.7 10.14 16.41 10.43L13.91 12.64C13.56 12.93 13.33 13.51 13.33 13.98V16.48C13.33 16.83 13.1 17.29 12.81 17.47L12 17.98C11.24 18.45 10.2 17.92 10.2 16.99V13.91C10.2 13.5 9.97 12.98 9.73 12.69L7.52 10.36C7.23 10.08 7 9.55002 7 9.20002V7.87002C7 7.17002 7.52 6.65002 8.16 6.65002Z" stroke="currentColor" className={`${isExpanded ? 'text-primary-600 dark:text-primary-400' : 'text-slate-600 dark:text-gray-400'}`} strokeWidth={1} strokeMiterlimit={10} strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                  {hasActiveFilters && !isExpanded && (
-                    <span className="absolute top-1 right-1 flex h-2 w-2 rounded-full bg-red-500"></span>
-                  )}
-                </button>
-                <div id="search-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" width={20} viewBox="0 0 24 24" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" height={20} fill="none" className="feather feather-search">
-                    <circle stroke="url(#search_filter)" r={8} cy={11} cx={11} />
-                    <line stroke="url(#searchl_filter)" y2="16.65" y1={22} x2="16.65" x1={22} />
-                    <defs>
-                      <linearGradient gradientTransform="rotate(50)" id="search_filter">
-                        <stop stopColor="#0ea5e9" offset="0%" />
-                        <stop stopColor="#d946ef" offset="100%" />
-                      </linearGradient>
-                      <linearGradient id="searchl_filter">
-                        <stop stopColor="#0ea5e9" offset="0%" />
-                        <stop stopColor="#d946ef" offset="100%" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                </div>
-              </div>
+        {/* Primary Row: Categories & Toggle */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full">
+           <div className="flex-grow overflow-hidden w-full">
+             <FilterScrollRow
+               name="category"
+               currentValue={filters.category}
+               onChange={handleChange}
+               options={[{ value: '', label: '🔥 All Categories' }, ...categoryOptions]}
+             />
+           </div>
+           
+           <button
+             onClick={() => setIsMoreFiltersOpen(!isMoreFiltersOpen)}
+             className={`shrink-0 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-[8px] text-[11px] sm:text-[12px] font-bold border transition-colors ${
+               isMoreFiltersOpen 
+                 ? 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white' 
+                 : 'bg-white dark:bg-slate-800/50 border-slate-200 dark:border-slate-700/80 text-slate-600 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+             }`}
+           >
+             <Filter className="w-3.5 h-3.5" />
+             <span className="inline">{isMoreFiltersOpen ? 'Less Filters' : 'More Filters'}</span>
+           </button>
+        </div>
+
+        {/* Expandable Secondary Row */}
+        <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 transition-all duration-300 overflow-hidden ${isMoreFiltersOpen ? 'max-h-[500px] opacity-100 mt-1' : 'max-h-0 opacity-0 m-0'}`}>
+             <FilterScrollRow
+               name="eventType"
+               currentValue={filters.eventType}
+               onChange={handleChange}
+               options={[{ value: '', label: 'All Types' }, ...EVENT_TYPES.map(t => ({ value: (t.value || t), label: (t.label || t) }))]}
+             />
+             <FilterScrollRow
+               name="city"
+               currentValue={filters.city}
+               onChange={handleChange}
+               options={[{ value: '', label: 'Globally' }, ...CITIES.map(c => ({ value: c, label: c }))]}
+             />
+             <FilterScrollRow
+               name="sort"
+               currentValue={filters.sort}
+               onChange={handleChange}
+               options={[
+                 { value: 'date', label: 'By Upcoming' },
+                 { value: 'latest', label: 'Recently Added' },
+                 { value: 'popular', label: 'Most Popular' },
+                 { value: 'favorites', label: 'Top Trending' }
+               ]}
+             />
+             <FilterScrollRow
+               name="upcoming"
+               currentValue={filters.upcoming}
+               onChange={handleChange}
+               options={[
+                 { value: 'true', label: 'Upcoming Only' },
+                 { value: '', label: 'All Time' }
+               ]}
+             />
+        </div>
+
+        {/* Active Filters & Reset Action */}
+        {(hasActiveFilters || isMoreFiltersOpen) && (
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pt-2 gap-3 border-t border-slate-100 dark:border-slate-700/50 mt-1">
+            <div className="flex flex-wrap gap-2">
+              {filters.category && (
+                <span className="inline-flex items-center px-2 py-1 bg-primary-50 dark:bg-primary-500/10 text-primary-700 dark:text-primary-300 rounded-[6px] text-[10px] font-black uppercase tracking-wider ring-1 ring-primary-500/20">
+                  {filters.category.replace('-', ' ')}
+                  <button onClick={() => setFilters(prev => ({ ...prev, category: '' }))} className="ml-1.5 hover:text-red-500 transition-colors">
+                    <X className="w-3 h-3" />
+                  </button>
+                </span>
+              )}
+              {filters.eventType && (
+                <span className="inline-flex items-center px-2 py-1 bg-primary-50 dark:bg-primary-500/10 text-primary-700 dark:text-primary-300 rounded-[6px] text-[10px] font-black uppercase tracking-wider ring-1 ring-primary-500/20">
+                  {filters.eventType}
+                  <button onClick={() => setFilters(prev => ({ ...prev, eventType: '' }))} className="ml-1.5 hover:text-red-500 transition-colors">
+                    <X className="w-3 h-3" />
+                  </button>
+                </span>
+              )}
+              {filters.city && (
+                <span className="inline-flex items-center px-2 py-1 bg-primary-50 dark:bg-primary-500/10 text-primary-700 dark:text-primary-300 rounded-[6px] text-[10px] font-black uppercase tracking-wider ring-1 ring-primary-500/20">
+                  {filters.city}
+                  <button onClick={() => setFilters(prev => ({ ...prev, city: '' }))} className="ml-1.5 hover:text-red-500 transition-colors">
+                    <X className="w-3 h-3" />
+                  </button>
+                </span>
+              )}
+              {!hasActiveFilters && (
+                <span className="text-[11px] font-semibold text-slate-400 dark:text-gray-500">No active filters applied</span>
+              )}
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Filters Grid - Desktop Always Visible, Mobile Toggleable */}
-      <div className={`${isExpanded ? 'block' : 'hidden'} md:block mt-2 sm:mt-0 pt-3 sm:pt-0 border-t border-slate-200 dark:border-white/10 sm:border-0`}>
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-4">
-          {/* Category */}
-          <div>
-            <label className="block text-[10px] sm:text-xs font-black uppercase tracking-wider text-slate-500 dark:text-gray-400 mb-1 ml-1">Category</label>
-            <IconSelect
-              name="category"
-              value={filters.category}
-              onChange={handleChange}
-              options={[
-                { value: '', label: 'All Categories' },
-                ...categoryOptions
-              ]}
-              placeholder="All Categories"
-            />
-          </div>
-
-          {/* Event Type */}
-          <div>
-            <label className="block text-[10px] sm:text-xs font-black uppercase tracking-wider text-slate-500 dark:text-gray-400 mb-1 ml-1">Type</label>
-            <IconSelect
-              name="eventType"
-              value={filters.eventType}
-              onChange={handleChange}
-              options={[
-                { value: '', label: 'All Types' },
-                ...EVENT_TYPES
-              ]}
-              placeholder="All Types"
-            />
-          </div>
-
-          {/* City */}
-          <div>
-            <label className="block text-[10px] sm:text-xs font-black uppercase tracking-wider text-slate-500 dark:text-gray-400 mb-1 ml-1">Location</label>
-            <IconSelect
-              name="city"
-              value={filters.city}
-              onChange={handleChange}
-              options={[
-                { value: '', label: 'All Cities', icon: 'MapPin' },
-                ...CITIES.map(city => ({
-                  value: city,
-                  label: city,
-                  icon: city === 'Online' ? 'Globe' : 'MapPin'
-                }))
-              ]}
-              placeholder="All Cities"
-            />
-          </div>
-
-          {/* Sort */}
-          <div>
-            <label className="block text-[10px] sm:text-xs font-black uppercase tracking-wider text-slate-500 dark:text-gray-400 mb-1 ml-1">Sort</label>
-            <IconSelect
-              name="sort"
-              value={filters.sort}
-              onChange={handleChange}
-              options={[
-                { value: 'date', label: 'Upcoming', icon: 'Calendar' },
-                { value: 'latest', label: 'Latest', icon: 'Clock' },
-                { value: 'popular', label: 'Popular', icon: 'Zap' },
-                { value: 'favorites', label: 'Trending', icon: 'Heart' }
-              ]}
-            />
-          </div>
-
-          {/* Upcoming Toggle */}
-          <div>
-            <label className="block text-[10px] sm:text-xs font-black uppercase tracking-wider text-slate-500 dark:text-gray-400 mb-1 ml-1">Status</label>
-            <IconSelect
-              name="upcoming"
-              value={filters.upcoming}
-              onChange={handleChange}
-              options={[
-                { value: 'true', label: 'Upcoming', icon: 'CalendarCheck' },
-                { value: '', label: 'All Time', icon: 'Eye' }
-              ]}
-            />
-          </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="mt-6 pt-4 border-t border-slate-100 dark:border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-            {filters.category && (
-              <span className="inline-flex items-center px-3 py-1 bg-primary-500/10 dark:bg-primary-500/20 text-primary-700 dark:text-primary-300 rounded-lg text-xs font-bold ring-1 ring-primary-500/20">
-                {filters.category.replace('-', ' ')}
-                <button onClick={() => setFilters(prev => ({ ...prev, category: '' }))} className="ml-2 hover:text-red-500 transition-colors">
-                  <X className="w-3 h-3" />
-                </button>
-              </span>
-            )}
-            {filters.eventType && (
-              <span className="inline-flex items-center px-3 py-1 bg-primary-500/10 dark:bg-primary-500/20 text-primary-700 dark:text-primary-300 rounded-lg text-xs font-bold ring-1 ring-primary-500/20">
-                {filters.eventType}
-                <button onClick={() => setFilters(prev => ({ ...prev, eventType: '' }))} className="ml-2 hover:text-red-500 transition-colors">
-                  <X className="w-3 h-3" />
-                </button>
-              </span>
-            )}
-            {filters.city && (
-              <span className="inline-flex items-center px-3 py-1 bg-primary-500/10 dark:bg-primary-500/20 text-primary-700 dark:text-primary-300 rounded-lg text-xs font-bold ring-1 ring-primary-500/20">
-                {filters.city}
-                <button onClick={() => setFilters(prev => ({ ...prev, city: '' }))} className="ml-2 hover:text-red-500 transition-colors">
-                  <X className="w-3 h-3" />
-                </button>
-              </span>
+            
+            {(hasActiveFilters) && (
+              <button
+                onClick={clearFilters}
+                className="w-full sm:w-auto text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 flex items-center justify-center space-x-1 transition-all px-3 py-1.5 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-[6px] active:scale-95 border border-transparent hover:border-red-100 dark:hover:border-red-500/20"
+              >
+                <span>Reset All</span>
+              </button>
             )}
           </div>
-          
-          <button
-            onClick={clearFilters}
-            className="w-full sm:w-auto text-xs text-slate-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 flex items-center justify-center space-x-1.5 font-black uppercase tracking-widest transition-all px-4 py-2 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg"
-          >
-            <Filter className="w-3.5 h-3.5" />
-            <span>Reset Filters</span>
-          </button>
-        </div>
-        </div>
+        )}
       </div>
     </div>
   );
