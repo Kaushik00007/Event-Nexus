@@ -264,7 +264,7 @@ const Navbar = ({ isCollapsed, isDrawerOpen, onMenuClick }) => {
                 </Link>
                 <Link
                   to="/register"
-                  className="bg-primary-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-primary-700 hover:scale-[1.02] transition-all"
+                  className="bg-gradient-to-r from-blue-600 to-slate-900 text-white px-5 py-2 rounded-xl font-bold hover:opacity-90 hover:shadow-lg hover:shadow-blue-900/20 hover:scale-[1.02] transition-all"
                 >
                   Sign Up
                 </Link>
