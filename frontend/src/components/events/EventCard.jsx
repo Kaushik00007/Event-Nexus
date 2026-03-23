@@ -91,7 +91,7 @@ const EventCard = ({ event }) => {
           {/* Category Badge - Bottom Left over gradient */}
           <div className="absolute bottom-3 left-3 flex items-center">
             <span className="px-2.5 py-1 bg-white/20 backdrop-blur-md border border-white/20 rounded-[6px] text-[9px] md:text-[10px] font-bold text-white tracking-widest uppercase shadow-sm">
-              {event.category.replace('-', ' ')}
+              {(event?.category || 'other').replace('-', ' ')}
             </span>
           </div>
 
@@ -132,7 +132,7 @@ const EventCard = ({ event }) => {
           <div className="flex items-center gap-2 md:gap-3 text-[11px] md:text-[12px] font-semibold text-slate-600 dark:text-slate-400 mb-3 md:mb-4 truncate">
             <div className="flex items-center gap-1 shrink-0">
               <Calendar className="w-3.5 h-3.5 text-primary-500 shrink-0" />
-              <span className="truncate">{formatDate(event.date)}</span>
+              <span className="truncate">{event?.date ? formatDate(event.date) : 'Date TBD'}</span>
             </div>
             <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-600 shrink-0" />
             <div className="flex items-center gap-1 truncate">
