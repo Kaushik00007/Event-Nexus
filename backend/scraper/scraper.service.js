@@ -405,25 +405,62 @@ class ScraperService {
         return { success: true, eventsFound: 0, inserted: 0, updated: 0 };
       }
 
-      // STEP 3: Scrape each event page individually
-      console.log(`   📄 Step 2: Scraping individual event pages...`);
+      // STEP 3: Scrape each event page individually using AI Extraction
+      console.log(`   📄 Step 2: Extracting details from individual event pages using AI...`);
       const events = [];
       
+      const schema = {
+        type: "object",
+        properties: {
+          title: { type: "string" },
+          date: { type: "string", description: "ISO 8601 format full start date and time. Must contain the year, month, and day." },
+          location: { type: "string", description: "Physical location (address/city). Output 'Online' if virtual." },
+          description: { type: "string", description: "Event description, max 500 characters." },
+          image: { type: ["string", "null"], description: "Cover image URL. Null if none." },
+          registration_link: { type: ["string", "null"], description: "Registration or RSVP link URL. Null if none." }
+        },
+        required: ["title", "date", "location", "description"]
+      };
+
       for (const eventUrl of eventUrls.slice(0, 20)) { // Limit to 20 events per source
         try {
-          const result = await firecrawlService.scrapeUrl(eventUrl);
+          const result = await firecrawlService.extractData(
+            eventUrl,
+            schema,
+            "Extract complete and accurate event details from this page. Provide accurate ISO 8601 date, full location, and image if available."
+          );
           
-          if (result.success) {
-            // STEP 4: Parse event details including images
-            const eventData = source.parser(result.data, eventUrl);
+          if (result.success && result.data) {
+            const aiData = result.data;
+            let finalDate = aiData.date;
             
-            if (eventData) {
+            // Try to validate and parse the date strictly
+            const parsedTime = new Date(finalDate).getTime();
+            const isValidDate = !isNaN(parsedTime);
+            
+            // If LLM failed to give a valid ISO string but we have something, try basic fixing or skip
+            // We do NOT use Date.now() fallback to avoid the "events disappearing" bug.
+            
+            const eventData = {
+              title: aiData.title,
+              date: isValidDate ? new Date(parsedTime).toISOString() : null,
+              location: aiData.location,
+              description: aiData.description,
+              image: aiData.image,
+              registration_link: aiData.registration_link || eventUrl,
+              url: eventUrl,
+              source: source.name.split(' ')[0] // e.g. "GDG" or "Meetup"
+            };
+            
+            if (eventData.title && eventData.date) {
               events.push(eventData);
-              console.log(`   ✓ Parsed: ${eventData.title}`);
+              console.log(`   ✓ AI Extracted: ${eventData.title} (${eventData.date})`);
+            } else {
+              console.log(`   ⚠️  AI Extracted poor details for ${eventUrl} - Title: ${eventData.title}, Valid Date: ${isValidDate}`);
             }
           }
         } catch (error) {
-          console.log(`   ⚠️  Failed to scrape ${eventUrl}: ${error.message}`);
+          console.log(`   ⚠️  Failed to extract from ${eventUrl}: ${error.message}`);
         }
       }
 
