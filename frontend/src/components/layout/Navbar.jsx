@@ -162,54 +162,54 @@ const Navbar = ({ isCollapsed, isDrawerOpen, onMenuClick }) => {
             {isAuthenticated ? (
               <>
 
-                <Link
-                  to="/favorites"
-                  className="flex items-center space-x-1 text-slate-950 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-bold transition-colors group"
-                >
-                  <Star className="w-4 h-4 icon-transition group-hover:scale-110 group-hover:fill-yellow-300 group-hover:text-yellow-400" />
-                </Link>
-
-
-
-                {/* Notifications Bell */}
-                <Link
-                  to="/notifications"
-                  className="relative flex items-center group"
-                >
-                  <div className={`relative ${unreadCount > 0 ? 'animate-bell-ring' : ''}`}>
-                    <Bell
-                      className={`w-5 h-5 transition-all icon-transition group-hover:scale-110 ${unreadCount > 0
-                        ? 'text-red-600 fill-red-100'
-                        : 'text-gray-600 dark:text-gray-400 group-hover:text-primary-600'
-                        }`}
-                    />
-                    {unreadCount > 0 && (
-                      <>
-                        <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-bounce">
-                          {unreadCount > 9 ? '9+' : unreadCount}
-                        </span>
-                        <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full animate-ping"></span>
-                      </>
-                    )}
-                  </div>
-                </Link>
-
-                <ThemeToggle />
-
-                {/* User Dropdown */}
-                <div className="relative">
-                  <button
-                    onClick={() => setShowDropdown(!showDropdown)}
-                    className="flex items-center text-slate-950 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-bold transition-colors group"
+                <div className="flex items-center space-x-1 sm:space-x-1.5 bg-white/50 dark:bg-slate-800/50 backdrop-blur-md border border-slate-200/50 dark:border-white/10 p-1.5 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)]">
+                  {/* Favorites */}
+                  <Link
+                    to="/favorites"
+                    className="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-white/60 dark:hover:bg-slate-700/50 transition-all text-slate-600 dark:text-gray-400 hover:text-yellow-500 dark:hover:text-yellow-400 hover:shadow-sm group"
+                    title="Favorites"
                   >
-                    <div className={`w-8 h-8 ${user?.role === 'admin' ? 'bg-red-100' : 'bg-primary-100'} rounded-full flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                      {user?.role === 'admin' ? (
-                        <Shield className="w-4 h-4 text-red-600 icon-transition group-hover:icon-hover-bounce" />
-                      ) : (
-                        <User className="w-4 h-4 text-primary-600 icon-transition group-hover:scale-110" />
+                    <Star className="w-5 h-5 icon-transition group-hover:scale-110 group-hover:fill-yellow-400/20" />
+                  </Link>
+
+                  <div className="w-[1px] h-4 bg-slate-200 dark:bg-slate-700/50 hidden sm:block"></div>
+
+                  {/* Notifications Bell */}
+                  <Link
+                    to="/notifications"
+                    className="relative w-9 h-9 flex items-center justify-center rounded-xl hover:bg-white/60 dark:hover:bg-slate-700/50 transition-all text-slate-600 dark:text-gray-400 hover:text-primary-600 hover:shadow-sm group"
+                    title="Notifications"
+                  >
+                    <div className={`relative ${unreadCount > 0 ? 'animate-bell-ring text-red-600' : ''}`}>
+                      <Bell className="w-5 h-5 transition-all icon-transition group-hover:scale-110" />
+                      {unreadCount > 0 && (
+                        <>
+                          <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white dark:border-slate-800"></span>
+                          <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-red-500 rounded-full animate-ping opacity-75"></span>
+                        </>
                       )}
                     </div>
-                  </button>
+                  </Link>
+
+                  <div className="w-[1px] h-4 bg-slate-200 dark:bg-slate-700/50 hidden sm:block"></div>
+
+                  <ThemeToggle />
+
+                  <div className="w-[1px] h-4 bg-slate-200 dark:bg-slate-700/50 hidden sm:block"></div>
+
+                  {/* User Dropdown */}
+                  <div className="relative ml-0.5">
+                    <button
+                      onClick={() => setShowDropdown(!showDropdown)}
+                      className="flex items-center justify-center w-9 h-9 rounded-xl overflow-hidden bg-primary-50 dark:bg-primary-500/10 text-primary-600 dark:text-primary-400 hover:bg-primary-100 dark:hover:bg-primary-500/20 hover:scale-[1.05] transition-all shadow-sm group border border-primary-100 dark:border-primary-500/30"
+                      title="Profile"
+                    >
+                      {user?.role === 'admin' ? (
+                        <Shield className="w-5 h-5 text-red-600 icon-transition group-hover:scale-110 group-hover:icon-hover-bounce" />
+                      ) : (
+                        <User className="w-5 h-5 icon-transition group-hover:scale-110" />
+                      )}
+                    </button>
 
                   {showDropdown && (
                     <div className="absolute right-0 mt-2 w-48 glass-panel-premium rounded-lg shadow-lg py-2 animate-fadeIn border-white/20">
@@ -252,6 +252,7 @@ const Navbar = ({ isCollapsed, isDrawerOpen, onMenuClick }) => {
                       </button>
                     </div>
                   )}
+                </div>
                 </div>
               </>
             ) : (
