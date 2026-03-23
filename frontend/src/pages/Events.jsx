@@ -126,7 +126,7 @@ const Events = () => {
                           key={page}
                           onClick={() => handlePageChange(page)}
                           className={`px-4 py-2 rounded-lg font-bold transition-all ${pagination.currentPage === page
-                            ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20'
+                            ? 'bg-gradient-to-r from-blue-600 to-slate-900 border-transparent text-white shadow-lg shadow-blue-900/20'
                             : 'border border-slate-200 dark:border-white/10 text-slate-700 dark:text-gray-300 hover:bg-white/10 dark:hover:bg-white/5 backdrop-blur-sm'
                             }`}
                         >
@@ -182,7 +182,7 @@ const Events = () => {
         {/* Back to Top Button */}
         <button
           onClick={scrollToTop}
-          className={`fixed bottom-24 md:bottom-8 right-6 md:right-8 p-3 bg-blue-600 dark:bg-blue-500 text-white rounded-full shadow-2xl hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-300 hover:scale-110 border-2 border-white dark:border-white/20 z-[9999] ${showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
+          className={`fixed bottom-24 md:bottom-8 right-6 md:right-8 p-3 bg-gradient-to-r from-blue-600 to-slate-900 text-white rounded-full shadow-2xl hover:opacity-90 transition-all duration-300 hover:scale-[1.15] border border-white/20 z-[9999] ${showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
             }`}
           aria-label="Back to top"
         >
