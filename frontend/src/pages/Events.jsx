@@ -22,9 +22,21 @@ const Events = () => {
   });
 
   useEffect(() => {
-    // Fetch events with URL params on mount
-    fetchEvents(localFilters);
-  }, []);
+    // Sync local filters with URL params and fetch events
+    const currentParams = {
+      category: searchParams.get('category') || '',
+      eventType: searchParams.get('eventType') || '',
+      city: searchParams.get('city') || '',
+      search: searchParams.get('search') || '',
+      upcoming: searchParams.get('upcoming') || '',
+      sort: searchParams.get('sort') || 'date',
+      order: searchParams.get('order') || 'asc',
+      limit: parseInt(searchParams.get('limit')) || 12
+    };
+    
+    setLocalFilters(currentParams);
+    fetchEvents(currentParams);
+  }, [searchParams]);
 
   // Back to top button visibility
   useEffect(() => {
@@ -114,7 +126,7 @@ const Events = () => {
                     Previous
                   </button>
 
-                  {[...Array(pagination.totalPages)].map((_, index) => {
+                  {[...Array(Math.max(0, parseInt(pagination.totalPages) || 0))].map((_, index) => {
                     const page = index + 1;
                     if (
                       page === 1 ||
