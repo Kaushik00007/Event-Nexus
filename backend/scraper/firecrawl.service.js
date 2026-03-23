@@ -172,7 +172,7 @@ class FirecrawlService {
   /**
    * Extract structured data using LLM
    */
-  async extractData(url, schema) {
+  async extractData(url, schema, prompt = "Extract the full event details from this page. Provide accurate ISO 8601 date, full location/address, and descriptions.") {
     console.log(`📊 Extracting structured data from: ${url}`);
 
     return this.throttledRequest(async () => {
@@ -180,7 +180,8 @@ class FirecrawlService {
         const result = await this.client.scrapeUrl(url, {
           formats: ['extract'],
           extract: {
-            schema: schema
+            schema: schema,
+            prompt: prompt
           }
         });
 
