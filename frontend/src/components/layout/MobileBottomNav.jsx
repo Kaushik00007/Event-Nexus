@@ -26,7 +26,7 @@ const MobileBottomNav = () => {
                             key={item.path}
                             to={item.path}
                             className={`flex flex-col items-center justify-center py-2 px-6 rounded-full transition-all duration-300 ${active
-                                    ? 'bg-primary-600 text-white shadow-lg scale-105'
+                                    ? 'bg-gradient-to-r from-blue-600 to-slate-900 border-transparent text-white shadow-lg shadow-blue-900/20 scale-105'
                                     : 'text-gray-500 dark:text-gray-400 hover:bg-white/10'
                                 }`}
                         >
