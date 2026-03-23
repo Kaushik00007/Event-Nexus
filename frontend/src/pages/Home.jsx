@@ -330,7 +330,7 @@ const Home = () => {
           <div className="mt-8 text-center md:hidden">
             <Link
               to="/events"
-              className="inline-flex items-center space-x-2 bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
+              className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-slate-900 text-white px-6 py-3 rounded-xl font-bold hover:opacity-90 transition-all shadow-md shadow-blue-900/20 active:scale-95"
             >
               <span>View All Events</span>
               <ArrowRight className="w-5 h-5" />
@@ -340,7 +340,7 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="hidden md:block py-10 bg-gradient-to-r from-primary-600 to-secondary-600 text-white">
+      <section className="hidden md:block py-10 bg-gradient-to-r from-blue-600 to-slate-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-3">
             Have an Event to Share?
@@ -362,7 +362,7 @@ const Home = () => {
       {/* Back to Top Button */}
       <button
         onClick={scrollToTop}
-        className={`fixed bottom-24 md:bottom-8 right-6 md:right-8 p-3 bg-blue-600 text-white rounded-full shadow-2xl hover:bg-blue-700 transition-all duration-300 hover:scale-110 border-2 border-white group z-[9999] ${showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
+        className={`fixed bottom-24 md:bottom-8 right-6 md:right-8 p-3 bg-gradient-to-r from-blue-600 to-slate-900 text-white rounded-full shadow-2xl hover:opacity-90 transition-all duration-300 hover:scale-[1.15] border border-white/20 group z-[9999] ${showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
           }`}
         aria-label="Back to top"
       >
