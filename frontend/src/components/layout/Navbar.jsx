@@ -60,8 +60,9 @@ const InternalCustomSearch = ({ value, onChange, placeholder = "Search events...
   };
 
   return (
-    <div className="relative w-full search-dropdown-wrapper">
-      <div className="custom-search-container relative z-[1051]">
+    <div className="relative search-dropdown-wrapper mx-auto w-full">
+      <div className="custom-search-container relative z-[1055] mx-auto w-full flex justify-center">
+        <div className="relative w-full max-w-[600px]">
         <div id="poda">
           <div className="custom-search-glow"></div>
           <div className="custom-search-darkBorderBg"></div>
@@ -82,8 +83,8 @@ const InternalCustomSearch = ({ value, onChange, placeholder = "Search events...
             <div id="input-mask"></div>
             <div id="pink-mask"></div>
             <div className="filterBorder"></div>
-            <div 
-              id="filter-icon" 
+            <div
+              id="filter-icon"
               onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsOpen(!isOpen); }}
               className="cursor-pointer z-20"
               title="Explore Categories"
@@ -109,56 +110,60 @@ const InternalCustomSearch = ({ value, onChange, placeholder = "Search events...
               </svg>
             </div>
           </div>
+          </div>
         </div>
-      </div>
-      
-      {isOpen && (
-        <div className="absolute top-[calc(100%+8px)] left-0 w-full bg-white dark:bg-slate-900 rounded-[20px] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] dark:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.4)] border border-slate-100 dark:border-slate-800 overflow-hidden z-[1050] animate-fadeIn origin-top">
-          <div className="p-4 sm:p-5 pb-6">
-             <div className="flex items-center justify-between mb-4">
+
+        {isOpen && (
+          <div className="absolute top-[calc(100%+12px)] left-1/2 -translate-x-1/2 w-[calc(100vw-32px)] sm:w-[500px] bg-white dark:bg-slate-900 rounded-[24px] shadow-[0_20px_50px_-8px_rgba(0,0,0,0.2)] dark:shadow-[0_20px_50px_-8px_rgba(0,0,0,0.5)] border border-slate-100 dark:border-white/5 overflow-hidden z-[2000] animate-fadeIn origin-top">
+            <div className="p-5 sm:p-6 pb-8">
+              <div className="flex items-center justify-between mb-6">
                 <span className="text-[12px] font-bold text-slate-400 dark:text-gray-500 uppercase tracking-widest pl-2">Explore</span>
                 <button type="button" onClick={() => { setIsOpen(false); navigate('/events'); }} className="text-[13px] font-bold text-primary-600 dark:text-primary-400 flex items-center hover:translate-x-1 transition-transform group pr-2">
                   View All <ArrowRight className="w-4 h-4 ml-1 icon-transition group-hover:translate-x-0.5" />
                 </button>
-             </div>
-             
-             <div className="grid grid-cols-4 gap-y-5 gap-x-2">
+              </div>
+
+              <div className="grid grid-cols-4 gap-y-7 gap-x-3">
                 {EXPLORE_CATEGORIES.map(cat => (
-                   <button 
-                     key={cat.id}
-                     type="button"
-                     onClick={() => handleCategoryClick(cat.id)}
-                     className="flex flex-col items-center justify-center rounded-xl transition-all group active:scale-95"
-                   >
-                     <div className={`w-12 h-12 sm:w-[52px] sm:h-[52px] rounded-full ${cat.bg} flex items-center justify-center mb-2.5 group-hover:scale-110 group-hover:shadow-md transition-all duration-300 border border-transparent`}>
-                        <cat.icon className={`w-5 h-5 sm:w-[22px] sm:h-[22px] ${cat.color}`} />
-                     </div>
-                     <span className="text-[11px] sm:text-xs font-semibold text-slate-600 dark:text-gray-300 text-center leading-tight">
-                       {cat.label}
-                     </span>
-                   </button>
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => handleCategoryClick(cat.id)}
+                    className="flex flex-col items-center justify-center rounded-xl transition-all group active:scale-95"
+                  >
+                    <div className={`w-[52px] h-[52px] sm:w-[60px] sm:h-[60px] rounded-2xl ${cat.bg} flex items-center justify-center mb-3 group-hover:scale-110 group-hover:shadow-lg transition-all duration-300 border border-transparent`}>
+                      <cat.icon className={`w-5 h-5 sm:w-[24px] sm:h-[24px] ${cat.color}`} />
+                    </div>
+                    <span className="text-[11px] sm:text-xs font-bold text-slate-600 dark:text-gray-300 text-center leading-tight">
+                      {cat.label}
+                    </span>
+                  </button>
                 ))}
-             </div>
+              </div>
+            </div>
+
+            <div
+              className="bg-gradient-to-r from-blue-600 to-indigo-900 p-5 sm:px-8 flex items-center justify-between cursor-pointer hover:brightness-110 transition-all group"
+              onClick={() => { setIsOpen(false); navigate('/create-event'); }}
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center border border-white/20">
+                  <span className="text-xl group-hover:animate-bounce">🚀</span>
+                </div>
+                <div>
+                  <h4 className="text-white font-bold text-[14px]">Host Your Own Event</h4>
+                  <p className="text-blue-100/70 text-[11px] font-medium mt-0.5 tracking-wide">Reach students across campuses!</p>
+                </div>
+              </div>
+              <ArrowRight className="w-5 h-5 text-white icon-transition group-hover:translate-x-1" />
+            </div>
           </div>
-          
-          <div 
-            className="bg-gradient-to-r from-blue-600 to-slate-900 p-4 sm:px-6 flex items-center justify-between cursor-pointer hover:opacity-95 transition-opacity" 
-            onClick={() => { setIsOpen(false); navigate('/create-event'); }}
-          >
-             <div className="flex items-center gap-3">
-               <span className="text-2xl animate-bounce-slow filter drop-shadow-md">🚀</span>
-               <div>
-                  <h4 className="text-white font-bold text-sm">Host Your Own Event</h4>
-                  <p className="text-blue-200 text-xs font-medium opacity-90 mt-0.5">Reach students instantly!</p>
-               </div>
-             </div>
-             <ArrowRight className="w-5 h-5 text-white opacity-70" />
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
+
 
 const Navbar = ({ isCollapsed, isDrawerOpen, onMenuClick }) => {
   const [showDropdown, setShowDropdown] = useState(false);
