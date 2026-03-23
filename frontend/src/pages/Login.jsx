@@ -43,12 +43,7 @@ const Login = () => {
       <div className="max-w-md w-full">
         {/* Logo */}
         <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center space-x-3">
-            <img
-              src="/logo.png"
-              alt="EventNexus Logo"
-              className="w-24 h-24 object-contain"
-            />
+          <Link to="/" className="inline-flex items-center">
             <span className="text-2xl font-bold gradient-text">EventNexus</span>
           </Link>
           <h2 className="mt-6 text-3xl font-bold text-slate-950 dark:text-white">Welcome back!</h2>
