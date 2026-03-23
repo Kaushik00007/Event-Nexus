@@ -53,8 +53,8 @@ const FilterScrollRow = ({ options, name, currentValue, onChange }) => (
             onClick={() => onChange({ target: { name, value: val }})}
             className={`flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-[8px] text-[11px] sm:text-[12px] font-bold transition-all active:scale-[0.97] border ${
               isActive 
-                ? 'bg-primary-600 border-primary-600 text-white shadow-sm shadow-primary-500/20' 
-                : 'bg-white dark:bg-slate-800/80 border-slate-200 dark:border-slate-700/80 text-slate-600 dark:text-gray-300 hover:border-primary-300 dark:hover:border-primary-500/50 hover:bg-slate-50 dark:hover:bg-slate-800'
+                ? 'bg-gradient-to-r from-blue-600 to-slate-900 border-transparent text-white shadow-sm shadow-blue-900/20' 
+                : 'bg-white dark:bg-slate-800/80 border-slate-200 dark:border-slate-700/80 text-slate-600 dark:text-gray-300 hover:border-blue-500/50 hover:bg-slate-50 dark:hover:bg-slate-800'
             }`}
           >
             {lbl}
@@ -132,7 +132,7 @@ const EventFilters = ({ filters, setFilters, onSearch }) => {
             />
             <button
               type="submit"
-              className="absolute right-1.5 top-1/2 transform -translate-y-1/2 bg-primary-600 text-white px-4 py-1.5 sm:py-2 rounded-[8px] hover:bg-primary-700 transition-all shadow-sm active:scale-[0.97] text-[13px] font-bold tracking-wide"
+              className="absolute right-1.5 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-blue-600 to-slate-900 text-white px-4 py-1.5 sm:py-2 rounded-[8px] hover:opacity-90 hover:shadow-blue-900/20 transition-all shadow-md active:scale-[0.97] text-[13px] font-bold tracking-wide"
             >
               Search
             </button>
