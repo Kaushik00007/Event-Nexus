@@ -229,9 +229,6 @@ class Event {
       query = query.ilike('city', `%${city}%`);
     }
 
-    // Exclude college internal events
-    query = query.or('is_internal_event.is.null,is_internal_event.eq.false');
-
     // Prioritize events with images
     query = query.order('image', { ascending: false, nullsFirst: false });
 
