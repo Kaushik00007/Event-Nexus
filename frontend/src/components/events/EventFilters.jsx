@@ -105,7 +105,9 @@ const EventFilters = ({ filters, setFilters, onSearch }) => {
       city: '',
       search: '',
       upcoming: 'true',
-      sort: 'date'
+      sort: 'date',
+      order: 'asc',
+      limit: filters.limit || 12
     });
     onSearch();
   };
