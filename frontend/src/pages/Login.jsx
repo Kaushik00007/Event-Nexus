@@ -56,7 +56,7 @@ const Login = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-transparent to-transparent z-0 pointer-events-none" />
         
         {/* Subtle glowing divider edge */}
-        <div className="absolute right-0 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-purple-500/20 to-transparent shadow-[0_0_20px_rgba(139,92,246,0.4)]" />
+        <div className="absolute right-0 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-purple-500/30 to-transparent shadow-[0_0_25px_rgba(139,92,246,0.5)]" />
 
         <div className="relative z-10 flex items-center gap-2">
           <Link to="/" className="inline-flex items-center">
@@ -89,15 +89,15 @@ const Login = () => {
       </div>
 
       {/* Right Panel - Form */}
-      <div className="w-full flex items-center justify-center lg:justify-start lg:pl-12 p-6 sm:p-12 relative z-10 py-12">
+      <div className="w-full flex items-center justify-center p-6 sm:p-12 relative z-10 py-12">
         {/* Soft glow precisely behind the card */}
-        <div className="absolute top-1/2 left-1/2 lg:left-[45%] -translate-x-1/2 -translate-y-1/2 w-[120%] h-[110%] md:w-[90%] md:h-[100%] lg:w-[150%] lg:h-[120%] bg-gradient-to-br from-purple-600/10 via-transparent to-indigo-600/10 blur-[100px] rounded-full -z-10 pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[110%] md:w-[100%] md:h-[110%] lg:w-[150%] lg:h-[130%] bg-gradient-to-br from-purple-600/10 via-transparent to-indigo-600/10 blur-[100px] rounded-full -z-10 pointer-events-none" />
 
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="w-full max-w-[520px] bg-[#111827]/80 backdrop-blur-3xl border border-white/[0.08] rounded-2xl p-8 sm:p-12 shadow-[0_0_50px_-12px_rgba(0,0,0,0.8)] mx-auto lg:mx-0 relative overflow-hidden shrink-0"
+          className="w-full max-w-[560px] bg-[#111827]/80 backdrop-blur-3xl border border-white/[0.08] rounded-2xl p-8 sm:p-12 shadow-[0_0_50px_-12px_rgba(0,0,0,0.8)] hover:-translate-y-1 hover:shadow-[0_10px_60px_-15px_rgba(139,92,246,0.15)] transition-all duration-500 mx-auto relative overflow-hidden shrink-0"
         >
           {/* Subtle top edge highlight for glass effect */}
           <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/[0.15] to-transparent" />
@@ -125,7 +125,7 @@ const Login = () => {
             </motion.div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-7">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                 Email Address
