@@ -39,7 +39,7 @@ const Login = () => {
     }
   };
 
-  const inputClasses = "w-full pl-10 pr-4 h-11 bg-[#0F1629]/80 backdrop-blur-md border border-white/5 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 transition-all font-medium shadow-inner hover:bg-[#0F1629]";
+  const inputClasses = "w-full pl-9 pr-4 h-10 bg-[#0F1629]/80 backdrop-blur-md border border-white/5 rounded-xl text-[13px] text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 transition-all font-medium shadow-inner hover:bg-[#0F1629]";
 
   return (
     <div className="h-screen w-full flex flex-col lg:grid lg:grid-cols-[1.2fr_1fr] bg-[#0B0F1A] text-white overflow-hidden relative font-sans">
@@ -87,7 +87,7 @@ const Login = () => {
       </div>
 
       {/* Right Panel - Form (Centered, fixed height) */}
-      <div className="w-full h-full flex items-center justify-center p-4 sm:p-6 lg:p-8 relative z-10 overflow-hidden">
+      <div className="w-full h-full flex items-center justify-center p-4 lg:p-6 relative z-10 overflow-hidden">
         {/* Soft glow precisely behind the card */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] lg:w-[120%] lg:h-[130%] bg-gradient-to-br from-purple-600/10 via-transparent to-indigo-600/10 blur-[120px] rounded-full -z-10 pointer-events-none" />
 
@@ -95,41 +95,41 @@ const Login = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="w-full max-w-[500px] bg-[#111827]/80 backdrop-blur-3xl border border-white/[0.08] rounded-2xl p-6 sm:p-8 shadow-[0_0_50px_-12px_rgba(0,0,0,0.8)] hover:-translate-y-1 hover:shadow-[0_10px_60px_-15px_rgba(139,92,246,0.15)] transition-all duration-500 relative shrink-0"
+          className="w-full max-w-[460px] bg-[#111827]/80 backdrop-blur-3xl border border-white/[0.08] rounded-2xl p-6 sm:p-7 shadow-[0_0_50px_-12px_rgba(0,0,0,0.8)] hover:-translate-y-1 hover:shadow-[0_10px_60px_-15px_rgba(139,92,246,0.15)] transition-all duration-500 relative shrink-0"
         >
           {/* Subtle top edge highlight for glass effect */}
           <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/[0.15] to-transparent" />
 
           {/* Mobile Logo */}
-          <div className="lg:hidden text-center mb-6">
+          <div className="lg:hidden text-center mb-5">
             <Link to="/" className="inline-flex items-center">
-              <span className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">EventNexus</span>
+              <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">EventNexus</span>
             </Link>
           </div>
 
-          <div className="mb-6 text-center lg:text-left">
-            <h2 className="text-2xl lg:text-3xl font-bold tracking-tight mb-2 text-white">Welcome back</h2>
-            <p className="text-gray-400/80 text-sm">Sign in to your account to continue</p>
+          <div className="mb-5 text-center lg:text-left">
+            <h2 className="text-xl lg:text-2xl font-bold tracking-tight mb-1 text-white">Welcome back</h2>
+            <p className="text-gray-400/80 text-xs">Sign in to your account to continue</p>
           </div>
 
           {error && (
             <motion.div 
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
-              className="mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center space-x-3 overflow-hidden backdrop-blur-md"
+              className="mb-4 p-2.5 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center space-x-3 overflow-hidden backdrop-blur-md"
             >
               <AlertCircle className="w-4 h-4 text-red-500 shrink-0" />
-              <p className="text-red-400 text-sm font-medium">{error}</p>
+              <p className="text-red-400 text-xs font-medium">{error}</p>
             </motion.div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3.5">
             <div>
-              <label htmlFor="email" className="block text-xs font-medium text-gray-300 mb-1.5">
+              <label htmlFor="email" className="block text-[11px] font-medium text-gray-300 mb-1">
                 Email Address
               </label>
               <div className="relative group">
-                <Mail className="absolute left-3.5 top-1/2 transform -translate-y-1/2 text-gray-500/80 w-4 h-4 transition-colors group-focus-within:text-purple-400" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500/80 w-3.5 h-3.5 transition-colors group-focus-within:text-purple-400" />
                 <input
                   id="email"
                   name="email"
@@ -144,11 +144,11 @@ const Login = () => {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-xs font-medium text-gray-300 mb-1.5">
+              <label htmlFor="password" className="block text-[11px] font-medium text-gray-300 mb-1">
                 Password
               </label>
               <div className="relative group">
-                <Lock className="absolute left-3.5 top-1/2 transform -translate-y-1/2 text-gray-500/80 w-4 h-4 transition-colors group-focus-within:text-purple-400" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500/80 w-3.5 h-3.5 transition-colors group-focus-within:text-purple-400" />
                 <input
                   id="password"
                   name="password"
@@ -162,9 +162,9 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 transform -translate-y-1/2 text-gray-500/80 hover:text-gray-300 transition-colors focus:outline-none"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500/80 hover:text-gray-300 transition-colors focus:outline-none"
                 >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                 </button>
               </div>
             </div>
@@ -173,13 +173,13 @@ const Login = () => {
               <div className="flex items-center h-4">
                 <input
                   type="checkbox"
-                  className="h-3.5 w-3.5 rounded bg-[#0F1629]/80 border-white/10 text-purple-500 focus:ring-purple-500/50 focus:ring-offset-0 transition-colors"
+                  className="h-3 w-3 rounded bg-[#0F1629]/80 border-white/10 text-purple-500 focus:ring-purple-500/50 focus:ring-offset-0 transition-colors"
                 />
               </div>
               <label className="flex flex-1 items-center cursor-pointer group">
-                <span className="ml-2.5 text-[11px] text-gray-400/90 group-hover:text-gray-300 transition-colors font-light">Remember me</span>
+                <span className="ml-2 text-[10px] text-gray-400/90 group-hover:text-gray-300 transition-colors font-light">Remember me</span>
               </label>
-              <a href="#" className="text-[11px] font-medium text-purple-400/90 hover:text-purple-300 hover:drop-shadow-[0_0_8px_rgba(167,139,250,0.5)] transition-all">
+              <a href="#" className="text-[10px] font-medium text-purple-400/90 hover:text-purple-300 hover:drop-shadow-[0_0_8px_rgba(167,139,250,0.5)] transition-all">
                 Forgot password?
               </a>
             </div>
@@ -189,13 +189,13 @@ const Login = () => {
               whileTap={{ scale: 0.99 }}
               type="submit"
               disabled={loading}
-              className="relative w-full mt-4 h-11 bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 text-white fill-white text-sm font-semibold rounded-xl shadow-[0_0_20px_rgba(139,92,246,0.2)] hover:shadow-[0_0_35px_rgba(139,92,246,0.4)] focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:ring-offset-2 focus:ring-offset-[#111827] transition-all disabled:opacity-50 disabled:cursor-not-allowed group overflow-hidden border border-white/10 flex items-center justify-center"
+              className="relative w-full mt-3 h-10 bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 text-white fill-white text-[13px] font-semibold rounded-xl shadow-[0_0_20px_rgba(139,92,246,0.2)] hover:shadow-[0_0_35px_rgba(139,92,246,0.4)] focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:ring-offset-2 focus:ring-offset-[#111827] transition-all disabled:opacity-50 disabled:cursor-not-allowed group overflow-hidden border border-white/10 flex items-center justify-center"
             >
               <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="relative z-10 flex items-center justify-center">
                 {loading ? (
                   <>
-                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <svg className="animate-spin -ml-1 mr-2 h-3.5 w-3.5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
@@ -208,7 +208,7 @@ const Login = () => {
             </motion.button>
           </form>
 
-          <p className="mt-5 text-center text-[13px] text-gray-400/80 font-medium tracking-wide">
+          <p className="mt-4 text-center text-[12px] text-gray-400/80 font-medium tracking-wide">
             Don't have an account?{' '}
             <Link to="/register" className="text-purple-400 hover:text-purple-300 hover:drop-shadow-[0_0_8px_rgba(167,139,250,0.5)] font-semibold transition-all">
               Sign up for free
