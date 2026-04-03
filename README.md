@@ -8,13 +8,13 @@ EventNexus is a full-stack web platform built to help college students easily di
 Designed with a seamless user experience, EventNexus aggregates events automatically through web scraping and allows organizers to submit their own events, creating a central hub for student opportunities.
 
 ## 🎯 Features
-- ✅ **Event Discovery** – Automatically scraped and manually submitted events from platforms like GDG, Devfolio, MLH, and Eventbrite.
-- ✅ **Free Courses & Resources** – Curated list of free online courses with coupon codes and developer resources like GitHub Student Pack.
-- ✅ **College Profiles** – Dedicated pages for individual college events and opportunities.
-- ✅ **Automated Scraping** – Powered by Firecrawl and node-cron to keep event listings up to date automatically.
-- ✅ **Secure Authentication** – Role-based access control (User, Organizer, Admin) powered by Supabase.
-- ✅ **Admin Dashboard** – Comprehensive approval workflows, event management, and resource moderation.
-- ✅ **Responsive Design** – Optimized for seamless browsing across desktop and mobile devices.
+- **Event Discovery** – Automatically scraped and manually submitted events from platforms like GDG, Devfolio, MLH, and Eventbrite.
+- **Free Courses & Resources** – Curated list of free online courses with coupon codes and developer resources like GitHub Student Pack.
+- **College Profiles** – Dedicated pages for individual college events and opportunities.
+- **Automated Scraping** – Powered by Firecrawl and node-cron to keep event listings up to date automatically.
+- **Secure Authentication** – Role-based access control (User, Organizer, Admin) powered by Supabase.
+- **Admin Dashboard** – Comprehensive approval workflows, event management, and resource moderation.
+- **Responsive Design** – Optimized for seamless browsing across desktop and mobile devices.
 
 ## 🛠️ Tech Stack
 
