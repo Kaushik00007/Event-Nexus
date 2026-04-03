@@ -96,7 +96,7 @@ Contributions are welcome! Follow these steps:
 5. Open a pull request
 ```
 
-## 💻 Cross-Platform Development (Fedora & Windows)
+## 💻 Cross-Platform Development (Linux & Windows)
 
 This project is designed to work seamlessly on both **Linux** and **Windows**. To ensure a consistent experience:
 
