@@ -9,15 +9,15 @@ const Footer = () => {
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
-              <img 
-                src="/logo.png" 
-                alt="EventNexus Logo" 
+              <img
+                src="/logo.png"
+                alt="EventNexus Logo"
                 className="w-16 h-16 object-contain"
               />
               <span className="text-xl font-bold text-white">EventNexus</span>
             </div>
             <p className="text-gray-400 mb-4 max-w-md">
-              Your one-stop platform to discover college events, hackathons, coding contests, 
+              Your one-stop platform to discover college events, hackathons, coding contests,
               workshops, and more. Never miss an opportunity to learn and grow!
             </p>
             <div className="flex space-x-4">

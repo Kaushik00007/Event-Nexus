@@ -485,7 +485,6 @@ const EventDetail = () => {
                       <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-white dark:from-slate-900 to-transparent pointer-events-none"></div>
                     )}
                   </div>
-                  
                   {event.description?.length > 400 && (
                     <div className="mt-2">
                        <button 
@@ -559,7 +558,7 @@ const EventDetail = () => {
             {/* Sidebar */}
             <div className="lg:col-span-1">
               <div className="glass-panel-premium bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-white/50 dark:border-slate-700 shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-6 rounded-[20px] lg:sticky lg:top-[100px] mb-8 transition-all hover:shadow-[0_8px_40px_rgb(0,0,0,0.08)]">
-                
+
                 {/* 1. Date Block */}
                 <div className="flex items-center gap-4 mb-4 pb-4 border-b border-slate-100 dark:border-slate-800">
                   <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-xl flex items-center justify-center shrink-0">
@@ -665,7 +664,7 @@ const EventDetail = () => {
                     );
                   })()}
                 </div>
-                
+
                 {/* Footer links within card */}
                 {(event.contact?.email || event.contact?.phone || event.contact?.website || getDirectionsUrl()) && (
                   <div className="mt-5 pt-5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-center gap-4">
@@ -687,7 +686,7 @@ const EventDetail = () => {
                   </div>
                 )}
               </div>
-              
+
               {/* Tags Section moved OUT of the main sticky card */}
               {event.tags && event.tags.length > 0 && (
                 <div className="px-2">

@@ -28,7 +28,7 @@ const Colleges = () => {
     fetchColleges();
   }, []);
 
-  const filteredColleges = colleges.filter(college => 
+  const filteredColleges = colleges.filter(college =>
     college.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     (college.short_name && college.short_name.toLowerCase().includes(searchQuery.toLowerCase())) ||
     (college.location && college.location.toLowerCase().includes(searchQuery.toLowerCase()))

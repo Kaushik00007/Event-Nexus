@@ -85,6 +85,27 @@ Contributions are welcome! Follow these steps:
 5. Open a pull request
 ```
 
+## 💻 Cross-Platform Development (Fedora & Windows)
+
+This project is designed to work seamlessly on both **Fedora (Linux)** and **Windows**. To ensure a consistent experience:
+
+1.  **Git Configuration**: This project uses a `.gitattributes` file to enforce `LF` line endings in the repository. To avoid warnings on Windows, run:
+    ```bash
+    git config --global core.autocrlf input
+    ```
+
+2.  **Native Modules**: If you alternate between Windows and Fedora, the `node_modules` folder will contain OS-specific binaries. Always run the following when switching:
+    ```bash
+    # Reinstall all dependencies for the current OS
+    npm run install-all
+    ```
+
+3.  **Case Sensitivity**: Remember that Fedora is case-sensitive. Always ensure your `import` statements match the filename casing exactly (e.g., `Navbar.jsx` must be imported as `Navbar`, not `navbar`).
+
+4.  **Build Tools**:
+    - **Fedora**: Run `sudo dnf group install development-tools`.
+    - **Windows**: Install [Build Tools for Visual Studio](https://visualstudio.microsoft.com/visual-cpp-build-tools/).
+
 ## 📩 Contact
 For queries or collaboration, reach out via:
 - 📧 Email: kaushik0007@gmail.com

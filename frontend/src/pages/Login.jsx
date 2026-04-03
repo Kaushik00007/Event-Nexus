@@ -52,7 +52,6 @@ const Login = () => {
         <div className="absolute top-[-20%] left-[-10%] w-[80%] h-[80%] bg-purple-600/20 blur-[150px] rounded-full mix-blend-screen pointer-events-none" />
         <div className="absolute bottom-[-20%] right-[-10%] w-[80%] h-[80%] bg-blue-600/10 blur-[150px] rounded-full mix-blend-screen pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-transparent to-transparent z-0 pointer-events-none" />
-        
         {/* Subtle glowing divider edge */}
         <div className="absolute right-0 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-purple-500/30 to-transparent shadow-[0_0_25px_rgba(139,92,246,0.5)]" />
 
@@ -63,7 +62,7 @@ const Login = () => {
             </span>
           </Link>
         </div>
-        
+
         <div className="relative z-10 max-w-xl mb-20">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -80,7 +79,7 @@ const Login = () => {
             </p>
           </motion.div>
         </div>
-        
+
         <div className="relative z-10 text-sm text-gray-500/80 font-medium">
           © {new Date().getFullYear()} EventNexus. All rights reserved.
         </div>
@@ -91,7 +90,7 @@ const Login = () => {
         {/* Soft glow precisely behind the card */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] lg:w-[120%] lg:h-[130%] bg-gradient-to-br from-purple-600/10 via-transparent to-indigo-600/10 blur-[120px] rounded-full -z-10 pointer-events-none" />
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
@@ -113,7 +112,7 @@ const Login = () => {
           </div>
 
           {error && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               className="mb-4 p-2.5 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center space-x-3 overflow-hidden backdrop-blur-md"

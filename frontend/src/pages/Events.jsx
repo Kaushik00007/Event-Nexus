@@ -33,7 +33,6 @@ const Events = () => {
       order: searchParams.get('order') || 'asc',
       limit: parseInt(searchParams.get('limit')) || 12
     };
-    
     setLocalFilters(currentParams);
     fetchEvents(currentParams);
   }, [searchParams]);
