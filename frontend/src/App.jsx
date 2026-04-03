@@ -8,8 +8,7 @@ import MobileBottomNav from './components/layout/MobileBottomNav'
 import Home from './pages/Home'
 import Events from './pages/Events'
 import EventDetail from './pages/EventDetail'
-import Login from './pages/Login'
-import Register from './pages/Register'
+import Auth from './pages/Auth'
 import Dashboard from './pages/Dashboard'
 import CreateEvent from './pages/CreateEvent'
 import Favorites from './pages/Favorites'
@@ -78,8 +77,8 @@ function App() {
                 <Route path="/competitions" element={<Competitions />} />
                 <Route path="/courses" element={<Courses />} />
                 <Route path="/free-resources" element={<FreeResources />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Auth />} />
+                <Route path="/register" element={<Auth />} />
                 <Route path="/dashboard" element={
                   <PrivateRoute>
                     <Dashboard />
