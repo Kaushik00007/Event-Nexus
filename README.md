@@ -17,14 +17,25 @@ Designed with a seamless user experience, EventNexus aggregates events automatic
 - ✅ **Responsive Design** – Optimized for seamless browsing across desktop and mobile devices.
 
 ## 🛠️ Tech Stack
-- **React 18 + Vite** – Frontend framework
-- **Tailwind CSS v3** – Styling and responsive design
-- **Node.js / Express.js** – Backend API
-- **Supabase (PostgreSQL)** – Database and authentication
-- **Firecrawl** – AI Web Scraping API
-- **Framer Motion & OGL** – Animations and 3D canvas effects
-- **Lenis** - For Smooth Scrolling
-- **Railway / Vercel** – Deployment infrastructure
+
+### 🖥️ Frontend
+![React](https://img.shields.io/static/v1?label=Frontend&message=React%2018&color=20232A&logo=react&style=flat-square)
+![Vite](https://img.shields.io/static/v1?label=Bundler&message=Vite&color=646CFF&logo=vite&style=flat-square)
+![Tailwind CSS](https://img.shields.io/static/v1?label=Styling&message=Tailwind%20CSS&color=38B2AC&logo=tailwind-css&style=flat-square)
+![Framer Motion](https://img.shields.io/static/v1?label=Animations&message=Framer%20Motion&color=0055FF&logo=framer&style=flat-square)
+![OGL](https://img.shields.io/static/v1?label=3D&message=OGL&color=000000&logo=opengl&style=flat-square)
+![Lenis](https://img.shields.io/static/v1?label=Scroll&message=Lenis&color=000000&style=flat-square)
+
+### ⚙️ Backend & Database
+![Node.js](https://img.shields.io/static/v1?label=Backend&message=Node.js&color=339933&logo=nodedotjs&style=flat-square)
+![Express.js](https://img.shields.io/static/v1?label=Framework&message=Express.js&color=000000&logo=express&style=flat-square)
+![Supabase](https://img.shields.io/static/v1?label=Auth%20&%20DB&message=Supabase&color=3ECF8E&logo=supabase&style=flat-square)
+![PostgreSQL](https://img.shields.io/static/v1?label=Database&message=PostgreSQL&color=4169E1&logo=postgresql&style=flat-square)
+
+### 🚀 Automation & Cloud
+![Firecrawl](https://img.shields.io/static/v1?label=Scraping&message=Firecrawl&color=FF4B4B&style=flat-square)
+![Railway](https://img.shields.io/static/v1?label=Hosting&message=Railway&color=131415&logo=railway&style=flat-square)
+![Vercel](https://img.shields.io/static/v1?label=Deployment&message=Vercel&color=000000&logo=vercel&style=flat-square)
 
 ## ⚙️ Installation
 
@@ -87,24 +98,18 @@ Contributions are welcome! Follow these steps:
 
 ## 💻 Cross-Platform Development (Fedora & Windows)
 
-This project is designed to work seamlessly on both **Fedora (Linux)** and **Windows**. To ensure a consistent experience:
+This project is designed to work seamlessly on both **Linux** and **Windows**. To ensure a consistent experience:
 
 1.  **Git Configuration**: This project uses a `.gitattributes` file to enforce `LF` line endings in the repository. To avoid warnings on Windows, run:
     ```bash
     git config --global core.autocrlf input
     ```
 
-2.  **Native Modules**: If you alternate between Windows and Fedora, the `node_modules` folder will contain OS-specific binaries. Always run the following when switching:
+2.  **Native Modules**: If you alternate between Windows and linux, the `node_modules` folder will contain OS-specific binaries. Always run the following when switching:
     ```bash
     # Reinstall all dependencies for the current OS
     npm run install-all
     ```
-
-3.  **Case Sensitivity**: Remember that Fedora is case-sensitive. Always ensure your `import` statements match the filename casing exactly (e.g., `Navbar.jsx` must be imported as `Navbar`, not `navbar`).
-
-4.  **Build Tools**:
-    - **Fedora**: Run `sudo dnf group install development-tools`.
-    - **Windows**: Install [Build Tools for Visual Studio](https://visualstudio.microsoft.com/visual-cpp-build-tools/).
 
 ## 📩 Contact
 For queries or collaboration, reach out via:
@@ -114,4 +119,9 @@ For queries or collaboration, reach out via:
 
 ---
 
-💻 Built with Passion using React, Express, Tailwind CSS, and Supabase.
+<p align="center">
+  <b>EventNexus</b> – Aggregating opportunities for the next generation of developers.<br>
+  <img src="https://img.shields.io/static/v1?label=Built%20With&message=React&color=20232A&logo=react&style=for-the-badge" />
+  <img src="https://img.shields.io/static/v1?label=Built%20With&message=Supabase&color=3ECF8E&logo=supabase&style=for-the-badge" />
+  <img src="https://img.shields.io/static/v1?label=Built%20With&message=Tailwind%20CSS&color=38B2AC&logo=tailwind-css&style=for-the-badge" />
+</p>
