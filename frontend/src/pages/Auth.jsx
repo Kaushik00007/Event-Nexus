@@ -10,8 +10,27 @@ const Auth = () => {
   const { login, register } = useAuth();
 
   const [mode, setMode] = useState(location.pathname === '/register' ? 'signup' : 'login');
+  const [isDesktop, setIsDesktop] = useState(true);
+
+  useEffect(() => {
+    setIsDesktop(window.innerWidth >= 1024);
+    const handleResize = () => setIsDesktop(window.innerWidth >= 1024);
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   
-  // Keep URL in sync without re-rendering or full navigation
+  const switchMode = (newMode) => {
+    if (mode === newMode) return;
+    setMode(newMode);
+    
+    // Dispatch custom events to pause/resume expensive background operations
+    window.dispatchEvent(new Event('authTransitionStart'));
+    setTimeout(() => {
+      window.dispatchEvent(new Event('authTransitionEnd'));
+    }, 500); // 400ms duration + 100ms buffer
+  };
+
+  // Keep URL in sync
   useEffect(() => {
     const path = mode === 'login' ? '/login' : '/register';
     if (location.pathname !== path) {
@@ -26,7 +45,6 @@ const Auth = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Clear errors when switching modes
   useEffect(() => {
     setError('');
     setShowPassword(false);
@@ -92,25 +110,34 @@ const Auth = () => {
   const pwStrength = passwordStrength(signupData.password);
   const inputClasses = "w-full pl-9 pr-4 h-10 bg-[#0F1629]/80 backdrop-blur-md border border-white/5 rounded-xl text-[13px] text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 transition-all font-medium shadow-inner hover:bg-[#0F1629]";
 
+  // Optimal transition settings
+  const transitionSettings = { duration: 0.4, ease: [0.4, 0, 0.2, 1] };
+
   return (
-    <div className={`h-screen w-full flex flex-col lg:flex-row ${mode === 'signup' ? 'lg:flex-row-reverse' : ''} bg-[#0B0F1A] text-white overflow-hidden relative font-sans`}>
+    <div className="h-screen w-full relative bg-[#0B0F1A] text-white overflow-hidden font-sans">
       {/* Texture Noise Overlay */}
       <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E')" }}></div>
 
-      {/* Left/Right Panel - Visual/Brand */}
+      {/* Left Branding Panel (translates right on signup) */}
       <motion.div 
-        layout
-        transition={{ type: "tween", ease: "easeInOut", duration: 0.6 }}
-        className="hidden lg:flex relative flex-col justify-between p-12 xl:p-20 h-full overflow-hidden w-full lg:w-[55%] shrink-0"
+        initial={false}
+        animate={{ x: isDesktop ? (mode === 'login' ? '0vw' : '45vw') : '0vw' }}
+        transition={transitionSettings}
+        className="hidden lg:flex absolute top-0 left-0 h-full w-[55vw] flex-col justify-between p-12 xl:p-20 z-10"
+        style={{ willChange: 'transform' }}
       >
-        {/* Cinematic Lighting & Gradients */}
-        <div className="absolute top-[-20%] left-[-10%] w-[80%] h-[80%] bg-purple-600/20 blur-[150px] rounded-full mix-blend-screen pointer-events-none" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[80%] h-[80%] bg-blue-600/10 blur-[150px] rounded-full mix-blend-screen pointer-events-none" />
-        {mode === 'signup' && <div className="absolute top-[20%] right-[20%] w-[30%] h-[40%] bg-violet-600/15 blur-[120px] rounded-full mix-blend-screen pointer-events-none" />}
+        {/* Cinematic Lighting & Gradients (Simplified for Performance) */}
+        <div className="absolute top-[-20%] left-[-10%] w-[80%] h-[80%] bg-purple-600/20 blur-3xl rounded-full mix-blend-screen pointer-events-none" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[80%] h-[80%] bg-blue-600/10 blur-3xl rounded-full mix-blend-screen pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-transparent to-transparent z-0 pointer-events-none" />
         
         {/* Subtle glowing divider edge */}
-        <div className={`absolute top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-purple-500/30 to-transparent shadow-[0_0_25px_rgba(139,92,246,0.5)] transition-all duration-700 ${mode === 'login' ? 'right-0' : 'left-0'}`} />
+        <motion.div 
+          initial={false}
+          animate={{ left: mode === 'login' ? '100%' : '0%' }}
+          transition={transitionSettings}
+          className="absolute top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-purple-500/30 to-transparent shadow-[0_0_25px_rgba(139,92,246,0.5)] z-20 pointer-events-none"
+        />
 
         <div className="relative z-10 flex items-center gap-2">
           <Link to="/" className="inline-flex items-center">
@@ -128,7 +155,7 @@ const Auth = () => {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.4 }}
+                transition={{ duration: 0.3 }}
               >
                 <h1 className="text-5xl lg:text-6xl font-bold tracking-tight mb-8 leading-tight">
                   Manage your <br />
@@ -145,7 +172,7 @@ const Auth = () => {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.4 }}
+                transition={{ duration: 0.3 }}
               >
                 <h1 className="text-5xl lg:text-6xl font-bold tracking-tight mb-8 leading-tight">
                   Start your <br />
@@ -165,23 +192,19 @@ const Auth = () => {
         </div>
       </motion.div>
 
-      {/* Right/Left Panel - Form Center Container */}
+      {/* Right Form Panel (translates left on signup) */}
       <motion.div 
-        layout
-        transition={{ type: "tween", ease: "easeInOut", duration: 0.6 }}
-        className="w-full lg:w-[45%] h-full flex items-center justify-center p-4 lg:p-6 relative z-10 overflow-hidden shrink-0"
+        initial={false}
+        animate={{ x: isDesktop ? (mode === 'login' ? '0vw' : '-55vw') : '0vw' }}
+        transition={transitionSettings}
+        className="absolute top-0 right-0 h-full w-full lg:w-[45vw] flex items-center justify-center p-4 lg:p-6 z-20"
+        style={{ willChange: 'transform' }}
       >
-        {/* Soft glow precisely behind the card */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-br from-purple-600/10 via-transparent to-indigo-600/10 blur-[120px] rounded-full -z-10 pointer-events-none" />
+        {/* Simplified soft glow behind card */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] bg-gradient-to-br from-purple-600/10 via-transparent to-indigo-600/10 blur-3xl rounded-full -z-10 pointer-events-none" />
 
-        <motion.div 
-          layout
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="w-full max-w-[460px] bg-[#111827]/80 backdrop-blur-3xl border border-white/[0.08] rounded-2xl p-6 sm:p-7 shadow-[0_0_50px_-12px_rgba(0,0,0,0.8)] hover:shadow-[0_10px_60px_-15px_rgba(139,92,246,0.15)] transition-shadow duration-500 relative shrink-0"
-        >
-          {/* Subtle top edge highlight for glass effect */}
+        <div className="w-full max-w-[460px] bg-[#111827]/80 backdrop-blur-xl border border-white/5 rounded-2xl p-6 sm:p-7 shadow-lg relative shrink-0">
+          {/* Subtle top edge highlight */}
           <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/[0.15] to-transparent" />
 
           {/* Mobile Logo */}
@@ -194,11 +217,11 @@ const Auth = () => {
           <AnimatePresence mode="wait">
             {mode === 'login' ? (
               <motion.div 
-                key="login-form-container"
-                initial={{ opacity: 0, x: -10 }} 
-                animate={{ opacity: 1, x: 0 }} 
-                exit={{ opacity: 0, x: 10 }} 
-                transition={{ duration: 0.3 }}
+                key="login-form"
+                initial={{ opacity: 0, scale: 0.98 }} 
+                animate={{ opacity: 1, scale: 1 }} 
+                exit={{ opacity: 0, scale: 0.98 }} 
+                transition={{ duration: 0.2 }}
               >
                 <div className="mb-5 text-center lg:text-left">
                   <h2 className="text-xl lg:text-2xl font-bold tracking-tight mb-1 text-white">Welcome back</h2>
@@ -291,18 +314,18 @@ const Auth = () => {
 
                 <p className="mt-4 text-center text-[12px] text-gray-400/80 font-medium tracking-wide">
                   Don't have an account?{' '}
-                  <button onClick={() => setMode('signup')} className="text-purple-400 hover:text-purple-300 hover:drop-shadow-[0_0_8px_rgba(167,139,250,0.5)] font-semibold transition-all focus:outline-none">
+                  <button onClick={() => switchMode('signup')} className="text-purple-400 hover:text-purple-300 hover:drop-shadow-[0_0_8px_rgba(167,139,250,0.5)] font-semibold transition-all focus:outline-none">
                     Sign up for free
                   </button>
                 </p>
               </motion.div>
             ) : (
               <motion.div 
-                key="signup-form-container"
-                initial={{ opacity: 0, x: 10 }} 
-                animate={{ opacity: 1, x: 0 }} 
-                exit={{ opacity: 0, x: -10 }} 
-                transition={{ duration: 0.3 }}
+                key="signup-form"
+                initial={{ opacity: 0, scale: 0.98 }} 
+                animate={{ opacity: 1, scale: 1 }} 
+                exit={{ opacity: 0, scale: 0.98 }} 
+                transition={{ duration: 0.2 }}
               >
                 <div className="mb-5 text-center lg:text-left">
                   <h2 className="text-xl lg:text-2xl font-bold tracking-tight mb-1 text-white">Create an account</h2>
@@ -400,14 +423,14 @@ const Auth = () => {
 
                 <p className="mt-4 text-center text-[12px] text-gray-400/80 font-medium tracking-wide">
                   Already have an account?{' '}
-                  <button onClick={() => setMode('login')} className="text-purple-400 hover:text-purple-300 hover:drop-shadow-[0_0_8px_rgba(167,139,250,0.5)] font-semibold transition-all focus:outline-none">
+                  <button onClick={() => switchMode('login')} className="text-purple-400 hover:text-purple-300 hover:drop-shadow-[0_0_8px_rgba(167,139,250,0.5)] font-semibold transition-all focus:outline-none">
                     Sign in
                   </button>
                 </p>
               </motion.div>
             )}
           </AnimatePresence>
-        </motion.div>
+        </div>
       </motion.div>
     </div>
   );
