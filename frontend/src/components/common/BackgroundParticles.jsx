@@ -52,31 +52,43 @@ const BackgroundParticles = () => {
         }
         particlesRef.current = particles;
 
+        let isPaused = false;
+        
         const animate = () => {
-            ctx.clearRect(0, 0, w, h);
-            const color = particleColorRef.current;
-            for (let i = 0; i < particles.length; i++) {
-                const p = particles[i];
-                p.x += p.speedX;
-                p.y += p.speedY;
+            if (!isPaused) {
+                ctx.clearRect(0, 0, w, h);
+                const color = particleColorRef.current;
+                for (let i = 0; i < particles.length; i++) {
+                    const p = particles[i];
+                    p.x += p.speedX;
+                    p.y += p.speedY;
 
-                if (p.x < 0) p.x = w;
-                else if (p.x > w) p.x = 0;
-                if (p.y < 0) p.y = h;
-                else if (p.y > h) p.y = 0;
+                    if (p.x < 0) p.x = w;
+                    else if (p.x > w) p.x = 0;
+                    if (p.y < 0) p.y = h;
+                    else if (p.y > h) p.y = 0;
 
-                ctx.fillStyle = `${color}${p.opacity})`;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fill();
+                    ctx.fillStyle = `${color}${p.opacity})`;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
             }
             animationFrameRef.current = requestAnimationFrame(animate);
         };
+
+        const handlePause = () => { isPaused = true; };
+        const handleResume = () => { isPaused = false; };
+        
+        window.addEventListener('authTransitionStart', handlePause, { passive: true });
+        window.addEventListener('authTransitionEnd', handleResume, { passive: true });
 
         animationFrameRef.current = requestAnimationFrame(animate);
 
         return () => {
             window.removeEventListener('resize', handleResize);
+            window.removeEventListener('authTransitionStart', handlePause);
+            window.removeEventListener('authTransitionEnd', handleResume);
             clearTimeout(resizeTimeout);
             if (animationFrameRef.current) {
                 cancelAnimationFrame(animationFrameRef.current);
