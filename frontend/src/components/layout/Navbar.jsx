@@ -28,137 +28,48 @@ import {
 } from 'lucide-react';
 import ThemeToggle from '../common/ThemeToggle';
 
-const EXPLORE_CATEGORIES = [
-  { id: 'hackathon', label: 'Hackathons', icon: Laptop, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-500/10' },
-  { id: 'coding-contest', label: 'Coding Contests', icon: Trophy, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-500/10' },
-  { id: 'workshop', label: 'Workshops', icon: BookOpen, color: 'text-purple-500', bg: 'bg-purple-50 dark:bg-purple-500/10' },
-  { id: 'cultural', label: 'Cultural', icon: Music, color: 'text-pink-500', bg: 'bg-pink-50 dark:bg-pink-500/10' },
-  { id: 'sports', label: 'Sports', icon: Dumbbell, color: 'text-green-500', bg: 'bg-green-50 dark:bg-green-500/10' },
-  { id: 'networking', label: 'Networking', icon: Users, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-500/10' },
-  { id: 'academic', label: 'Academic', icon: GraduationCap, color: 'text-cyan-500', bg: 'bg-cyan-50 dark:bg-cyan-500/10' },
-  { id: 'seminar', label: 'Seminars', icon: Mic, color: 'text-rose-500', bg: 'bg-rose-50 dark:bg-rose-500/10' }
-];
-
 const InternalCustomSearch = ({ value, onChange, placeholder = "Search events..." }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
-
-  // Close when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (!e.target.closest('.search-dropdown-wrapper')) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  const handleCategoryClick = (categoryId) => {
-    setIsOpen(false);
-    navigate(`/events?category=${categoryId}`);
-  };
-
   return (
     <div className="relative search-dropdown-wrapper mx-auto w-full">
       <div className="custom-search-container relative z-[1055] mx-auto w-full flex justify-center">
         <div className="relative w-full max-w-[600px]">
-        <div id="poda">
-          <div className="custom-search-glow"></div>
-          <div className="custom-search-darkBorderBg"></div>
-          <div className="custom-search-darkBorderBg"></div>
-          <div className="custom-search-darkBorderBg"></div>
-          <div className="custom-search-white"></div>
-          <div className="custom-search-border"></div>
-          <div id="main">
-            <input
-              placeholder={placeholder}
-              type="text"
-              name="text"
-              className="custom-search-input"
-              value={value}
-              onChange={onChange}
-              onClick={() => setIsOpen(true)}
-            />
-            <div id="input-mask"></div>
-            <div id="pink-mask"></div>
-            <div className="filterBorder"></div>
-            <div
-              id="filter-icon"
-              onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsOpen(!isOpen); }}
-              className="cursor-pointer z-20"
-              title="Explore Categories"
-            >
-              <svg preserveAspectRatio="none" height={20} width={20} viewBox="4.8 4.56 14.832 15.408" fill="none">
-                <path d="M8.16 6.65002H15.83C16.47 6.65002 16.99 7.17002 16.99 7.81002V9.09002C16.99 9.56002 16.7 10.14 16.41 10.43L13.91 12.64C13.56 12.93 13.33 13.51 13.33 13.98V16.48C13.33 16.83 13.1 17.29 12.81 17.47L12 17.98C11.24 18.45 10.2 17.92 10.2 16.99V13.91C10.2 13.5 9.97 12.98 9.73 12.69L7.52 10.36C7.23 10.08 7 9.55002 7 9.20002V7.87002C7 7.17002 7.52 6.65002 8.16 6.65002Z" stroke="currentColor" className="text-slate-600 dark:text-gray-400" strokeWidth={1} strokeMiterlimit={10} strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+          <div id="poda">
+            <div className="custom-search-glow"></div>
+            <div className="custom-search-darkBorderBg"></div>
+            <div className="custom-search-darkBorderBg"></div>
+            <div className="custom-search-darkBorderBg"></div>
+            <div className="custom-search-white"></div>
+            <div className="custom-search-border"></div>
+            <div id="main">
+              <input
+                placeholder={placeholder}
+                type="text"
+                name="text"
+                className="custom-search-input"
+                value={value}
+                onChange={onChange}
+              />
+              <div id="input-mask"></div>
+              <div id="pink-mask"></div>
+              <div id="search-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width={24} viewBox="0 0 24 24" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" height={24} fill="none" className="feather feather-search">
+                  <circle stroke="url(#search)" r={8} cy={11} cx={11} />
+                  <line stroke="url(#searchl)" y2="16.65" y1={22} x2="16.65" x1={22} />
+                  <defs>
+                    <linearGradient gradientTransform="rotate(50)" id="search">
+                      <stop stopColor="#0ea5e9" offset="0%" />
+                      <stop stopColor="#d946ef" offset="100%" />
+                    </linearGradient>
+                    <linearGradient id="searchl">
+                      <stop stopColor="#0ea5e9" offset="0%" />
+                      <stop stopColor="#d946ef" offset="100%" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
             </div>
-            <div id="search-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width={24} viewBox="0 0 24 24" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" height={24} fill="none" className="feather feather-search">
-                <circle stroke="url(#search)" r={8} cy={11} cx={11} />
-                <line stroke="url(#searchl)" y2="16.65" y1={22} x2="16.65" x1={22} />
-                <defs>
-                  <linearGradient gradientTransform="rotate(50)" id="search">
-                    <stop stopColor="#0ea5e9" offset="0%" />
-                    <stop stopColor="#d946ef" offset="100%" />
-                  </linearGradient>
-                  <linearGradient id="searchl">
-                    <stop stopColor="#0ea5e9" offset="0%" />
-                    <stop stopColor="#d946ef" offset="100%" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-          </div>
           </div>
         </div>
-
-        {isOpen && (
-          <div className="absolute top-[calc(100%+12px)] left-1/2 -translate-x-1/2 w-[calc(100vw-32px)] sm:w-[500px] bg-white dark:bg-slate-900 rounded-[24px] shadow-[0_20px_50px_-8px_rgba(0,0,0,0.2)] dark:shadow-[0_20px_50px_-8px_rgba(0,0,0,0.5)] border border-slate-100 dark:border-white/5 overflow-hidden z-[2000] animate-fadeIn origin-top">
-            <div className="p-5 sm:p-6 pb-8">
-              <div className="flex items-center justify-between mb-6">
-                <span className="text-[12px] font-bold text-slate-400 dark:text-gray-500 uppercase tracking-widest pl-2">Explore</span>
-                <button type="button" onClick={() => { setIsOpen(false); navigate('/events'); }} className="text-[13px] font-bold text-primary-600 dark:text-primary-400 flex items-center hover:translate-x-1 transition-transform group pr-2">
-                  View All <ArrowRight className="w-4 h-4 ml-1 icon-transition group-hover:translate-x-0.5" />
-                </button>
-              </div>
-
-              <div className="grid grid-cols-4 gap-y-7 gap-x-3">
-                {EXPLORE_CATEGORIES.map(cat => (
-                  <button
-                    key={cat.id}
-                    type="button"
-                    onClick={() => handleCategoryClick(cat.id)}
-                    className="flex flex-col items-center justify-center rounded-xl transition-all group active:scale-95"
-                  >
-                    <div className={`w-[52px] h-[52px] sm:w-[60px] sm:h-[60px] rounded-2xl ${cat.bg} flex items-center justify-center mb-3 group-hover:scale-110 group-hover:shadow-lg transition-all duration-300 border border-transparent`}>
-                      <cat.icon className={`w-5 h-5 sm:w-[24px] sm:h-[24px] ${cat.color}`} />
-                    </div>
-                    <span className="text-[11px] sm:text-xs font-bold text-slate-600 dark:text-gray-300 text-center leading-tight">
-                      {cat.label}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div
-              className="bg-gradient-to-r from-blue-600 to-indigo-900 p-5 sm:px-8 flex items-center justify-between cursor-pointer hover:brightness-110 transition-all group"
-              onClick={() => { setIsOpen(false); navigate('/create-event'); }}
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center border border-white/20">
-                  <span className="text-xl group-hover:animate-bounce">🚀</span>
-                </div>
-                <div>
-                  <h4 className="text-white font-bold text-[14px]">Host Your Own Event</h4>
-                  <p className="text-blue-100/70 text-[11px] font-medium mt-0.5 tracking-wide">Reach students across campuses!</p>
-                </div>
-              </div>
-              <ArrowRight className="w-5 h-5 text-white icon-transition group-hover:translate-x-1" />
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
