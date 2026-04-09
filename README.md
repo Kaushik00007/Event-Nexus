@@ -34,7 +34,7 @@ Designed with a seamless user experience, EventNexus aggregates events automatic
 
 ### 🚀 Automation & Cloud
 ![Firecrawl](https://img.shields.io/static/v1?label=Scraping&message=Firecrawl&color=FF4B4B&style=flat-square)
-![Railway](https://img.shields.io/static/v1?label=Hosting&message=Railway&color=131415&logo=railway&style=flat-square)
+![Render](https://img.shields.io/static/v1?label=Hosting&message=Render&color=000000&logo=render&style=flat-square)
 ![Vercel](https://img.shields.io/static/v1?label=Deployment&message=Vercel&color=000000&logo=vercel&style=flat-square)
 
 ## ⚙️ Installation
