@@ -664,7 +664,7 @@ const EventDetail = () => {
                               rel="noopener noreferrer"
                               className="relative flex items-center justify-center space-x-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white h-14 sm:h-16 rounded-[16px] font-black text-lg hover:shadow-xl hover:scale-[1.02] transform transition-all active:scale-95 shadow-indigo-600/30"
                             >
-                              <span>Secure Your Spot</span>
+                              <span>Register Now</span>
                               <ExternalLink className="w-5 h-5 ml-1 drop-shadow-md" />
                             </a>
                           </div>
