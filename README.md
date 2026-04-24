@@ -113,14 +113,12 @@ This project is designed to work seamlessly on both **Linux** and **Windows**. T
 
 ## 📩 Contact
 For queries or collaboration, reach out via:
-- 📧 Email: nikhilmacharya@gmail.com
-- 🔗 LinkedIn: https://www.linkedin.com/in/nikhilmacharya/
-
--
-
 - 📧 Email: kaushik0007@gmail.com
 - 🔗 LinkedIn: https://www.linkedin.com/in/kaushik-k-dev/
 - 🐱 GitHub: Kaushik00007
+
+- - 📧 Email: nikhilmacharya@gmail.com
+- 🔗 LinkedIn: https://www.linkedin.com/in/nikhilmacharya/
 
 ---
 
