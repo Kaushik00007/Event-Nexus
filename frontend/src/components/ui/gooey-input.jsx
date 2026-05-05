@@ -142,7 +142,7 @@ export function GooeyInput({
   }, [searchText, setExpanded]);
 
   const surfaceClass =
-    "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900";
+    "bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-slate-100";
 
   return (
     <div
@@ -193,10 +193,10 @@ export function GooeyInput({
               disabled={disabled || !isExpanded}
               placeholder={placeholder}
               className={cn(
-                "h-full min-w-0 flex-1 bg-transparent text-sm text-white dark:text-slate-900 outline-none",
+                "h-full min-w-0 flex-1 bg-transparent text-sm text-slate-900 dark:text-slate-100 outline-none",
                 isExpanded
-                  ? "placeholder:text-slate-400 dark:placeholder:text-slate-500"
-                  : "pointer-events-none placeholder:text-slate-400 dark:placeholder:text-slate-500",
+                  ? "placeholder:text-slate-500 dark:placeholder:text-slate-400"
+                  : "pointer-events-none placeholder:text-slate-500 dark:placeholder:text-slate-400",
                 classNames?.input,
               )}
             />
