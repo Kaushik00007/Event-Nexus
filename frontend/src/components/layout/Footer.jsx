@@ -45,12 +45,11 @@ const Footer = () => {
             <p className="text-base lg:text-lg text-gray-400 mb-8 max-w-md leading-relaxed font-medium">
               Your one-stop platform to discover college events, hackathons, coding contests, workshops, and more.
             </p>
-            
             {/* Social Icons */}
             <div className="flex items-center gap-4 mt-auto">
               {socialLinks.map((item, index) => (
-                <a 
-                  key={index} 
+                <a
+                  key={index}
                   href={item.href}
                   aria-label={item.name}
                   className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/20 hover:scale-110 hover:-translate-y-1 transition-all duration-300"

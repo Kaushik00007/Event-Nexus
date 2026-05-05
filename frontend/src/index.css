@@ -501,265 +501,32 @@
   }
 
   /* Custom Search Styles */
-  .custom-search-container {
-    position: relative;
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    min-height: 42px;
-    box-sizing: border-box;
-    /* Ensure visibility */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    isolation: isolate;
-    /* Create new stacking context */
-    z-index: 1;
-  }
 
-  .custom-search-grid {
-    height: 200px;
-    width: 100%;
-    max-width: 400px;
-    background-image: linear-gradient(to right, #e2e8f0 1px, transparent 1px),
-      linear-gradient(to bottom, #e2e8f0 1px, transparent 1px);
-    background-size: 1rem 1rem;
-    background-position: center center;
-    position: absolute;
-    z-index: -1;
-    filter: blur(1px);
-    opacity: 0.5;
-  }
 
-  .custom-search-white,
-  .custom-search-border,
-  .custom-search-darkBorderBg,
-  .custom-search-glow {
-    max-height: 50px;
-    max-width: 100%;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    overflow: hidden;
-    z-index: -1;
-    border-radius: 12px;
-    filter: blur(3px);
-  }
 
-  .custom-search-input {
-    background-color: var(--bg-primary);
-    border: 1px solid var(--glass-border-simple);
-    width: 100%;
-    height: 40px;
-    border-radius: 10px;
-    color: var(--text-primary);
-    padding-inline: 40px 42px;
-    font-size: 14px;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-  }
 
-  #poda {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    position: relative;
-  }
 
-  .custom-search-input::placeholder {
-    color: #94a3b8;
-  }
 
-  .custom-search-input:focus {
-    outline: none;
-    background-color: var(--bg-primary);
-    border-color: var(--glass-border);
-  }
 
-  #main:focus-within>#input-mask {
-    display: none;
-  }
 
-  #input-mask {
-    pointer-events: none;
-    width: 100px;
-    height: 20px;
-    position: absolute;
-    background: linear-gradient(90deg, transparent, var(--bg-primary));
-    top: 10px;
-    left: 70px;
-  }
 
-  #pink-mask {
-    pointer-events: none;
-    width: 30px;
-    height: 20px;
-    position: absolute;
-    background: #d946ef;
-    top: 10px;
-    left: 5px;
-    filter: blur(20px);
-    opacity: 0.8;
-    transition: all 2s;
-  }
 
-  #main:hover>#pink-mask {
-    opacity: 0;
-  }
 
-  .custom-search-white {
-    max-height: 45px;
-    max-width: 98%;
-    border-radius: 10px;
-    filter: blur(2px);
-  }
 
-  .custom-search-white::before {
-    content: "";
-    z-index: -2;
-    text-align: center;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(83deg);
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-    filter: brightness(1.4);
-    background-image: conic-gradient(rgba(0, 0, 0, 0) 0%,
-        #7dd3fc,
-        rgba(0, 0, 0, 0) 8%,
-        rgba(0, 0, 0, 0) 50%,
-        #f0abfc,
-        rgba(0, 0, 0, 0) 58%);
-    transition: transform 1.5s ease-in-out;
-    will-change: transform;
-  }
 
-  .custom-search-border {
-    max-height: 42px;
-    max-width: 97%;
-    border-radius: 11px;
-    filter: blur(0.5px);
-  }
 
-  .custom-search-border::before {
-    content: "";
-    z-index: -2;
-    text-align: center;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(70deg);
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    filter: brightness(1.3);
-    background-repeat: no-repeat;
-    background-position: 0 0;
-    background-image: conic-gradient(var(--bg-primary),
-        #0284c7 5%,
-        var(--bg-primary) 14%,
-        var(--bg-primary) 50%,
-        #d946ef 60%,
-        var(--bg-primary) 64%);
-    transition: transform 1.5s ease-in-out;
-    will-change: transform;
-  }
 
-  .custom-search-darkBorderBg {
-    max-height: 46px;
-    max-width: 99%;
-  }
 
-  .custom-search-darkBorderBg::before {
-    content: "";
-    z-index: -2;
-    text-align: center;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(82deg);
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-    background-image: conic-gradient(rgba(0, 0, 0, 0),
-        #0369a1,
-        rgba(0, 0, 0, 0) 10%,
-        rgba(0, 0, 0, 0) 50%,
-        #a21caf,
-        rgba(0, 0, 0, 0) 60%);
-    transition: transform 1.5s ease-in-out;
-    will-change: transform;
-  }
 
-  #poda:hover>.custom-search-darkBorderBg::before {
-    transform: translate(-50%, -50%) rotate(262deg);
-  }
 
-  #poda:hover>.custom-search-glow::before {
-    transform: translate(-50%, -50%) rotate(240deg);
-  }
 
-  #poda:hover>.custom-search-white::before {
-    transform: translate(-50%, -50%) rotate(263deg);
-  }
 
-  #poda:hover>.custom-search-border::before {
-    transform: translate(-50%, -50%) rotate(250deg);
-  }
 
-  #poda:focus-within>.custom-search-darkBorderBg::before {
-    transform: translate(-50%, -50%) rotate(442deg);
-    transition: all 4s;
-  }
 
-  #poda:focus-within>.custom-search-glow::before {
-    transform: translate(-50%, -50%) rotate(420deg);
-    transition: all 4s;
-  }
 
-  #poda:focus-within>.custom-search-white::before {
-    transform: translate(-50%, -50%) rotate(443deg);
-    transition: all 4s;
-  }
 
-  #poda:focus-within>.custom-search-border::before {
-    transform: translate(-50%, -50%) rotate(430deg);
-    transition: all 4s;
-  }
 
-  .custom-search-glow {
-    overflow: hidden;
-    filter: blur(30px);
-    opacity: 0.4;
-    max-height: 80px;
-    max-width: 120%;
-  }
 
-  .custom-search-glow:before {
-    content: "";
-    z-index: -2;
-    text-align: center;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(60deg);
-    position: absolute;
-    width: 999px;
-    height: 999px;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-    background-image: conic-gradient(var(--bg-primary),
-        #0284c7 5%,
-        var(--bg-primary) 38%,
-        var(--bg-primary) 50%,
-        #d946ef 60%,
-        var(--bg-primary) 87%);
-    transition: transform 1.5s ease-in-out;
-    will-change: transform;
-  }
 
   #filter-icon {
     position: absolute;
@@ -813,10 +580,6 @@
     animation-play-state: paused;
   }
 
-  #poda:hover .filterBorder::before,
-  #poda:focus-within .filterBorder::before {
-    animation-play-state: running;
-  }
 
   @keyframes rotate {
     100% {
@@ -946,20 +709,7 @@
     }
   }
 
-  #main {
-    position: relative;
-    width: 100%;
-  }
 
-  #search-icon {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    align-items: center;
-    pointer-events: none;
-  }
 
   /* Hide scrollbar utility for smooth horizontal scrolling */
   .hide-scrollbar {

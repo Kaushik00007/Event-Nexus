@@ -28,53 +28,7 @@ import {
 } from 'lucide-react';
 import ThemeToggle from '../common/ThemeToggle';
 
-const InternalCustomSearch = ({ value, onChange, placeholder = "Search events..." }) => {
-  return (
-    <div className="relative search-dropdown-wrapper mx-auto w-full">
-      <div className="custom-search-container relative z-[1055] mx-auto w-full flex justify-center">
-        <div className="relative w-full max-w-[600px]">
-          <div id="poda">
-            <div className="custom-search-glow"></div>
-            <div className="custom-search-darkBorderBg"></div>
-            <div className="custom-search-darkBorderBg"></div>
-            <div className="custom-search-darkBorderBg"></div>
-            <div className="custom-search-white"></div>
-            <div className="custom-search-border"></div>
-            <div id="main">
-              <input
-                placeholder={placeholder}
-                type="text"
-                name="text"
-                className="custom-search-input"
-                value={value}
-                onChange={onChange}
-              />
-              <div id="input-mask"></div>
-              <div id="pink-mask"></div>
-              <div id="search-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width={24} viewBox="0 0 24 24" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" height={24} fill="none" className="feather feather-search">
-                  <circle stroke="url(#search)" r={8} cy={11} cx={11} />
-                  <line stroke="url(#searchl)" y2="16.65" y1={22} x2="16.65" x1={22} />
-                  <defs>
-                    <linearGradient gradientTransform="rotate(50)" id="search">
-                      <stop stopColor="#0ea5e9" offset="0%" />
-                      <stop stopColor="#d946ef" offset="100%" />
-                    </linearGradient>
-                    <linearGradient id="searchl">
-                      <stop stopColor="#0ea5e9" offset="0%" />
-                      <stop stopColor="#d946ef" offset="100%" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
+import { GooeyInput } from '../ui/gooey-input';
 
 const Navbar = ({ isCollapsed, isDrawerOpen, onMenuClick }) => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -148,11 +102,12 @@ const Navbar = ({ isCollapsed, isDrawerOpen, onMenuClick }) => {
           {/* Search Bar - Only on Home Page */}
           {showSearchBar && (
             <div className={`absolute ${isCollapsed ? 'left-[calc(50%+40px)]' : 'left-[calc(50%+128px)]'} -translate-x-1/2 transition-[left] duration-300 hidden md:flex items-center h-full`}>
-              <form onSubmit={handleSearch} className="w-full max-w-2xl">
-                <InternalCustomSearch
+              <form onSubmit={handleSearch} className="w-full max-w-2xl flex items-center justify-center">
+                <GooeyInput
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onValueChange={setSearchQuery}
                   placeholder="Search events..."
+                  expandedWidth={400}
                 />
               </form>
             </div>
@@ -278,12 +233,13 @@ const Navbar = ({ isCollapsed, isDrawerOpen, onMenuClick }) => {
 
         {/* Mobile Search Bar - Appears below Navbar only on Home Page */}
         {showSearchBar && (
-          <div className="md:hidden pb-2 px-2">
-            <form onSubmit={handleSearch}>
-              <InternalCustomSearch
+          <div className="md:hidden pb-2 px-2 flex justify-center w-full">
+            <form onSubmit={handleSearch} className="w-full max-w-[400px] flex justify-center">
+              <GooeyInput
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search events, workshops..."
+                onValueChange={setSearchQuery}
+                placeholder="Search events..."
+                expandedWidth={280}
               />
             </form>
           </div>
