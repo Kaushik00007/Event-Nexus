@@ -16,7 +16,7 @@ function GooeyFilter({
   blur,
 }) {
   return (
-    <svg className="absolute hidden h-0 w-0" aria-hidden>
+    <svg style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }} aria-hidden>
       <defs>
         <filter id={filterId} x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur in="SourceGraphic" stdDeviation={blur} result="blur" />
@@ -59,15 +59,15 @@ const transition = {
 };
 
 const iconBubbleVariants = {
-  collapsed: { scale: 0, opacity: 0 },
-  expanded: { scale: 1, opacity: 1 },
+  collapsed: { scale: 0, opacity: 0, y: "-50%" },
+  expanded: { scale: 1, opacity: 1, y: "-50%" },
 };
 
 export function GooeyInput({
   placeholder = "Type to search...",
   className,
   classNames,
-  collapsedWidth = 115,
+  collapsedWidth = 200,
   expandedWidth = 200,
   expandedOffset = 40,
   gooeyBlur = 5,
@@ -205,7 +205,7 @@ export function GooeyInput({
 
         <motion.div
           className={cn(
-            "absolute top-1/2 left-0 flex size-10 -translate-y-1/2 items-center justify-center",
+            "absolute top-1/2 left-0 flex size-10 items-center justify-center",
             classNames?.bubble,
           )}
           variants={iconBubbleVariants}
