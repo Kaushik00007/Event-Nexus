@@ -69,7 +69,7 @@ export function GooeyInput({
   classNames,
   collapsedWidth = 200,
   expandedWidth = 200,
-  expandedOffset = 60,
+  expandedOffset = 50,
   gooeyBlur = 5,
   value: valueProp,
   defaultValue = "",
