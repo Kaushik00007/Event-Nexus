@@ -407,90 +407,90 @@ const EventDetail = () => {
       {/* DESKTOP VIEW (RE-DESIGNED)                                */}
       {/* ========================================================= */}
       <div className="hidden md:block">
-        
+
         {/* Modern Dynamic Hero */}
         <div className="relative h-[60vh] lg:h-[70vh] w-full overflow-hidden bg-slate-950 border-b border-white/5 shadow-2xl">
-           <motion.div 
-             style={{ scale: heroScale, y: heroY }}
-             className="absolute inset-0 origin-bottom"
-           >
-             {event.image ? (
-               <img src={getDecodedImage()} className="w-full h-full object-cover" />
-             ) : (
-               <div className="w-full h-full bg-gradient-to-br from-indigo-900 to-blue-900"></div>
-             )}
-             {/* Tiny noise overlay to build depth */}
-             <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay"></div>
-           </motion.div>
-           
-           {/* Dark Gradient Overlay for readability - much softer and darker at the bottom */}
-           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent pointer-events-none mix-blend-multiply opacity-95"></div>
-           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent pointer-events-none opacity-80 backdrop-blur-[1px] mask-image-gradient-t"></div>
-           
-           {/* Top Navigation */}
-           <div className="absolute top-0 left-0 w-full px-8 py-6 z-20 flex justify-between">
-             <button onClick={() => navigate(-1)} className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-5 py-2.5 rounded-full font-bold transition-all duration-300 border border-white/10 shadow-lg group">
-               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> <span>Back to Events</span>
-             </button>
-             <div className="flex space-x-3">
-               <button onClick={handleShare} className="p-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white rounded-full transition-colors duration-300 border border-white/10 shadow-lg hover:scale-[1.03]">
-                 <Share2 className="w-5 h-5"/>
-               </button>
-               <button onClick={handleFavorite} className="p-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white rounded-full transition-colors duration-300 border border-white/10 shadow-lg hover:scale-[1.03]">
-                 <Heart className={`w-5 h-5 ${isFavorite ? 'fill-red-500 text-red-500' : ''}`}/>
-               </button>
-             </div>
-           </div>
+          <motion.div
+            style={{ scale: heroScale, y: heroY }}
+            className="absolute inset-0 origin-bottom"
+          >
+            {event.image ? (
+              <img src={getDecodedImage()} className="w-full h-full object-cover" />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-indigo-900 to-blue-900"></div>
+            )}
+            {/* Tiny noise overlay to build depth */}
+            <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay"></div>
+          </motion.div>
 
-           {/* Immersive Text Anchor (Bottom Left) */}
-           <div className="absolute bottom-28 lg:bottom-40 left-0 w-full px-8 lg:px-12 z-20">
-             <div className="max-w-7xl mx-auto">
-               <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.6 }}>
-                 {/* Tags */}
-                 <div className="flex flex-wrap items-center gap-2 mb-4">
-                   <span className="px-3 py-1.5 rounded-full text-[11px] font-black uppercase tracking-widest backdrop-blur-xl bg-white/90 text-indigo-900 shadow-xl border border-white/30 hover:bg-white transition-colors duration-300 cursor-default">
-                     {event.category.replace('-', ' ')}
-                   </span>
-                   <span className="px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest backdrop-blur-xl bg-black/40 text-white shadow-xl border border-white/20 hover:bg-black/60 transition-colors duration-300 cursor-default">
-                     {formatEventType(event.event_type)}
-                   </span>
-                   {event.featured && (
-                     <span className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-full text-[11px] font-black uppercase tracking-widest shadow-[0_0_20px_rgba(245,158,11,0.4)] flex items-center gap-1.5 border border-amber-400 hover:brightness-110 transition-all duration-300 cursor-default">
-                       ⭐ Featured
-                     </span>
-                   )}
-                 </div>
-                 
-                 <h1 className="text-4xl lg:text-5xl xl:text-[64px] font-black text-white leading-tight max-w-4xl tracking-tight drop-shadow-2xl">
-                   {event.title}
-                 </h1>
-                 
-                 <div className="mt-6 flex flex-wrap items-center gap-4">
-                    <div className="flex items-center space-x-2.5 text-slate-100 font-semibold bg-black/20 backdrop-blur-xl px-4 py-2 rounded-xl border border-white/10 shadow-lg">
-                       <Calendar className="w-4 h-4 text-indigo-400" />
-                       <span className="text-[14px]">{formatDateRange(event.date, event.end_date)}</span>
-                    </div>
-                    <div className="flex items-center space-x-2.5 text-slate-100 font-semibold bg-black/20 backdrop-blur-xl px-4 py-2 rounded-xl border border-white/10 shadow-lg">
-                       <Users className="w-4 h-4 text-indigo-400" />
-                       <span className="text-[14px]">By {event.college || 'Community'}</span>
-                    </div>
-                 </div>
-               </motion.div>
-             </div>
-           </div>
-           
-           {/* Soft gradient fade masking the sharp cut offset of the layout grid */}
-           <div className="absolute -bottom-1 left-0 w-full h-32 bg-gradient-to-t from-slate-50 dark:from-slate-950 to-transparent z-10 pointer-events-none"></div>
+          {/* Dark Gradient Overlay for readability - much softer and darker at the bottom */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent pointer-events-none mix-blend-multiply opacity-95"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent pointer-events-none opacity-80 backdrop-blur-[1px] mask-image-gradient-t"></div>
+
+          {/* Top Navigation */}
+          <div className="absolute top-0 left-0 w-full px-8 py-6 z-20 flex justify-between">
+            <button onClick={() => navigate(-1)} className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-5 py-2.5 rounded-full font-bold transition-all duration-300 border border-white/10 shadow-lg group">
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> <span>Back to Events</span>
+            </button>
+            <div className="flex space-x-3">
+              <button onClick={handleShare} className="p-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white rounded-full transition-colors duration-300 border border-white/10 shadow-lg hover:scale-[1.03]">
+                <Share2 className="w-5 h-5" />
+              </button>
+              <button onClick={handleFavorite} className="p-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white rounded-full transition-colors duration-300 border border-white/10 shadow-lg hover:scale-[1.03]">
+                <Heart className={`w-5 h-5 ${isFavorite ? 'fill-red-500 text-red-500' : ''}`} />
+              </button>
+            </div>
+          </div>
+
+          {/* Immersive Text Anchor (Bottom Left) */}
+          <div className="absolute bottom-28 lg:bottom-40 left-0 w-full px-8 lg:px-12 z-20">
+            <div className="max-w-7xl mx-auto">
+              <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.6 }}>
+                {/* Tags */}
+                <div className="flex flex-wrap items-center gap-2 mb-4">
+                  <span className="px-3 py-1.5 rounded-full text-[11px] font-black uppercase tracking-widest backdrop-blur-xl bg-white/90 text-indigo-900 shadow-xl border border-white/30 hover:bg-white transition-colors duration-300 cursor-default">
+                    {event.category.replace('-', ' ')}
+                  </span>
+                  <span className="px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest backdrop-blur-xl bg-black/40 text-white shadow-xl border border-white/20 hover:bg-black/60 transition-colors duration-300 cursor-default">
+                    {formatEventType(event.event_type)}
+                  </span>
+                  {event.featured && (
+                    <span className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-full text-[11px] font-black uppercase tracking-widest shadow-[0_0_20px_rgba(245,158,11,0.4)] flex items-center gap-1.5 border border-amber-400 hover:brightness-110 transition-all duration-300 cursor-default">
+                      ⭐ Featured
+                    </span>
+                  )}
+                </div>
+
+                <h1 className="text-4xl lg:text-5xl xl:text-[64px] font-black text-white leading-tight max-w-4xl tracking-tight drop-shadow-2xl">
+                  {event.title}
+                </h1>
+
+                <div className="mt-6 flex flex-wrap items-center gap-4">
+                  <div className="flex items-center space-x-2.5 text-slate-100 font-semibold bg-black/20 backdrop-blur-xl px-4 py-2 rounded-xl border border-white/10 shadow-lg">
+                    <Calendar className="w-4 h-4 text-indigo-400" />
+                    <span className="text-[14px]">{formatDateRange(event.date, event.end_date)}</span>
+                  </div>
+                  <div className="flex items-center space-x-2.5 text-slate-100 font-semibold bg-black/20 backdrop-blur-xl px-4 py-2 rounded-xl border border-white/10 shadow-lg">
+                    <Users className="w-4 h-4 text-indigo-400" />
+                    <span className="text-[14px]">By {event.college || 'Community'}</span>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Soft gradient fade masking the sharp cut offset of the layout grid */}
+          <div className="absolute -bottom-1 left-0 w-full h-32 bg-gradient-to-t from-slate-50 dark:from-slate-950 to-transparent z-10 pointer-events-none"></div>
         </div>
-        
+
         {/* Floating Content Layout */}
         <div className="max-w-7xl mx-auto px-6 lg:px-8 -mt-24 lg:-mt-32 relative z-30 pb-24">
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 items-start">
-            
+
             {/* LEFT CONTENT (2/3) */}
             <div className="xl:col-span-2 space-y-6">
               <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-3xl rounded-[32px] p-8 lg:p-10 shadow-[0_12px_40px_rgb(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,0.7)] dark:shadow-[0_12px_40px_rgb(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.05)] border border-white/40 dark:border-white/10 relative overflow-hidden transition-all duration-500">
-                
+
                 {/* Decorative blob highlight inside card */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-50/50 dark:bg-indigo-900/10 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
 
@@ -583,7 +583,7 @@ const EventDetail = () => {
             {/* RIGHT SIDEBAR (1/3) */}
             <div className="xl:col-span-1">
               <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3, duration: 0.5 }} className="sticky top-28 bg-white/90 dark:bg-slate-900/90 backdrop-blur-3xl rounded-[32px] p-8 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.8)] border border-slate-100 dark:border-white/10 relative z-20 transition-all duration-500">
-                
+
                 <div className="space-y-6">
                   {/* Date Container */}
                   <div className="flex items-start space-x-4">
@@ -642,8 +642,8 @@ const EventDetail = () => {
                   {/* Map snippet */}
                   {getMapEmbedUrl() && (
                     <div className="rounded-2xl overflow-hidden shadow-sm border border-slate-100 dark:border-slate-800 h-40 group relative">
-                       <div className="absolute inset-0 bg-transparent group-hover:bg-black/5 transition-colors pointer-events-none z-10 duration-300"></div>
-                       <iframe
+                      <div className="absolute inset-0 bg-transparent group-hover:bg-black/5 transition-colors pointer-events-none z-10 duration-300"></div>
+                      <iframe
                         width="100%"
                         height="100%"
                         style={{ border: 0 }}
@@ -685,21 +685,21 @@ const EventDetail = () => {
 
                   {/* Footers Contexts */}
                   <div className="flex justify-center gap-4 pt-5 mt-3 border-t border-slate-100 dark:border-slate-800/80">
-                     {getDirectionsUrl() && (
+                    {getDirectionsUrl() && (
                       <a href={getDirectionsUrl()} target="_blank" rel="noopener noreferrer" className="p-3 bg-white/60 dark:bg-slate-800/50 backdrop-blur-md hover:bg-white dark:hover:bg-slate-700/50 rounded-xl text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-300 shadow-sm border border-slate-100 dark:border-slate-800 hover:scale-[1.05] hover:shadow-md" title="Directions">
                         <Navigation className="w-4 h-4" />
                       </a>
-                     )}
-                     {event.contact?.website && (
+                    )}
+                    {event.contact?.website && (
                       <a href={event.contact.website} target="_blank" rel="noopener noreferrer" className="p-3 bg-white/60 dark:bg-slate-800/50 backdrop-blur-md hover:bg-white dark:hover:bg-slate-700/50 rounded-xl text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-300 shadow-sm border border-slate-100 dark:border-slate-800 hover:scale-[1.05] hover:shadow-md" title="Website">
                         <Globe className="w-4 h-4" />
                       </a>
-                     )}
-                     {event.contact?.email && (
+                    )}
+                    {event.contact?.email && (
                       <a href={`mailto:${event.contact.email}`} className="p-3 bg-white/60 dark:bg-slate-800/50 backdrop-blur-md hover:bg-white dark:hover:bg-slate-700/50 rounded-xl text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-300 shadow-sm border border-slate-100 dark:border-slate-800 hover:scale-[1.05] hover:shadow-md" title="Email">
                         <Mail className="w-4 h-4" />
                       </a>
-                     )}
+                    )}
                   </div>
 
                 </div>

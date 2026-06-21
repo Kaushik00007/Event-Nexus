@@ -66,14 +66,14 @@ const EventCard = ({ event }) => {
 
   return (
     <Link to={`/events/${eventId}`} className="block h-full outline-none">
-      <div className="bg-white dark:bg-slate-900 rounded-[14px] md:rounded-[16px] overflow-hidden group h-full flex flex-col border border-slate-100 dark:border-slate-800 shadow-[0_2px_12px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.09)] hover:-translate-y-[3px] active:scale-[0.98] transition-[transform,box-shadow] duration-[175ms] ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+      <div className="bg-white dark:bg-slate-900 rounded-[14px] md:rounded-[16px] overflow-hidden group h-full flex flex-col border border-slate-100 dark:border-slate-800 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] active:scale-[0.98] transition-all duration-300">
         {/* Image Section */}
         <div className={`relative h-[140px] sm:h-[180px] overflow-hidden shrink-0 ${event.image && !imageError ? '' : `bg-gradient-to-br ${getCategoryGradient()}`}`}>
           {event.image && !imageError ? (
             <img
               src={getDecodedImage()}
               alt={event.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 motion-reduce:group-hover:scale-100"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               onError={() => setImageError(true)}
               loading="lazy"
             />
@@ -99,7 +99,7 @@ const EventCard = ({ event }) => {
           <button
             onClick={handleFavorite}
             disabled={isLoading}
-            className={`absolute top-3 right-3 p-1.5 rounded-full backdrop-blur-md border transition-all duration-[175ms] z-10 ${isFavorite
+            className={`absolute top-3 right-3 p-1.5 rounded-full backdrop-blur-md border transition-all duration-300 z-10 ${isFavorite
               ? 'bg-yellow-400 border-yellow-400 text-slate-900'
               : 'bg-black/20 border-white/20 text-white hover:bg-white/30'
               }`}
@@ -110,10 +110,10 @@ const EventCard = ({ event }) => {
 
         {/* Content Section */}
         <div className="p-3 md:p-4 flex flex-col flex-grow bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 relative">
-          
+
           {/* Title & Featured Row - Forced min-height to prevent staggering */}
           <div className="flex justify-between items-start mb-2 gap-2 min-h-[40px] md:min-h-[42px]">
-            <h3 className="text-[14.5px] md:text-[16px] font-bold text-slate-900 dark:text-white leading-[1.3] line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-[175ms]">
+            <h3 className="text-[14.5px] md:text-[16px] font-bold text-slate-900 dark:text-white leading-[1.3] line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
               {event.title}
             </h3>
             {event.featured && (
@@ -141,9 +141,9 @@ const EventCard = ({ event }) => {
             </div>
           </div>
 
-          {/* Action Button - lift on hover for consistent interaction */}
+          {/* Action Button - Minimalist Outlined Pill */}
           <div className="mt-auto pt-2.5 md:pt-3 border-t border-slate-100 dark:border-slate-800/60">
-            <div className="w-full text-center py-2 text-[13px] font-bold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-500/10 hover:bg-primary-100 dark:hover:bg-primary-500/20 rounded-[8px] transition-colors duration-[175ms]">
+            <div className="w-full text-center py-2 text-[13px] font-bold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-500/10 hover:bg-primary-100 dark:hover:bg-primary-500/20 rounded-[8px] transition-colors">
               View Details
             </div>
           </div>

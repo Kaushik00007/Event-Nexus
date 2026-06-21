@@ -146,7 +146,7 @@ const LocalEventsSection = ({ events = [], city = '', onCityChange, loading = fa
           </div>
 
           {/* Desktop/Tablet Header (Animated) */}
-          <div className="hidden md:block w-full overflow-hidden">
+          <div className="hidden md:block w-full">
             <ScrollVelocity
               texts={[`Events in ${city}`]}
               velocity={45}
@@ -351,7 +351,7 @@ const LocalEventCard = ({ event, formatDate }) => {
                 <ExternalLink className="w-3.5 h-3.5" />
               </span>
               <div className="h-0.5 flex-1 mx-3 bg-white/20 rounded-full overflow-hidden">
-                <div className="h-full bg-secondary-400 w-0 group-hover:w-full transition-all duration-500" />
+                <div className="h-full bg-orange-400 w-0 group-hover:w-full transition-all duration-500" />
               </div>
             </div>
           </div>

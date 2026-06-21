@@ -36,7 +36,7 @@ const FeaturedSection = ({ events = [] }) => {
       // When we've scrolled past the first set of duplicated items, jump back to maintain "infinite" feel
       // We have [events, events, events]. Total width is 3 * singleSetWidth.
       const singleSetWidth = scrollWidth / 3;
-      
+
       if (scrollLeft >= singleSetWidth * 2) {
         container.scrollLeft = scrollLeft - singleSetWidth;
       }
@@ -104,7 +104,7 @@ const FeaturedSection = ({ events = [] }) => {
           </div>
 
           {/* Desktop/Tablet Header (Animated) */}
-          <div className="hidden md:block w-full overflow-hidden">
+          <div className="hidden md:block w-full">
             <ScrollVelocity
               texts={['Featured']}
               velocity={45}

@@ -1,7 +1,6 @@
 .parallax {
     position: relative;
     overflow: hidden;
-    width: 100%;
 }
 
 .scroller {
@@ -18,10 +17,4 @@
 .scroller span {
     display: block;
     padding-right: 1.5rem;
-}
-
-@media (min-width: 768px) {
-    .scroller {
-        /* Handled by clamp but can override if needed */
-    }
 }

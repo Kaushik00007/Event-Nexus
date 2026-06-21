@@ -319,26 +319,16 @@
     animation: slideInRight 0.3s ease-out forwards;
   }
 
-  /* Card hover effects — consistent 3-level elevation system */
+  /* Card hover effects */
   .card-hover {
-    transition: transform 175ms cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 175ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     transform: translateZ(0);
     will-change: transform, box-shadow;
   }
 
   .card-hover:hover {
-    transform: translateY(-3px) translateZ(0);
-    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.12), 0 2px 8px -2px rgba(0, 0, 0, 0.06);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .card-hover {
-      transition: box-shadow 175ms ease;
-    }
-    .card-hover:hover {
-      transform: translateZ(0);
-    }
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   }
 
   /* Gradient text */
@@ -360,9 +350,9 @@
     display: inline-block;
   }
 
-  /* Gradient background — slightly deepened primary so it reads as chosen, not default */
+  /* Gradient background */
   .gradient-bg {
-    background: linear-gradient(135deg, #4338ca 0%, #0f172a 100%);
+    background: linear-gradient(135deg, #2563eb 0%, #0f172a 100%);
   }
 
   /* Glass effect - Optimized */
@@ -382,24 +372,12 @@
     box-shadow: 0 4px 24px 0 var(--glass-shadow);
     transform: translateZ(0);
     will-change: transform, box-shadow;
-    transition: transform 175ms cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 175ms cubic-bezier(0.4, 0, 0.2, 1),
-                border-color 175ms ease;
   }
 
   .glass-panel-premium:hover {
     border: 1px solid color-mix(in srgb, var(--glass-border), white 20%);
-    transform: translateY(-3px) translateZ(0);
-    box-shadow: 0 8px 28px 0 var(--glass-shadow), 0 2px 8px 0 rgba(0,0,0,0.04);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .glass-panel-premium {
-      transition: box-shadow 175ms ease, border-color 175ms ease;
-    }
-    .glass-panel-premium:hover {
-      transform: translateZ(0);
-    }
+    transform: translateY(-4px) translateZ(0);
+    box-shadow: 0 10px 30px 0 var(--glass-shadow);
   }
 
   /* Dedicated Navbar Style - Fixed without hover transforms */
@@ -430,12 +408,10 @@
     background: var(--text-primary);
     color: var(--bg-primary);
     padding: 11px 24px;
-    border-radius: 10px;
+    border-radius: 12px;
     font-weight: 700;
     font-size: 0.95rem;
-    transition: background-color 175ms ease,
-                transform 175ms cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 175ms ease;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -445,22 +421,8 @@
 
   .glass-button-primary:hover {
     background: #1e293b;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.18);
-  }
-
-  .glass-button-primary:focus-visible {
-    outline: 2px solid #6366f1;
-    outline-offset: 2px;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .glass-button-primary {
-      transition: background-color 175ms ease, box-shadow 175ms ease;
-    }
-    .glass-button-primary:hover {
-      transform: none;
-    }
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
   }
 
   /* Featured Badge - Colorful for light mode */
@@ -526,45 +488,16 @@
   }
 
   .sidebar-item-hover {
-    transition: transform 175ms cubic-bezier(0.4, 0, 0.2, 1),
-                background-color 175ms ease;
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
   }
 
   .sidebar-item-hover:hover {
     transform: translateX(2px);
   }
 
-  /* Smooth transitions - Optimized (175ms system-wide) */
+  /* Smooth transitions - Optimized */
   .transition-smooth {
-    transition: transform 175ms cubic-bezier(0.4, 0, 0.2, 1),
-                opacity 175ms ease,
-                background-color 175ms ease,
-                border-color 175ms ease;
-  }
-
-  /* ── Global keyboard focus-visible ring ────────────────────────────────
-     Provides a consistent visible focus indicator for keyboard users
-     across all interactive elements. Browsers that support :focus-visible
-     will only show this ring during keyboard navigation, not on click.
-  ──────────────────────────────────────────────────────────────────── */
-  a:focus-visible,
-  button:focus-visible,
-  [role="button"]:focus-visible,
-  input:focus-visible,
-  select:focus-visible,
-  textarea:focus-visible {
-    outline: 2px solid #6366f1;
-    outline-offset: 2px;
-    border-radius: 4px;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .sidebar-item-hover {
-      transition: background-color 175ms ease;
-    }
-    .transition-smooth {
-      transition: opacity 175ms ease, background-color 175ms ease;
-    }
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
   }
 
   /* Custom Search Styles */
@@ -830,3 +763,57 @@
     }
   }
 
+  /* ── Section-edge fade utility ─────────────────────────────────────────
+     Add the element below as the LAST child of any section that hard-cuts
+     into the next section. It fades the current section's background into
+     transparent over 64px, letting the next section's bg show through.
+     Use one of:
+       .section-fade-to-white   → fades current section to white (light mode)
+       .section-fade-to-slate50 → fades current section to #f8fafc (light slate)
+       .section-fade-to-dark    → fades current section to dark (#020617)
+     All are pointer-events-none and positioned absolute/bottom-0.
+  ──────────────────────────────────────────────────────────────────── */
+  .section-fade-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 64px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .section-fade-to-white {
+    background: linear-gradient(to bottom, transparent, #ffffff);
+  }
+
+  .dark .section-fade-to-white {
+    background: linear-gradient(to bottom, transparent, #020617);
+  }
+
+  .section-fade-to-slate {
+    background: linear-gradient(to bottom, transparent, #f8fafc);
+  }
+
+  .dark .section-fade-to-slate {
+    background: linear-gradient(to bottom, transparent, #020617);
+  }
+
+  .section-fade-to-dark {
+    background: linear-gradient(to bottom, transparent, #0b1629);
+  }
+
+  /* Top fade — used on footer top edge */
+  .section-fade-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 48px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .section-fade-top.section-fade-to-dark {
+    background: linear-gradient(to top, transparent, #0b1629);
+  }

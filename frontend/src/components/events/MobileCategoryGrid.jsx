@@ -19,7 +19,7 @@ const MobileCategoryGrid = () => {
         { name: 'Competitions', path: '/competitions', icon: Trophy, color: 'bg-orange-500/10 text-orange-600' },
         { name: 'Courses', path: '/courses', icon: BookOpen, color: 'bg-green-500/10 text-green-600' },
         { name: 'Workshops', path: '/events?search=workshop', icon: Users, color: 'bg-purple-500/10 text-purple-600' },
-        { name: 'Resources', path: '/free-resources', icon: Lightbulb, color: 'bg-primary-500/10 text-primary-600' },
+        { name: 'Resources', path: '/free-resources', icon: Lightbulb, color: 'bg-yellow-500/10 text-yellow-600' },
         { name: 'Mentorship', path: '/events?search=mentorship', icon: PresentationIcon, color: 'bg-pink-500/10 text-pink-600' },
         { name: 'Coding', path: '/events?search=coding', icon: Code, color: 'bg-cyan-500/10 text-cyan-600' },
     ];

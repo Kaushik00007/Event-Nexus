@@ -35,7 +35,7 @@ const Footer = () => {
       <div className="relative max-w-7xl mx-auto px-6 md:px-16 py-16">
         {/* Main Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 lg:gap-16">
-          
+
           {/* Branding - Left Side (Spans 2 columns) */}
           <div className="md:col-span-2 flex flex-col items-start pr-0 md:pr-8">
             <h2 className="text-4xl lg:text-5xl font-extrabold text-white leading-[1.1] mb-6 tracking-tight">

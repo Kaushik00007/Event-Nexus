@@ -113,7 +113,7 @@ const CollegeSection = ({ colleges = [] }) => {
               Explore events happening at your institution
             </p>
           </div>
-          
+
           <Link
             to="/colleges"
             className="mt-6 lg:mt-0 ml-5 lg:ml-0 inline-flex items-center space-x-2 text-indigo-600 dark:text-indigo-400 font-semibold hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors group"
