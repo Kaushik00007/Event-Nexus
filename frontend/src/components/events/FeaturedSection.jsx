@@ -104,7 +104,7 @@ const FeaturedSection = ({ events = [] }) => {
           </div>
 
           {/* Desktop/Tablet Header (Animated) */}
-          <div className="hidden md:block w-full">
+          <div className="hidden md:block w-full overflow-hidden">
             <ScrollVelocity
               texts={['Featured']}
               velocity={45}

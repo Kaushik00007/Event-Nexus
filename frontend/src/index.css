@@ -319,16 +319,26 @@
     animation: slideInRight 0.3s ease-out forwards;
   }
 
-  /* Card hover effects */
+  /* Card hover effects — consistent 3-level elevation system */
   .card-hover {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 175ms cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 175ms cubic-bezier(0.4, 0, 0.2, 1);
     transform: translateZ(0);
     will-change: transform, box-shadow;
   }
 
   .card-hover:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transform: translateY(-3px) translateZ(0);
+    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.12), 0 2px 8px -2px rgba(0, 0, 0, 0.06);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-hover {
+      transition: box-shadow 175ms ease;
+    }
+    .card-hover:hover {
+      transform: translateZ(0);
+    }
   }
 
   /* Gradient text */
@@ -350,9 +360,9 @@
     display: inline-block;
   }
 
-  /* Gradient background */
+  /* Gradient background — slightly deepened primary so it reads as chosen, not default */
   .gradient-bg {
-    background: linear-gradient(135deg, #2563eb 0%, #0f172a 100%);
+    background: linear-gradient(135deg, #4338ca 0%, #0f172a 100%);
   }
 
   /* Glass effect - Optimized */
@@ -372,12 +382,24 @@
     box-shadow: 0 4px 24px 0 var(--glass-shadow);
     transform: translateZ(0);
     will-change: transform, box-shadow;
+    transition: transform 175ms cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 175ms cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 175ms ease;
   }
 
   .glass-panel-premium:hover {
     border: 1px solid color-mix(in srgb, var(--glass-border), white 20%);
-    transform: translateY(-4px) translateZ(0);
-    box-shadow: 0 10px 30px 0 var(--glass-shadow);
+    transform: translateY(-3px) translateZ(0);
+    box-shadow: 0 8px 28px 0 var(--glass-shadow), 0 2px 8px 0 rgba(0,0,0,0.04);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glass-panel-premium {
+      transition: box-shadow 175ms ease, border-color 175ms ease;
+    }
+    .glass-panel-premium:hover {
+      transform: translateZ(0);
+    }
   }
 
   /* Dedicated Navbar Style - Fixed without hover transforms */
@@ -408,10 +430,12 @@
     background: var(--text-primary);
     color: var(--bg-primary);
     padding: 11px 24px;
-    border-radius: 12px;
+    border-radius: 10px;
     font-weight: 700;
     font-size: 0.95rem;
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color 175ms ease,
+                transform 175ms cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 175ms ease;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -421,8 +445,22 @@
 
   .glass-button-primary:hover {
     background: #1e293b;
-    transform: scale(1.02);
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.18);
+  }
+
+  .glass-button-primary:focus-visible {
+    outline: 2px solid #6366f1;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glass-button-primary {
+      transition: background-color 175ms ease, box-shadow 175ms ease;
+    }
+    .glass-button-primary:hover {
+      transform: none;
+    }
   }
 
   /* Featured Badge - Colorful for light mode */
@@ -488,16 +526,45 @@
   }
 
   .sidebar-item-hover {
-    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    transition: transform 175ms cubic-bezier(0.4, 0, 0.2, 1),
+                background-color 175ms ease;
   }
 
   .sidebar-item-hover:hover {
     transform: translateX(2px);
   }
 
-  /* Smooth transitions - Optimized */
+  /* Smooth transitions - Optimized (175ms system-wide) */
   .transition-smooth {
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+    transition: transform 175ms cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 175ms ease,
+                background-color 175ms ease,
+                border-color 175ms ease;
+  }
+
+  /* ── Global keyboard focus-visible ring ────────────────────────────────
+     Provides a consistent visible focus indicator for keyboard users
+     across all interactive elements. Browsers that support :focus-visible
+     will only show this ring during keyboard navigation, not on click.
+  ──────────────────────────────────────────────────────────────────── */
+  a:focus-visible,
+  button:focus-visible,
+  [role="button"]:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid #6366f1;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sidebar-item-hover {
+      transition: background-color 175ms ease;
+    }
+    .transition-smooth {
+      transition: opacity 175ms ease, background-color 175ms ease;
+    }
   }
 
   /* Custom Search Styles */
@@ -721,3 +788,45 @@
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
+  /* ── Accessible sidebar tooltip ───────────────────────────────────────
+     Shows on hover AND :focus-visible so keyboard users see the label.
+     Uses [data-tooltip] attribute on the trigger element.
+  ──────────────────────────────────────────────────────────────────── */
+  [data-tooltip] {
+    position: relative;
+  }
+
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%) scale(0.92);
+    white-space: nowrap;
+    background: rgba(15, 23, 42, 0.92);
+    color: #f1f5f9;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+    padding: 6px 10px;
+    border-radius: 7px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 140ms ease, transform 140ms ease;
+    z-index: 9999;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  }
+
+  [data-tooltip]:hover::after,
+  [data-tooltip]:focus-visible::after {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-tooltip]::after {
+      transition: none;
+    }
+  }
+

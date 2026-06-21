@@ -32,7 +32,7 @@ export const getCategoryColor = (category) => {
     'hackathon': 'bg-purple-100 text-purple-800',
     'coding-contest': 'bg-blue-100 text-blue-800',
     'workshop': 'bg-green-100 text-green-800',
-    'seminar': 'bg-yellow-100 text-yellow-800',
+    'seminar': 'bg-sky-100 text-sky-800',
     'tech-talk': 'bg-orange-100 text-orange-800',
     'cultural': 'bg-pink-100 text-pink-800',
     'sports': 'bg-red-100 text-red-800',

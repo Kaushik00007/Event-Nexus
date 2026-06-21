@@ -124,10 +124,11 @@ const Navbar = ({ isCollapsed, isDrawerOpen, onMenuClick }) => {
                   {/* Favorites */}
                   <Link
                     to="/favorites"
-                    className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/50 dark:hover:bg-white/5 transition-all text-slate-600 dark:text-gray-400 hover:text-yellow-500 dark:hover:text-yellow-400 group"
+                    className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/50 dark:hover:bg-white/5 transition-all text-slate-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 group"
                     title="Favorites"
+                    aria-label="Favorites"
                   >
-                    <Star className="w-[18px] h-[18px] icon-transition group-hover:scale-110 group-hover:fill-yellow-400/20" />
+                    <Star className="w-[18px] h-[18px] icon-transition group-hover:scale-110 group-hover:fill-primary-400/20" />
                   </Link>
 
                   {/* Notifications Bell */}

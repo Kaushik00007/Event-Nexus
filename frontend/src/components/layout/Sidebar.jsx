@@ -68,7 +68,8 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
                   <button
                     key={role.name}
                     className={`w-12 h-12 rounded-full ${role.color} flex items-center justify-center text-white hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl group ${isAdminIndicator ? 'ring-4 ring-green-500 ring-offset-2 ring-offset-white' : ''}`}
-                    title={role.name + (isAdminIndicator ? ' (Logged in)' : '')}
+                    aria-label={role.name + (isAdminIndicator ? ' (Logged in)' : '')}
+                    data-tooltip={role.name + (isAdminIndicator ? ' (Logged in)' : '')}
                   >
                     <role.icon className="w-6 h-6 icon-transition group-hover:icon-hover-wave" />
                   </button>
@@ -83,7 +84,8 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
               to="/create-event"
               className={`flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-slate-900 text-white rounded-xl py-3 hover:opacity-90 hover:scale-[1.02] transition-all shadow-lg hover:shadow-blue-900/20 group ${isCollapsed ? 'w-12 h-12 mx-auto' : 'w-full'
                 }`}
-              title="Host Event"
+              aria-label="Host Event"
+              {...(isCollapsed ? { 'data-tooltip': 'Host Event' } : {})}
             >
               <Plus className="w-5 h-5 icon-transition group-hover:rotate-90" />
               {!isCollapsed && <span className="font-medium">Host Event</span>}
@@ -105,7 +107,8 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
                       ? 'bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 text-primary-600 dark:text-primary-400 shadow-sm'
                       : 'text-slate-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/5 hover:backdrop-blur-sm hover:shadow-sm'
                       } ${isCollapsed ? 'justify-center' : ''}`}
-                    title={isCollapsed ? item.name : ''}
+                    aria-label={item.name}
+                    {...(isCollapsed ? { 'data-tooltip': item.name } : {})}
                   >
                     <Icon className={`w-5 h-5 flex-shrink-0 icon-transition group-hover:scale-110 ${isActive ? 'text-primary-600 icon-pulse-glow' : 'group-hover:text-primary-500'}`} />
                     {!isCollapsed && (
@@ -127,7 +130,8 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
                       ? 'bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-900/20 dark:to-pink-900/20 text-red-600 dark:text-red-400 shadow-sm'
                       : 'text-red-600 dark:text-red-400 hover:bg-white/60 dark:hover:bg-red-500/10 hover:backdrop-blur-sm hover:shadow-sm'
                       } ${isCollapsed ? 'justify-center' : ''}`}
-                    title={isCollapsed ? 'Admin Dashboard' : ''}
+                    aria-label="Admin Dashboard"
+                    {...(isCollapsed ? { 'data-tooltip': 'Admin Dashboard' } : {})}
                   >
                     <Shield className={`w-5 h-5 flex-shrink-0 icon-transition group-hover:scale-110 group-hover:icon-hover-shake ${isActivePath('/admin') ? 'text-red-600 icon-pulse-glow' : ''}`} />
                     {!isCollapsed && (
@@ -154,6 +158,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
                     <button
                       key={role.name}
                       className="flex items-center gap-3 w-full px-3 py-2 rounded-lg hover:bg-white/60 hover:backdrop-blur-sm hover:shadow-sm transition-all group"
+                      aria-label={role.name}
                     >
                       <div className={`w-10 h-10 rounded-full ${role.color} flex items-center justify-center text-white shadow-sm group-hover:shadow-lg group-hover:scale-105 transition-all ${isAdminIndicator ? 'ring-4 ring-green-500 ring-offset-2 ring-offset-white' : ''}`}>
                         <role.icon className="w-5 h-5 icon-transition group-hover:icon-hover-bounce" />
@@ -175,5 +180,6 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
     </>
   );
 };
+
 
 export default Sidebar;
